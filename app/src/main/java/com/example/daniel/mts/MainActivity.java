@@ -20,14 +20,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
     implements OnFragmentInteractionListener {
 
-
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-
-    private ArrayList<Line> listOfUCSDShuttle = new ArrayList<Line>();
-    private ArrayList<Line> listOfBuses = new ArrayList<Line>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
