@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MTS</string>
+
+    <string name="home_frag">HOME PAGE</string>
+
+    <string name="map_frag">MAP PAGE</string>
+
+    <string name="fav_frag">FAVORITE PAGE</string>
+
+    <string name="lines_frag">LINES PAGE</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+</resources>
