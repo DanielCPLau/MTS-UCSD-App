@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
     implements OnFragmentInteractionListener {
 
@@ -24,10 +26,15 @@ public class MainActivity extends AppCompatActivity
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
+    private ArrayList<Line> listOfUCSDShuttle = new ArrayList<Line>();
+    private ArrayList<Line> listOfBuses = new ArrayList<Line>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        loadLines();
 
         //Set toolbar to replace the action bar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -136,6 +143,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentMessage(String MSG, Object data) {
         //nothing to communicate yet
+    }
+
+    private void loadLines() {
+        // Load UCSD shuttls
+        // TODO
+
+        // Load buses
+        // TODO
     }
 
 }
