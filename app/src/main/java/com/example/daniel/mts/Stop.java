@@ -10,18 +10,22 @@ public class Stop {
     private Line lineThatThisStopIsOn;
     private Stop[] stopsThatThisStopSharesWith;
     private boolean favorite;
+    private boolean isUCSDShuttleStop;
 
     public Stop(
-            String name,
             long id,
-            Line lineThatThisStopIsOn,
-            Stop[] stopsThatThisStopSharesWith,
-            boolean favorite) {
-        this.name = name;
+            boolean isUCSDShuttleStop) {
         this.id = id;
-        this.lineThatThisStopIsOn = lineThatThisStopIsOn;
-        this.stopsThatThisStopSharesWith = stopsThatThisStopSharesWith;
-        this.favorite = favorite;
+        if(isUCSDShuttleStop) {
+            // somehow fill in instance variables
+        }
+        else {
+            // fill in vairbles with MTS api
+        }
+    }
+
+    public void switchFavorite() {
+        favorite = !favorite;
     }
 
     public String getName() {

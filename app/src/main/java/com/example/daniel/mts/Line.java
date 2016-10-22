@@ -6,39 +6,55 @@ package com.example.daniel.mts;
 
 public class Line {
     private String symbol;      // symbol of the line; eg) 201, 202
-    private String nameOfLine;  // name of the line; eg) SuperLoop
+    private String name;  // name of the line; eg) SuperLoop
     private Stop[] listOfStops; // list of stops on this line
     private Line oppositeDirection; // Points to the line of the other direction;
                                     // eg) 30 to Downtown and 30 to UTC
-    private boolean favorite;   // true if user favorited this line
+    private boolean favorite;       // true if user favorited this line
+    private boolean isUCSDShuttle;  // true if line is UCSD Shuttle
 
     /**
      * Constructor
      *
      * @param symbol symbol of the line
-     * @param nameOfLine name of the line
-     * @param listOfStops list of stops on this line
-     * @param oppositeDirection line of the other direction
+     * @param isUCSDShuttle true if line is UCSD shuttle, false other wise
      */
     public Line(
             String symbol,
-            String nameOfLine,
-            Stop[] listOfStops,
-            Line oppositeDirection,
-            boolean favorite) {
+            boolean isUCSDShuttle) {
         this.symbol = symbol;
-        this.nameOfLine = nameOfLine;
+        this.isUCSDShuttle = isUCSDShuttle;
+
+        if(isUCSDShuttle) {
+            // somehow get shuttle info from website
+        }
+        else {
+            // use API to get information about line with symbol
+        }
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setListOfStops(Stop[] listOfStops) {
         this.listOfStops = listOfStops;
+    }
+
+    public void setOppositeDirection(Line oppositeDirection) {
         this.oppositeDirection = oppositeDirection;
-        this.favorite = favorite;
+    }
+
+    public void switchFavorite() {
+        favorite = !favorite;
     }
 
     public String getSymbol() {
         return symbol;
     }
 
-    public String getNameOfLine() {
-        return nameOfLine;
+    public String getName() {
+        return name;
     }
 
     public Stop[] getListOfStops() {
