@@ -140,6 +140,57 @@ public class RemoteFetch {
         }
     }
 
+    public static String[] getListOfAllLinesId() {
+        try {
+            String[] mtsLines = getListOfLinesId(REQUEST_MTS);
+            String[] nctdLines = getListOfLinesId(REQUEST_NCTD);
+
+            int length = mtsLines.length + nctdLines.length;
+            String[] allLines = new String[length];
+
+            System.arraycopy(mtsLines, 0, allLines, 0, mtsLines.length);
+            System.arraycopy(nctdLines, 0, allLines, mtsLines.length, nctdLines.length);
+
+            return allLines;
+        }
+        catch (NullPointerException ex) {
+            // TODO
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String[] getListOfLinesId(String agency) {
+        try {
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
+            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+                // Request to API failed
+                //TODO
+                return null;
+            }
+
+            JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
+
+            String[] lineIds = new String[list.length()];
+
+            for(int i = 0; i < lineIds.length; i++) {
+                lineIds[i] = list.getString(i);
+            }
+
+            return lineIds;
+        }
+        catch (IOException ex) {
+            // TODO
+            ex.printStackTrace();
+            return null;
+        }
+        catch (JSONException ex) {
+            // TODO
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public static void fillLineInfo(Line line) {
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_INFO, line.id)));
