@@ -103,7 +103,7 @@ public class RemoteFetch {
             Line[] line = new Line[list.length()];
 
             for(int i = 0; i < line.length; i++) {
-                line[i] = new Line(list.getString(i), false);
+                line[i] = new Line(list.getString(i));
             }
 
             return line;
@@ -191,7 +191,7 @@ public class RemoteFetch {
         }
     }
 
-    public static void fillLineInfo(Line line) {
+    public static void fillLineInfo(LineInfo line) {
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_INFO, line.id)));
 
@@ -210,10 +210,30 @@ public class RemoteFetch {
             line.color = entry.getString("color");
             line.textColor = entry.getString("textColor");
 
+        }
+        catch (IOException ex) {
             // TODO
-            // get stop list
-            // create stops
-            // get opposite direction
+            return;
+        }
+        catch (JSONException ex) {
+            // TODO
+            return;
+        }
+    }
+
+    public static void fillLineDetailInfo(Line line) {
+        try {
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_INFO, line.id)));
+
+            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+                // Request to API failed
+                //TODO
+                return;
+            }
+
+            JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
+
+            // TODO
         }
         catch (IOException ex) {
             // TODO
