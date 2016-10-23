@@ -73,9 +73,14 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // get permission to access network
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        // Inflate the layout for this fragment
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
+
+        // get MTS line ids
         RemoteFetch fetch = new RemoteFetch();
         Line[] lines = fetch.getListOfLines("MTS");
         String[] lineStrings = new String[lines.length];
@@ -83,10 +88,12 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         {
             lineStrings[i] = lines[i].id;
         }
+
+        // add in ids to rows
         ArrayAdapter<String> adapter = new MyAdapter(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
         setListAdapter(adapter);
         setRetainInstance(true);
-        // Inflate the layout for this fragment
+
         return rootview;
     }
 
@@ -147,6 +154,8 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
             View view = super.getView(position, convertView, parent);
 //            TextView tv = (TextView) view.findViewById(R.id.txtitem);
 //            tv.setBackgroundColor(Color.YELLOW);
+
+            // alternating grey and white row backgrounds
             if (position % 2 == 1) {
                 view.setBackgroundColor(Color.WHITE);
             } else {
