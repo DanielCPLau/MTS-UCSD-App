@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.InterruptedIOException;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -50,20 +51,22 @@ public class RemoteFetch {
 
     private static final String REQUEST_LIST_OF_STOPS = "stop-ids-for-agency/%S";   // Might not need this
 
-    private static final String REQUEST_STOP_INFO = "stop/%s";                      // Need stop id
+    private static final String REQUEST_STOP_INFO = "stop/%S";                      // Need stop id
 
-    private static final String REQUEST_ROUTE_INFO = "route/%s";                    // Need route id;
+    private static final String REQUEST_ROUTE_INFO = "route/%S";                    // Need route id;
 
     private static final String REQUEST_ROUTE_NEARBY = "routes-for-location";       // need lat and lon
 
     private static final String REQUEST_STOP_NEARBY = "stops-for-location";         // need lat and lon
 
-    private static final String REQUEST_ROUTE_STOP_LIST = "stops-for-route/%s";     // need route id;
+    private static final String REQUEST_ROUTE_STOP_LIST = "stops-for-route/%S";     // need route id;
 
     private static final int REQUEST_SUCCESS_CODE = 200;
     private static final String REQUEST_DATA = "data";
     private static final String REQUEST_LIST = "list";
     private static final String REQUEST_ENTRY = "entry";
+
+    private static final int TIMER = 100; // Min is 80
 
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -89,37 +92,6 @@ public class RemoteFetch {
         }
     }
 
-    public static Line[] getListOfLines(String agency) {
-        try {
-            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
-            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
-                // Request to API failed
-                //TODO
-                return null;
-            }
-
-            JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
-
-            Line[] line = new Line[list.length()];
-
-            for(int i = 0; i < line.length; i++) {
-                line[i] = new Line(list.getString(i));
-            }
-
-            return line;
-        }
-        catch (IOException ex) {
-            // TODO
-            ex.printStackTrace();
-            return null;
-        }
-        catch (JSONException ex) {
-            // TODO
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
     public static Line[] getListOfAllLines() {
         try {
             Line[] mtsLines = getListOfLines(REQUEST_MTS);
@@ -140,13 +112,50 @@ public class RemoteFetch {
         }
     }
 
-    public static String[] getListOfAllLinesId() {
+    public static Line[] getListOfLines(String agency) {
         try {
-            String[] mtsLines = getListOfLinesId(REQUEST_MTS);
-            String[] nctdLines = getListOfLinesId(REQUEST_NCTD);
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
+            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+                // Request to API failed
+                //TODO
+                return null;
+            }
+
+            JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
+
+            Line[] line = new Line[list.length()];
+
+            for(int i = 0; i < line.length; i++) {
+                line[i] = new Line(list.getString(i));
+                Thread.sleep(TIMER);
+            }
+
+            return line;
+        }
+        catch (IOException ex) {
+            // TODO
+            ex.printStackTrace();
+            return null;
+        }
+        catch (JSONException ex) {
+            // TODO
+            ex.printStackTrace();
+            return null;
+        }
+        catch (InterruptedException ex) {
+            // TODO
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static LineInfo[] getListOfAllLinesInfo() {
+        try {
+            LineInfo[] mtsLines = getListOfLinesInfo(REQUEST_MTS);
+            LineInfo[] nctdLines = getListOfLinesInfo(REQUEST_NCTD);
 
             int length = mtsLines.length + nctdLines.length;
-            String[] allLines = new String[length];
+            LineInfo[] allLines = new LineInfo[length];
 
             System.arraycopy(mtsLines, 0, allLines, 0, mtsLines.length);
             System.arraycopy(nctdLines, 0, allLines, mtsLines.length, nctdLines.length);
@@ -160,7 +169,7 @@ public class RemoteFetch {
         }
     }
 
-    public static String[] getListOfLinesId(String agency) {
+    public static LineInfo[] getListOfLinesInfo(String agency) {
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
@@ -171,13 +180,14 @@ public class RemoteFetch {
 
             JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
 
-            String[] lineIds = new String[list.length()];
+            LineInfo[] lineInfo = new LineInfo[list.length()];
 
-            for(int i = 0; i < lineIds.length; i++) {
-                lineIds[i] = list.getString(i);
+            for(int i = 0; i < lineInfo.length; i++) {
+                Thread.sleep(TIMER);
+                lineInfo[i] = new LineInfo(list.getString(i));
             }
 
-            return lineIds;
+            return lineInfo;
         }
         catch (IOException ex) {
             // TODO
@@ -187,6 +197,10 @@ public class RemoteFetch {
         catch (JSONException ex) {
             // TODO
             ex.printStackTrace();
+            return null;
+        }
+        catch (InterruptedException ex) {
+            // TODO
             return null;
         }
     }
@@ -203,13 +217,12 @@ public class RemoteFetch {
 
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
 
-            // poopulate basic info of Line from API
+            // populate basic info of Line from API
             line.agency = entry.getString("agencyId");
             line.shortName = entry.getString("shortName");
             line.longName = entry.getString("longName");
             line.color = entry.getString("color");
             line.textColor = entry.getString("textColor");
-
         }
         catch (IOException ex) {
             // TODO

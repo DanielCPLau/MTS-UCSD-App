@@ -17,6 +17,7 @@ import java.io.ObjectInputStream;
 public class ListOfLinesAndStopsIO extends Activity {
     private static final String FILENAME_LINE = "line_";
     private static final String FILENAME_STOP = "stop_";
+    private static final String FILE_NAME_LINE_INFO_LIST = "lineInfoList";
 
     // run this to initialize all line and stop information
     public void init() {
@@ -30,13 +31,18 @@ public class ListOfLinesAndStopsIO extends Activity {
 
     }
 
-    public void writeLineIdList(String[] list) {
-
+    public void writeLineInfoList() {
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(openFileOutput(FILE_NAME_LINE_INFO_LIST, Context.MODE_PRIVATE));
+        }
+        catch (FileNotFoundException ex) {
+            // TODO
+        }
+        catch (IOException ex) {
+            // TODO
+        }
     }
 
-    public void writeStopIdList(String[] list) {
-
-    }
 
     public Line readLine(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
@@ -82,11 +88,23 @@ public class ListOfLinesAndStopsIO extends Activity {
         return null;
     }
 
-    public String[] readLineIdList() {
+    public LineInfo[] readLineInfoList() {
+        try {
+            ObjectInputStream ois = new ObjectInputStream(openFileInput(FILE_NAME_LINE_INFO_LIST));
+            LineInfo[] lineInfo = (LineInfo[]) ois.readObject();
+            ois.close();
+            return lineInfo;
+        }
+        catch(FileNotFoundException ex) {
+            // TODO
+        }
+        catch(IOException ex) {
+            // TODO
+        }
+        catch(ClassNotFoundException ex) {
+            // TODO
+        }
         return null;
     }
 
-    public String[] readStopIdList() {
-        return null;
-    }
 }

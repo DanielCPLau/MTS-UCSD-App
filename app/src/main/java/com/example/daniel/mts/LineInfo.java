@@ -11,17 +11,11 @@ public class LineInfo {
     public String longName;
     public String color;
     public String textColor;
-    public boolean favorite;        // true if user favorited this line
+    public boolean favorite;
 
     public LineInfo (String id) {
         this.id = id;
-
-        if (agency == "UCSD") {
-            // somehow get shuttle info from website
-        } else {
-            // use API to get information about line with symbol
-            RemoteFetch.fillLineInfo(this);
-        }
+        RemoteFetch.fillLineInfo(this);
     }
 
     public void switchFavorite() {

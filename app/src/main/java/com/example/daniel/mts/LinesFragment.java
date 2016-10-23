@@ -65,8 +65,6 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -75,8 +73,14 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
-        RemoteFetch fetch = new RemoteFetch();
-        String[] lineStrings = fetch.getListOfLinesId("MTS");
+
+        LineInfo[] lineInfo = RemoteFetch.getListOfLinesInfo("MTS");    // need to change this later to read from file instead of API
+        String[] lineStrings = new String[lineInfo.length];
+
+        for(int i = 0; i < lineStrings.length; i++) {
+            lineStrings[i] = lineInfo[i].shortName;
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
         setListAdapter(adapter);
         setRetainInstance(true);
