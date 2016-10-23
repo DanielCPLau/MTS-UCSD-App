@@ -3,10 +3,17 @@ package com.example.daniel.mts;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.os.StrictMode;
+import android.support.v4.app.*;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 
 // Sheldon Test
 /**
@@ -17,7 +24,7 @@ import android.view.ViewGroup;
  * Use the {@link LinesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LinesFragment extends android.support.v4.app.Fragment implements OnFragmentInteractionListener{
+public class LinesFragment extends ListFragment implements OnFragmentInteractionListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,13 +65,35 @@ public class LinesFragment extends android.support.v4.app.Fragment implements On
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
+        RemoteFetch fetch = new RemoteFetch();
+        Line[] lines = fetch.getListOfLines("mts");
+        String[] lineStrings = new String[lines.length];
+        for(int i = 0; i < lines.length; i++)
+        {
+            lineStrings[i] = lines[i].id;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
+        setListAdapter(adapter);
+        setRetainInstance(true);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.lines_fragment, container, false);
+        return rootview;
+    }
+
+    public void onListItemClick(ListView view1, View view, int position, long id)
+    {
+        ViewGroup viewGroup = (ViewGroup)view;
+        TextView txt = (TextView)viewGroup.findViewById(R.id.txtitem);
+        Toast.makeText(getActivity(), txt.getText().toString(),Toast.LENGTH_LONG);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -77,6 +106,7 @@ public class LinesFragment extends android.support.v4.app.Fragment implements On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {

@@ -91,8 +91,8 @@ public class RemoteFetch {
 
     public static Line[] getListOfLines(String agency) {
         try {
-            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
-
+//            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
+            JSONObject json = readJsonFromUrl("http://realtime.sdmts.com/api/api/where/route-ids-for-agency/MTS.json?key=393bdfb5-b145-4149-a45e-067d8acb6246");
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
                 //TODO
@@ -111,10 +111,12 @@ public class RemoteFetch {
         }
         catch (IOException ex) {
             // TODO
+            ex.printStackTrace();
             return null;
         }
         catch (JSONException ex) {
             // TODO
+            ex.printStackTrace();
             return null;
         }
     }
@@ -134,6 +136,7 @@ public class RemoteFetch {
         }
         catch (NullPointerException ex) {
             // TODO
+            ex.printStackTrace();
             return null;
         }
     }
@@ -163,10 +166,12 @@ public class RemoteFetch {
         }
         catch (IOException ex) {
             // TODO
+            ex.printStackTrace();
             return;
         }
         catch (JSONException ex) {
             // TODO
+            ex.printStackTrace();
             return;
         }
     }
@@ -210,13 +215,16 @@ public class RemoteFetch {
 //                reader = new BufferedReader(new InputStreamReader(stream));
 //                StringBuffer buffer = new StringBuffer();
 //                String line ="";
+//
 //                while ((line = reader.readLine()) != null){
 //                    buffer.append(line);
 //                }
+//
 //                String finalJson= buffer.toString();
 //                JSONObject parentObject = new JSONObject(finalJson);
 //                JSONObject childObject = (JSONObject)parentObject.get("data");
 //                JSONArray parentArray = childObject.getJSONArray("list");
+//
 //                ArrayList<String> busList = new ArrayList<String>();
 //                if (parentArray != null) {
 //                    int len = parentArray.length();
@@ -224,9 +232,12 @@ public class RemoteFetch {
 //                        busList.add(parentArray.get(i).toString());
 //                    }
 //                }
+//
 //                String busNum = busList.get(0);
+//
 ////                return busNum;
 //                return busList.toString();
+//
 //            } catch (MalformedURLException e) {
 //                e.printStackTrace();
 //            } catch (IOException e) {
