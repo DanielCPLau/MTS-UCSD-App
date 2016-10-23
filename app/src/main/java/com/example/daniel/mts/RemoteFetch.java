@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,6 +131,8 @@ public class RemoteFetch {
                 Thread.sleep(TIMER);
             }
 
+            Arrays.sort(line);
+
             return line;
         }
         catch (IOException ex) {
@@ -187,6 +190,8 @@ public class RemoteFetch {
                 lineInfo[i] = new LineInfo(list.getString(i));
             }
 
+            Arrays.sort(lineInfo);
+
             return lineInfo;
         }
         catch (IOException ex) {
@@ -223,6 +228,16 @@ public class RemoteFetch {
             line.longName = entry.getString("longName");
             line.color = entry.getString("color");
             line.textColor = entry.getString("textColor");
+
+            if(line.shortName.equals("Orange Line")) {
+                line.shortName = "O";
+            }
+            else if(line.shortName.equals("UC San Diego Blue Line")) {
+                line.shortName = "B";
+            }
+            else if(line.shortName.equals("Green Line")) {
+                line.shortName = "G";
+            }
         }
         catch (IOException ex) {
             // TODO

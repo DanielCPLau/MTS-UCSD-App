@@ -80,7 +80,7 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
 
         // get MTS line ids
-        LineInfo[] lineInfo = RemoteFetch.getListOfLinesInfo("MTS");
+        LineInfo[] lineInfo = RemoteFetch.getListOfLinesInfo("MTS");    // Need to change later to read from IO
         String[] lineStrings = new String[lineInfo.length];
 
         for(int i = 0; i < lineStrings.length; i++) {
