@@ -5,12 +5,17 @@ package com.example.daniel.mts;
  */
 
 public class Stop {
-    public String name;    // name of the stop
-    public String id;        // id of the stop
-    public Line lineThatThisStopIsOn;
+    public String id;
+    public String code;
+    public String name;
+    public String direction;
+    public double lat;
+    public double lon;
+    public Line lineThatThisStopServes;
     public Stop[] stopsThatThisStopSharesWith;
     public boolean favorite;
     public boolean isUCSDShuttleStop;
+    public boolean wheelchairBoarding;
 
     public Stop(
             String id,
@@ -21,6 +26,7 @@ public class Stop {
         }
         else {
             // fill in vairbles with MTS api
+            RemoteFetch.fillStopInfo(this);
         }
     }
 

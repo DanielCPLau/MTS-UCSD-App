@@ -157,9 +157,44 @@ public class RemoteFetch {
             line.color = entry.getString("color");
             line.textColor = entry.getString("textColor");
 
-            json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_STOP_LIST, line.id)));
             // TODO
-            // get stop list and opposite direction
+            // get stop list
+            // create stops
+            // get opposite direction
+        }
+        catch (IOException ex) {
+            // TODO
+            return;
+        }
+        catch (JSONException ex) {
+            // TODO
+            return;
+        }
+    }
+
+    public static void fillStopInfo(Stop stop) {
+        try {
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_STOP_INFO, stop.id)));
+
+            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+                // Request to API failed
+                //TODO
+                return;
+            }
+
+            JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
+
+            // poopulate basic info of Line in API
+            stop.code = entry.getString("code");
+            stop.direction = entry.getString("direction");
+            stop.lat = entry.getInt("lat");
+            stop.lon = entry.getInt("lon");
+            stop.name = entry.getString("name");
+            stop.wheelchairBoarding = entry.getString("wheelchairBoarding").equals("ACCESSIBLE");
+
+            // TODO
+            // get line list
+            // get stops nearby
         }
         catch (IOException ex) {
             // TODO
