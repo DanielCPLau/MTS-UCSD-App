@@ -27,7 +27,7 @@ public class Line {
             // somehow get shuttle info from website
         } else {
             // use API to get information about line with symbol
-            RemoteFetch.fillLineInfo(this);
+            // RemoteFetch.fillLineInfo(this);
         }
     }
 

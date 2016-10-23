@@ -5,15 +5,15 @@ package com.example.daniel.mts;
  */
 
 public class Stop {
-    private String name;    // name of the stop
-    private long id;        // id of the stop
-    private Line lineThatThisStopIsOn;
-    private Stop[] stopsThatThisStopSharesWith;
-    private boolean favorite;
-    private boolean isUCSDShuttleStop;
+    public String name;    // name of the stop
+    public String id;        // id of the stop
+    public Line lineThatThisStopIsOn;
+    public Stop[] stopsThatThisStopSharesWith;
+    public boolean favorite;
+    public boolean isUCSDShuttleStop;
 
     public Stop(
-            long id,
+            String id,
             boolean isUCSDShuttleStop) {
         this.id = id;
         if(isUCSDShuttleStop) {
@@ -26,25 +26,5 @@ public class Stop {
 
     public void switchFavorite() {
         favorite = !favorite;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public Line getLineThatThisStopIsOn() {
-        return lineThatThisStopIsOn;
-    }
-
-    public Stop[] getStopsThatThisStopSharesWith() {
-        return stopsThatThisStopSharesWith;
-    }
-
-    public boolean getfavorite() {
-        return favorite;
     }
 }
