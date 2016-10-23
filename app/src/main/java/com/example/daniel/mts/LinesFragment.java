@@ -76,7 +76,12 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         StrictMode.setThreadPolicy(policy);
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
         RemoteFetch fetch = new RemoteFetch();
-        String[] lineStrings = fetch.getListOfLinesId("MTS");
+        Line[] lines = fetch.getListOfLines("MTS");
+        String[] lineStrings = new String[lines.length];
+        for(int i = 0; i < lines.length; i++)
+        {
+            lineStrings[i] = lines[i].id;
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
         setListAdapter(adapter);
         setRetainInstance(true);
