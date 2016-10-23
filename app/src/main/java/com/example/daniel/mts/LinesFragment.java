@@ -1,6 +1,7 @@
 package com.example.daniel.mts;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -82,7 +83,7 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         {
             lineStrings[i] = lines[i].id;
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
+        ArrayAdapter<String> adapter = new MyAdapter(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
         setListAdapter(adapter);
         setRetainInstance(true);
         // Inflate the layout for this fragment
@@ -133,5 +134,27 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
      */
     public void onFragmentMessage(String MSG, Object data) {
 
+    }
+
+    public class MyAdapter extends ArrayAdapter
+    {
+        public MyAdapter(Context context, int resource, int textViewResourceId, Object[] objects) {
+            super(context, resource, textViewResourceId, objects);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+//            TextView tv = (TextView) view.findViewById(R.id.txtitem);
+//            tv.setBackgroundColor(Color.YELLOW);
+            if (position % 2 == 1) {
+                view.setBackgroundColor(Color.WHITE);
+            } else {
+
+
+                view.setBackgroundColor(Color.parseColor("#F7F7F7"));
+            }
+            return view;
+        }
     }
 }
