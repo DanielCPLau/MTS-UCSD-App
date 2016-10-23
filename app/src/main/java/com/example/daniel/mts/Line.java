@@ -5,67 +5,33 @@ package com.example.daniel.mts;
  */
 
 public class Line {
-    private String symbol;      // symbol of the line; eg) 201, 202
-    private String name;  // name of the line; eg) SuperLoop
-    private Stop[] listOfStops; // list of stops on this line
-    private Line oppositeDirection; // Points to the line of the other direction;
+    public String id;
+    public String agency;           // agency of the bus line
+    public String shortName;
+    public String longName;
+    public String color;
+    public String textColor;
+    public Stop[] listOfStops;      // list of stops on this line
+    public Line oppositeDirection;  // Points to the line of the other direction;
                                     // eg) 30 to Downtown and 30 to UTC
-    private boolean favorite;       // true if user favorited this line
-    private boolean isUCSDShuttle;  // true if line is UCSD Shuttle
+    public boolean favorite;        // true if user favorited this line
+    public boolean isUCSDShuttle;   // true if line is UCSD Shuttle
 
-    /**
-     * Constructor
-     *
-     * @param symbol symbol of the line
-     * @param isUCSDShuttle true if line is UCSD shuttle, false other wise
-     */
     public Line(
-            String symbol,
+            String id,
             boolean isUCSDShuttle) {
-        this.symbol = symbol;
+        this.id = id;
         this.isUCSDShuttle = isUCSDShuttle;
 
-        if(isUCSDShuttle) {
+        if (isUCSDShuttle) {
             // somehow get shuttle info from website
-        }
-        else {
+        } else {
             // use API to get information about line with symbol
+            RemoteFetch.fillLineInfo(this);
         }
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setListOfStops(Stop[] listOfStops) {
-        this.listOfStops = listOfStops;
-    }
-
-    public void setOppositeDirection(Line oppositeDirection) {
-        this.oppositeDirection = oppositeDirection;
     }
 
     public void switchFavorite() {
         favorite = !favorite;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Stop[] getListOfStops() {
-        return listOfStops;
-    }
-
-    public Line getOppositeDirection() {
-        return oppositeDirection;
-    }
-
-    public boolean getFavorite() {
-        return favorite;
     }
 }
