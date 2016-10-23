@@ -44,11 +44,11 @@ public class RemoteFetch {
 
     private static final String REQUEST_END_LOC = "&lat=%s&lon=%s";
 
-    private static final String REQUEST_LIST_OF_ROUTE = "route-ids-for-agency/%s";  // Need to add agency name
+    private static final String REQUEST_LIST_OF_ROUTE = "route-ids-for-agency/%S";  // Need to add agency name
     private static final String REQUEST_MTS = "MTS";
     private static final String REQUEST_NCTD = "NCTD";
 
-    private static final String REQUEST_LIST_OF_STOPS = "stop-ids-for-agency/%s";   // Might not need this
+    private static final String REQUEST_LIST_OF_STOPS = "stop-ids-for-agency/%S";   // Might not need this
 
     private static final String REQUEST_STOP_INFO = "stop/%s";                      // Need stop id
 
@@ -91,8 +91,7 @@ public class RemoteFetch {
 
     public static Line[] getListOfLines(String agency) {
         try {
-            //JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
-            JSONObject json = readJsonFromUrl("http://realtime.sdmts.com/api/api/where/route-ids-for-agency/MTS.json?key=393bdfb5-b145-4149-a45e-067d8acb6246");
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
                 //TODO
