@@ -65,26 +65,33 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // get permission to access network
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        // Inflate the layout for this fragment
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
 
-        LineInfo[] lineInfo = RemoteFetch.getListOfLinesInfo("MTS");    // need to change this later to read from file instead of API
+        // get MTS line ids
+        LineInfo[] lineInfo = RemoteFetch.getListOfLinesInfo("MTS");
         String[] lineStrings = new String[lineInfo.length];
 
         for(int i = 0; i < lineStrings.length; i++) {
             lineStrings[i] = lineInfo[i].shortName;
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
+        // add in shortname to rows
+        ArrayAdapter<String> adapter = new MyAdapter(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
         setListAdapter(adapter);
         setRetainInstance(true);
-        // Inflate the layout for this fragment
+
         return rootview;
     }
 
@@ -132,5 +139,28 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
      */
     public void onFragmentMessage(String MSG, Object data) {
 
+    }
+
+    public class MyAdapter extends ArrayAdapter {
+        public MyAdapter(Context context, int resource, int textViewResourceId, Object[] objects) {
+            super(context, resource, textViewResourceId, objects);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+//            TextView tv = (TextView) view.findViewById(R.id.txtitem);
+//            tv.setBackgroundColor(Color.YELLOW);
+
+            // alternating grey and white row backgrounds
+            if (position % 2 == 1) {
+                view.setBackgroundColor(Color.WHITE);
+            } else {
+
+
+                view.setBackgroundColor(Color.parseColor("#F7F7F7"));
+            }
+            return view;
+        }
     }
 }
