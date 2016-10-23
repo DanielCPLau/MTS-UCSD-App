@@ -150,7 +150,7 @@ public class RemoteFetch {
 
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
 
-            // poopulate basic info of Line in API
+            // poopulate basic info of Line from API
             line.agency = entry.getString("agencyId");
             line.shortName = entry.getString("shortName");
             line.longName = entry.getString("longName");
@@ -184,7 +184,7 @@ public class RemoteFetch {
 
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
 
-            // poopulate basic info of Line in API
+            // poopulate basic info of bus stop from API
             stop.code = entry.getString("code");
             stop.direction = entry.getString("direction");
             stop.lat = entry.getInt("lat");
