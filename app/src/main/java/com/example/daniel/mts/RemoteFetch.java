@@ -140,6 +140,8 @@ public class RemoteFetch {
             line.textColor = entry.getString("textColor");
 
             json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_STOP_LIST, line.id)));
+            // TODO
+            // get stop list and opposite direction
         }
         catch (IOException ex) {
             // TODO
