@@ -88,10 +88,10 @@ public class RemoteFetch {
             is.close();
         }
     }
-//comment
+
     public static Line[] getListOfLines(String agency) {
         try {
-//            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
+            //JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
             JSONObject json = readJsonFromUrl("http://realtime.sdmts.com/api/api/where/route-ids-for-agency/MTS.json?key=393bdfb5-b145-4149-a45e-067d8acb6246");
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
