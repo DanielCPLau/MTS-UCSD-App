@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadLines();
-
         //Set toolbar to replace the action bar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -140,13 +138,4 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentMessage(String MSG, Object data) {
         //nothing to communicate yet
     }
-
-    private void loadLines() {
-        // Load UCSD shuttls
-        // TODO
-
-        // Load buses
-        // TODO
-    }
-
 }
