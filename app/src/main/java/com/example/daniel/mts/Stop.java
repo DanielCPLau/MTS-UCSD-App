@@ -11,8 +11,8 @@ public class Stop {
     public String direction;
     public double lat;
     public double lon;
-    public Line lineThatThisStopServes;
-    public Stop[] stopsThatThisStopSharesWith;
+    public String lineThatThisStopServesId;
+    public String[] stopsThatThisStopSharesWithId;
     public boolean favorite;
     public boolean isUCSDShuttleStop;
     public boolean wheelchairBoarding;

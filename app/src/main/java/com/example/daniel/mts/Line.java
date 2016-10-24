@@ -5,8 +5,8 @@ package com.example.daniel.mts;
  */
 
 public class Line extends LineInfo {
-    public Stop[] listOfStops;      // list of stops on this line
-    public Line oppositeDirection;  // Points to the line of the other direction;
+    public String[] listOfStopsId;      // list of stops on this line
+    public String oppositeDirectionId;  // Points to the line of the other direction;
                                     // eg) 30 to Downtown and 30 to UTC
     public Line(String id) {
         super(id);
