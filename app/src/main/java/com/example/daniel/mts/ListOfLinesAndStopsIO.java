@@ -2,6 +2,7 @@ package com.example.daniel.mts;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,39 +15,44 @@ import java.io.ObjectInputStream;
  * Created by Isaac on 10/22/16.
  */
 
-public class ListOfLinesAndStopsIO extends Activity {
+public class ListOfLinesAndStopsIO {
     private static final String FILENAME_LINE = "line_";
     private static final String FILENAME_STOP = "stop_";
     private static final String FILE_NAME_LINE_INFO_LIST = "lineInfoList";
 
     // run this to initialize all line and stop information
-    public void init() {
+    public static void init() {
     }
 
-    public void writeLine(Line line) {
-
-    }
-
-    public void writeStop(Stop stop) {
+    public static void writeLine(Line line) {
 
     }
 
-    public void writeLineInfoList() {
+    public static void writeStop(Stop stop) {
+
+    }
+
+    public static void writeLineInfoList() {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(openFileOutput(FILE_NAME_LINE_INFO_LIST, Context.MODE_PRIVATE));
-        }
-        catch (FileNotFoundException ex) {
+            Context context = MyApplication.getAppContext();
+            FileOutputStream fos = context.openFileOutput(FILE_NAME_LINE_INFO_LIST, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            LineInfo[] lineInfoList = RemoteFetch.getListOfAllLinesInfo();
+
+            oos.writeObject(lineInfoList);
+            oos.close();
+        } catch (IOException ex) {
             // TODO
-        }
-        catch (IOException ex) {
-            // TODO
+            ex.printStackTrace();
         }
     }
 
 
-    public Line readLine(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static Line readLine(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
-            ObjectInputStream ois = new ObjectInputStream(openFileInput(FILENAME_LINE + id));
+            Context context = MyApplication.getAppContext();
+            ObjectInputStream ois = new ObjectInputStream(context.openFileInput(FILENAME_LINE + id));
 
             Line line = (Line) ois.readObject();
 
@@ -56,19 +62,20 @@ public class ListOfLinesAndStopsIO extends Activity {
         }
         catch(FileNotFoundException ex) {
             // TODO
+            writeLine(new Line(id));
+            readLine(id);
         }
-        catch(IOException ex) {
+        catch(IOException | ClassNotFoundException ex) {
             // TODO
-        }
-        catch(ClassNotFoundException ex) {
-            // TODO
+            ex.printStackTrace();
         }
         return null;
     }
 
-    public Stop readStop(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static Stop readStop(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
-            ObjectInputStream ois = new ObjectInputStream(openFileInput(FILENAME_STOP + id));
+            Context context = MyApplication.getAppContext();
+            ObjectInputStream ois = new ObjectInputStream(context.openFileInput(FILENAME_STOP + id));
 
             Stop stop = (Stop) ois.readObject();
 
@@ -77,32 +84,32 @@ public class ListOfLinesAndStopsIO extends Activity {
             return stop;
         }
         catch(FileNotFoundException ex) {
-            // TODO
+            writeStop(new Stop(id));
+            readStop(id);
         }
-        catch(IOException ex) {
+        catch(IOException | ClassNotFoundException ex) {
             // TODO
-        }
-        catch(ClassNotFoundException ex) {
-            // TODO
+            ex.printStackTrace();
         }
         return null;
     }
 
-    public LineInfo[] readLineInfoList() {
+    public static LineInfo[] readLineInfoList() {
         try {
-            ObjectInputStream ois = new ObjectInputStream(openFileInput(FILE_NAME_LINE_INFO_LIST));
+            Context context = MyApplication.getAppContext();
+            FileInputStream fis = context.openFileInput(FILE_NAME_LINE_INFO_LIST);
+            ObjectInputStream ois = new ObjectInputStream(fis);
             LineInfo[] lineInfo = (LineInfo[]) ois.readObject();
             ois.close();
             return lineInfo;
         }
         catch(FileNotFoundException ex) {
-            // TODO
+            writeLineInfoList();
+            readLineInfoList();
         }
-        catch(IOException ex) {
+        catch(IOException | ClassNotFoundException ex) {
             // TODO
-        }
-        catch(ClassNotFoundException ex) {
-            // TODO
+            ex.printStackTrace();
         }
         return null;
     }

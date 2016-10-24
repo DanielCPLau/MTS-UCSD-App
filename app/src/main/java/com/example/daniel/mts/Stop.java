@@ -17,17 +17,9 @@ public class Stop {
     public boolean isUCSDShuttleStop;
     public boolean wheelchairBoarding;
 
-    public Stop(
-            String id,
-            boolean isUCSDShuttleStop) {
+    public Stop(String id) {
         this.id = id;
-        if(isUCSDShuttleStop) {
-            // somehow fill in instance variables
-        }
-        else {
-            // fill in vairbles with MTS api
-            RemoteFetch.fillStopInfo(this);
-        }
+        RemoteFetch.fillStopInfo(this);
     }
 
     public void switchFavorite() {

@@ -238,6 +238,9 @@ public class RemoteFetch {
             else if(line.shortName.equals("Green Line")) {
                 line.shortName = "G";
             }
+            else if(line.id.equals("MTS_COR")) {
+                line.shortName = "COR";
+            }
         }
         catch (IOException ex) {
             // TODO
