@@ -7,6 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.app.Activity;
+import android.app.ListActivity;
+import android.os.Bundle;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 
 /**
@@ -30,7 +38,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
     private OnFragmentInteractionListener mListener;
 
     public MapFragment() {
-        // Required empty public constructor
+        // Required empty public constructory
     }
 
     /**
@@ -58,7 +66,9 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
