@@ -21,7 +21,7 @@
         android:paddingTop="5dp"
         android:text="@string/map_201_string"
         style="?android:attr/borderlessButtonStyle"
-        />
+         />
 
     <ImageView
         android:id="@+id/icon_image"
