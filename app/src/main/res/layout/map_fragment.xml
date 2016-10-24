@@ -50,7 +50,7 @@
         android:text="@string/filter_string"
         android:layout_gravity="right"
         style="?android:attr/borderlessButtonStyle"
-         />
+        />
 
 
 
