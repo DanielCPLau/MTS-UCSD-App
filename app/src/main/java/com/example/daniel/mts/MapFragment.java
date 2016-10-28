@@ -1,76 +1,130 @@
 package com.example.daniel.mts;
 
-import android.app.ListActivity;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.app.Activity;
+import android.app.ListActivity;
+import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link MapFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class MapFragment extends android.support.v4.app.Fragment implements OnFragmentInteractionListener {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    boolean isFilterOpen = false;
+
+    Animation translateLeftAnim;
+    Animation translateRightAnim;
+
+    LinearLayout slidingPage;
+    Button filterButton;
+
+    private OnFragmentInteractionListener mListener;
+
+    public MapFragment() {
+        // Required empty public constructory
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment MapFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static MapFragment newInstance(String param1, String param2) {
+        MapFragment fragment = new MapFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
 
 
-public class MapFragment extends android.support.v4.app.Fragment{
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                         Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setContentView(R.layout.map_activity_list);
-
-        //CustomListAdapter adapter=new CustomListAdapter(this, buttonname, mapid, iconid);
-        //list=(ListView)findViewById(R.id.android_list);
-        //list.setAdapter(adapter);
-
-        View rootView = inflater.inflate(R.layout.map_activity_list, container, false);
-
-        String[] buttonName = createButtonList();
-        Integer[] mapId = createMapList();
-        Integer[] iconId = createIconList();
-        ListView lv = (ListView)rootView.findViewById(R.id.android_list);
-        lv.setAdapter(new CustomListAdapter(getActivity(), buttonName, mapId, iconId));
-        System.out.println("HI");
-        return rootView;
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.map_fragment, container, false);
     }
 
-    private String[] createButtonList(){
-        String[] buttonName = {
-                "201", "202", "150","30", "41", "237", "921"
-        };
-        return buttonName;
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentMessage("WHAT",uri);
+        }
     }
 
-
-    private Integer[] createMapList(){
-
-        // ids for the maps that pass through ucsd
-        Integer[] mapId={
-                R.drawable.map201,
-                R.drawable.map202,
-                R.drawable.map150,
-                R.drawable.map30,
-                R.drawable.map41,
-                R.drawable.map237,
-                R.drawable.map921
-        };
-        return mapId;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
-    private Integer[] createIconList(){
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public void onFragmentMessage(String MSG, Object data) {
 
-        // ids for the ucsd or mts icons
-        Integer[] iconId={
-                R.drawable.mtsicon,
-                R.drawable.mtsicon,
-                R.drawable.mtsicon,
-                R.drawable.ucsdicon,
-                R.drawable.mtsicon,
-                R.drawable.ucsdicon,
-                R.drawable.mtsicon,
-                R.drawable.ucsdicon,
-                R.drawable.mtsicon,
-        };
-        return iconId;
     }
 }

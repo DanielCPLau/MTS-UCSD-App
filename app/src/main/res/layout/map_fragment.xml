@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.example.daniel.mts.MapFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,43 +12,37 @@
         android:text="@string/map_frag" />
     -->
 
-    <!-- Image for whether line is MTS or UCSD -->
+
+    <Button
+        android:id="@+id/map_button_201"
+        android:layout_width="201dp"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:paddingTop="5dp"
+        android:text="@string/map_201_string"
+        style="?android:attr/borderlessButtonStyle"
+         />
+
     <ImageView
         android:id="@+id/icon_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
         android:src="@drawable/mtsicon"
-
+        android:layout_alignParentRight="true"
         />
 
-    <!-- Button for the line number -->
-    <Button
-        android:id="@+id/map_button_201"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="@string/map_201_string"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        style="?android:attr/borderlessButtonStyle"
-         />
-
-    <!-- Map image for corresponding line -->
     <ImageView
         android:id="@+id/map_image"
         android:layout_width="350dp"
         android:layout_height="350dp"
+        android:layout_below="@+id/map_201"
         android:layout_gravity="center"
         android:scaleType="center"
         android:src="@drawable/map201"
        />
 
 
-    <!-- Button for filtering maps -->
+
     <Button
         android:id="@+id/filter_button"
         android:layout_width="wrap_content"
@@ -58,5 +51,7 @@
         android:layout_gravity="right"
         style="?android:attr/borderlessButtonStyle"
         />
+
+
 
 </FrameLayout>
