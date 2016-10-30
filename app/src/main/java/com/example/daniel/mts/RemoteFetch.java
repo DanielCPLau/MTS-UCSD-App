@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.json.JSONException;
@@ -287,6 +288,39 @@ public class RemoteFetch {
             // TODO
             ex.printStackTrace();
             return;
+        }
+    }
+
+    public static Stop[] getStopsNearLoc(int lat, int lon) {
+        Stop[] stops;
+
+        try {
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, REQUEST_STOP_NEARBY) +
+                    String.format(REQUEST_END_LOC, lat, lon) );
+
+            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+                // Request to API failed
+                //TODO
+                stops = new Stop[0];
+                return stops;
+            }
+
+            JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
+
+            stops = new Stop[list.length()];
+
+            for(int i = 0; i < list.length(); i++ ) {
+                stops[i] = new Stop(list.getJSONObject(i).getString("id"));
+            }
+
+            return stops;
+
+
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+
+            stops = new Stop[0];
+            return stops;
         }
     }
 }
