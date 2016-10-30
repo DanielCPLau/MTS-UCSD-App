@@ -233,7 +233,7 @@ public class RemoteFetch {
 
     public static void fillLineDetailInfo(Line line) {
         try {
-            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_INFO, line.id)));
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_STOP_LIST, line.id))+"&includePolylines=false");
 
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
@@ -242,6 +242,46 @@ public class RemoteFetch {
             }
 
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
+
+            JSONArray directions = entry.getJSONArray("stopGroupings").getJSONObject(0).getJSONArray("stopGroupings").getJSONObject(0).getJSONArray("stopGroups");
+
+            JSONObject dir = directions.getJSONObject(0);
+
+            line.directionId = dir.getString("id");
+            line.directionName = dir.getJSONObject("name").getString("name");
+
+            JSONArray stops = dir.getJSONArray("stopIds");
+
+            String[] stopsArray = new String[stops.length()];
+
+            for(int i = 0; i < stops.length(); i++) {
+                stopsArray[i] = stops.getString(i);
+            }
+
+            line.listOfStopsId = stopsArray;
+
+            if( directions.length() > 1) {
+
+                dir = directions.getJSONObject(1);
+
+                Line oppositeDirLine = new Line(line.id);
+
+                oppositeDirLine.directionId = dir.getString("id");
+                oppositeDirLine.directionName = dir.getJSONObject("name").getString("name");
+
+                line.oppositeDirectionId = oppositeDirLine.directionId;
+                oppositeDirLine.oppositeDirectionId = line.directionId;
+
+                stops = dir.getJSONArray("stopIds");
+
+                String[] stopsArray2 = new String[stops.length()];
+
+                for(int i = 0; i < stops.length(); i++) {
+                    stopsArray2[i] = stops.getString(i);
+                }
+
+                oppositeDirLine.listOfStopsId = stopsArray2;
+            }
 
             // TODO
         }

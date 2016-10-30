@@ -5,8 +5,10 @@ package com.example.daniel.mts;
  */
 
 public class Line extends LineInfo implements Writable {
+    public String directionId = "";            // direction of the line
+    public String directionName = "";        // name of the direction
     public String[] listOfStopsId;      // list of stops on this line
-    public String oppositeDirectionId;  // Points to the line of the other direction;
+    public String oppositeDirectionId = "";  // Points to the line of the other direction;
                                     // eg) 30 to Downtown and 30 to UTC
     public Line(String id) {
         super(id);
@@ -22,7 +24,7 @@ public class Line extends LineInfo implements Writable {
     }
 
     public String getId() {
-        return id;
+        return id + "_" + directionId;
     }
 
     public void fill() {

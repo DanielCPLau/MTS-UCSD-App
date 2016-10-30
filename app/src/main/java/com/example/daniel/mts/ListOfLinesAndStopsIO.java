@@ -72,6 +72,7 @@ public class ListOfLinesAndStopsIO {
     }
 
 
+    // MUST USE getID() for id.
     public static Line readLine(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
             Context context = MyApplication.getAppContext();
@@ -99,6 +100,7 @@ public class ListOfLinesAndStopsIO {
         return null;
     }
 
+    // MUST USE getID() for id.
     public static Stop readStop(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
             Context context = MyApplication.getAppContext();
