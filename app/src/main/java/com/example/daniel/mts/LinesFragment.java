@@ -87,8 +87,7 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
 
         // get MTS line ids
-        ListOfLinesAndStopsIO listIo = new ListOfLinesAndStopsIO();
-        LineInfo[] lineInfo = RemoteFetch.getListOfLinesInfo("MTS");    // Need to change later to read from IO
+        LineInfo[] lineInfo = ListOfLinesAndStopsIO.readLineInfoList();    // Need to change later to read from IO
 
 //        String[] lineStrings = new String[lineInfo.length];
 //
@@ -168,8 +167,6 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
             if (position % 2 == 1) {
                 view.setBackgroundColor(Color.WHITE);
             } else {
-
-
                 view.setBackgroundColor(Color.parseColor("#F7F7F7"));
             }
 

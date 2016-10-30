@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.util.Arrays;
 
 /**
  * Created by Isaac on 10/22/16.
@@ -38,10 +42,21 @@ public class ListOfLinesAndStopsIO {
             FileOutputStream fos = context.openFileOutput(FILE_NAME_LINE_INFO_LIST, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            LineInfo[] lineInfoList = RemoteFetch.getListOfAllLinesInfo();
+            LineInfo[] array = RemoteFetch.getListOfLinesInfo("MTS");
 
-            oos.writeObject(lineInfoList);
+            JSONArray mJSONArray = new JSONArray(Arrays.asList(array));
+
+            // write size first
+            oos.writeInt(array.length);
+
+            for(LineInfo l:array) {
+                oos.writeObject(l);
+            }
+
             oos.close();
+            fos.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
         } catch (IOException ex) {
             // TODO
             ex.printStackTrace();
@@ -99,8 +114,21 @@ public class ListOfLinesAndStopsIO {
             Context context = MyApplication.getAppContext();
             FileInputStream fis = context.openFileInput(FILE_NAME_LINE_INFO_LIST);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            LineInfo[] lineInfo = (LineInfo[]) ois.readObject();
+
+            if(ois.available() == 0) {
+                writeLineInfoList();
+            }
+
+            int size = ois.readInt();
+
+            LineInfo lineInfo[] = new LineInfo[size];
+
+            for(int i = 0; i < size; i++) {
+                lineInfo[i] = (LineInfo) ois.readObject();
+            }
             ois.close();
+            fis.close();
+
             return lineInfo;
         }
         catch(FileNotFoundException ex) {

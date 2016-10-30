@@ -1,10 +1,12 @@
 package com.example.daniel.mts;
 
+import java.io.Serializable;
+
 /**
  * Created by Isaac on 10/22/16.
  */
 
-public class LineInfo implements Comparable<LineInfo>{
+public class LineInfo implements Comparable<LineInfo>, Serializable {
     public String agency;
     public String id;
     public String shortName;
@@ -12,6 +14,9 @@ public class LineInfo implements Comparable<LineInfo>{
     public String color;
     public String textColor;
     public boolean favorite;
+
+    public LineInfo () {
+    }
 
     public LineInfo (String id) {
         this.id = id;
