@@ -109,7 +109,13 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
 //        ViewGroup viewGroup = (ViewGroup)view;
 //        TextView txt = (TextView)viewGroup.findViewById(R.id.txtitem);
 //        Toast.makeText(getActivity(), txt.getText().toString(),Toast.LENGTH_LONG);
+        LineInfo lineObj = (LineInfo)getListAdapter().getItem(position);
+        String selectedValue = (String) lineObj.id;
+        Toast.makeText(getActivity(), selectedValue, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(getActivity(), DisplayListOfStops.class);
+        Bundle dataBundle = new Bundle();
+        dataBundle.putString("SelectedProperty", selectedValue);
+        i.putExtras(dataBundle);
         startActivity(i);
     }
 
