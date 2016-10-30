@@ -2,11 +2,15 @@ package com.example.daniel.mts;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.*;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+
+import static com.example.daniel.mts.R.drawable.circle;
 
 
 // Sheldon Test
@@ -83,14 +89,15 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         // get MTS line ids
         ListOfLinesAndStopsIO listIo = new ListOfLinesAndStopsIO();
         LineInfo[] lineInfo = RemoteFetch.getListOfLinesInfo("MTS");    // Need to change later to read from IO
-        String[] lineStrings = new String[lineInfo.length];
 
-        for(int i = 0; i < lineStrings.length; i++) {
-            lineStrings[i] = lineInfo[i].shortName;
-        }
+//        String[] lineStrings = new String[lineInfo.length];
+//
+//        for(int i = 0; i < lineStrings.length; i++) {
+//            lineStrings[i] = lineInfo[i].shortName;
+//        }
 
         // add in shortname to rows
-        ArrayAdapter<String> adapter = new MyAdapter(getActivity(),R.layout.rowlayout, R.id.txtitem,lineStrings);
+        ArrayAdapter<LineInfo> adapter = new MyAdapter(getActivity(),R.layout.rowlayout, R.id.txtitem,lineInfo);
         setListAdapter(adapter);
         setRetainInstance(true);
 
@@ -114,7 +121,6 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -150,9 +156,13 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+
             View view = super.getView(position, convertView, parent);
-//            TextView tv = (TextView) view.findViewById(R.id.txtitem);
-//            tv.setBackgroundColor(Color.YELLOW);
+
+            // get lineinfo object at row position
+            LineInfo obj = (LineInfo)getItem(position);
+            String col = "#" + obj.color;
+            String shortNm = obj.shortName;
 
             // alternating grey and white row backgrounds
             if (position % 2 == 1) {
@@ -162,6 +172,18 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
 
                 view.setBackgroundColor(Color.parseColor("#F7F7F7"));
             }
+
+            // get text object at row position
+            TextView tv = (TextView) view.findViewById(R.id.txtitem);
+
+            // set color of circle background to the color of the lineinfo object
+            GradientDrawable tvBackground = (GradientDrawable) tv.getBackground();
+            tvBackground.setColor(Color.parseColor(col));
+
+            // set text to be line number from the lineinfo object
+            tv.setText(shortNm);
+            tv.setTextColor(Color.WHITE);
+
             return view;
         }
     }

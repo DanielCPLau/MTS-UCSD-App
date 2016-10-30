@@ -2,6 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
     <corners
+        android:id="@+id/circle"
         android:radius="1dip"
         android:topLeftRadius="1dip"
         android:topRightRadius="1dip"
