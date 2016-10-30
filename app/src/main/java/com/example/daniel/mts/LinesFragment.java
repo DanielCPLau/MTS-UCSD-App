@@ -164,6 +164,12 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
             String shortNm = obj.shortName;
             String longNm = obj.longName;
 
+            longNm = longNm.replaceAll("Center", "Ctr");
+            longNm = longNm.replaceAll("Clockwise", "CW");
+            longNm = longNm.replaceAll("Counterclockwise", "CCW");
+            longNm = longNm.replaceAll("Counterclock", "CCW");
+            longNm = longNm.replaceAll("San Diego", "SD");
+
             // alternating grey and white row backgrounds
             if (position % 2 == 1) {
                 view.setBackgroundColor(Color.WHITE);
@@ -181,6 +187,11 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
             // set text to be line number from the lineinfo object
             tv.setText(shortNm);
             tv.setTextColor(Color.WHITE);
+
+            tv = (TextView) view.findViewById(R.id.nameItem);
+
+            tv.setText(longNm);
+            tv.setTextColor(Color.BLACK);
 
             return view;
         }
