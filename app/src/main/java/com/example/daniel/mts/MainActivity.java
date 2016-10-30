@@ -19,6 +19,8 @@ import android.widget.Button;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -32,7 +34,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("WHAT");
+
+        // Load lineInfo from API to local
+        try {
+            if(openFileInput(ListOfLinesAndStopsIO.FILE_NAME_LINE_INFO_LIST).available() == 0) {
+                ListOfLinesAndStopsIO.writeLineInfoList();
+            }
+
+            System.out.println("WHAT");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_main);
 
         //Set toolbar to replace the action bar

@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class ListOfLinesAndStopsIO {
     private static final String FILENAME_LINE = "line_";
     private static final String FILENAME_STOP = "stop_";
-    private static final String FILE_NAME_LINE_INFO_LIST = "lineInfoList";
+    public static final String FILE_NAME_LINE_INFO_LIST = "lineInfoList";
 
     // run this to initialize all line and stop information
     public static void init() {
