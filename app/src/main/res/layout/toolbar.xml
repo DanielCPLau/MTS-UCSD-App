@@ -12,6 +12,7 @@
 
     <!-- DOESN'T DO ANYTHING, NEEDS TO BE HOOKED UP !-->
     <Button
+        android:id="@+id/home_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Home"
