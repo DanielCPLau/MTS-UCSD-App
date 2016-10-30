@@ -8,5 +8,4 @@ interface Writable {
     abstract String getWritePreflix();
     abstract boolean isFilled();
     abstract String getId();
-    abstract void fill();
 }

@@ -34,10 +34,6 @@ public class ListOfLinesAndStopsIO {
             FileOutputStream fos = context.openFileOutput(obj.getWritePreflix() + obj.getId(), Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            if(!obj.isFilled()) {
-                obj.fill();
-            }
-
             oos.writeObject(obj);
 
             oos.close();

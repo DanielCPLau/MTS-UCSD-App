@@ -1,5 +1,7 @@
 package com.example.daniel.mts;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -243,11 +245,12 @@ public class RemoteFetch {
 
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
 
-            JSONArray directions = entry.getJSONArray("stopGroupings").getJSONObject(0).getJSONArray("stopGroupings").getJSONObject(0).getJSONArray("stopGroups");
+            JSONArray directions = entry.getJSONArray("stopGroupings").getJSONObject(0).getJSONArray("stopGroups");
 
             JSONObject dir = directions.getJSONObject(0);
 
             line.directionId = dir.getString("id");
+
             line.directionName = dir.getJSONObject("name").getString("name");
 
             JSONArray stops = dir.getJSONArray("stopIds");

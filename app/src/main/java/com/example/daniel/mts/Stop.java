@@ -37,8 +37,4 @@ public class Stop implements Writable{
     public String getId() {
         return id;
     }
-
-    public void fill() {
-        RemoteFetch.fillStopInfo(this);
-    }
 }
