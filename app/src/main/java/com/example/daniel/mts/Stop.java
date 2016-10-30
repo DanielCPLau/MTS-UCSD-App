@@ -4,7 +4,7 @@ package com.example.daniel.mts;
  * Created by Isaac on 10/21/16.
  */
 
-public class Stop {
+public class Stop implements Writable{
     public String id;
     public String code;
     public String name;
@@ -24,5 +24,21 @@ public class Stop {
 
     public void switchFavorite() {
         favorite = !favorite;
+    }
+
+    public String getWritePreflix() {
+        return ListOfLinesAndStopsIO.FILENAME_STOP;
+    }
+
+    public boolean isFilled() {
+        return !name.equals("");
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void fill() {
+        RemoteFetch.fillStopInfo(this);
     }
 }

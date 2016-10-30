@@ -162,6 +162,7 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
             LineInfo obj = (LineInfo)getItem(position);
             String col = "#" + obj.color;
             String shortNm = obj.shortName;
+            String longNm = obj.longName;
 
             // alternating grey and white row backgrounds
             if (position % 2 == 1) {
