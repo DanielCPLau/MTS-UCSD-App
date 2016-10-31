@@ -11,6 +11,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +22,10 @@ import org.json.JSONArray;
  */
 
 public class RemoteFetch {
+    private static Date date = new Date();
+
+    private static long lastTime = date.getTime();
+
     private static final String API_KEY = "393bdfb5-b145-4149-a45e-067d8acb6246";
 
     private static final String REQUEST = "http://realtime.sdmts.com/api/api/where/%s.json?key=" + API_KEY;
@@ -62,10 +67,21 @@ public class RemoteFetch {
     }
 
     public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        long time =  date.getTime() - lastTime;
+        if( time < TIMER) {
+            try {
+                Thread.sleep(TIMER - time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         InputStream is = new URL(url).openStream();
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             String jsonText = readAll(rd);
+
+            lastTime = date.getTime();
 
             return new JSONObject(jsonText);
         }
@@ -167,7 +183,6 @@ public class RemoteFetch {
             LineInfo[] lineInfo = new LineInfo[list.length()];
 
             for(int i = 0; i < lineInfo.length; i++) {
-                Thread.sleep(TIMER);
                 lineInfo[i] = new LineInfo(list.getString(i));
             }
 
@@ -183,10 +198,6 @@ public class RemoteFetch {
         catch (JSONException ex) {
             // TODO
             ex.printStackTrace();
-            return null;
-        }
-        catch (InterruptedException ex) {
-            // TODO
             return null;
         }
     }
@@ -255,19 +266,17 @@ public class RemoteFetch {
 
             JSONArray stops = dir.getJSONArray("stopIds");
 
-            String[] stopsArray = new String[stops.length()];
+            line.listOfStopsId = new String[stops.length()];
 
             for(int i = 0; i < stops.length(); i++) {
-                stopsArray[i] = stops.getString(i);
+                line.listOfStopsId[i] = stops.getString(i);
             }
-
-            line.listOfStopsId = stopsArray;
 
             if( directions.length() > 1) {
 
                 dir = directions.getJSONObject(1);
 
-                Line oppositeDirLine = new Line(line.id);
+                Line oppositeDirLine = new Line(line);
 
                 oppositeDirLine.directionId = dir.getString("id");
                 oppositeDirLine.directionName = dir.getJSONObject("name").getString("name");
@@ -277,13 +286,13 @@ public class RemoteFetch {
 
                 stops = dir.getJSONArray("stopIds");
 
-                String[] stopsArray2 = new String[stops.length()];
+                oppositeDirLine.listOfStopsId = new String[stops.length()];
 
                 for(int i = 0; i < stops.length(); i++) {
-                    stopsArray2[i] = stops.getString(i);
+                    oppositeDirLine.listOfStopsId[i] = stops.getString(i);
                 }
 
-                oppositeDirLine.listOfStopsId = stopsArray2;
+                ListOfLinesAndStopsIO.write(oppositeDirLine);
             }
 
             // TODO

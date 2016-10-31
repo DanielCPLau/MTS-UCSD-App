@@ -1,5 +1,7 @@
 package com.example.daniel.mts;
 
+import android.util.Log;
+
 /**
  * Created by Isaac on 10/21/16.
  */
@@ -15,11 +17,24 @@ public class Line extends LineInfo implements Writable {
         super(id);
         if( ListOfLinesAndStopsIO.readable(this)) {
             fill(ListOfLinesAndStopsIO.readLine(getId()));
+            Log.d("Hello", "1");
         }
         else {
+            Log.d("Hello", "2");
             RemoteFetch.fillLineDetailInfo(this);
+            Log.d("Hello", "3");
             ListOfLinesAndStopsIO.write(this);
         }
+    }
+
+    public Line(Line line) {
+        line.id = this.id;
+        line.agency = this.agency;
+        line.shortName = this.shortName;
+        line.longName = this.longName;
+        line.color = this.color;
+        line.textColor = this.textColor;
+        line.favorite = this.favorite;
     }
 
     private void fill(Line line) {
