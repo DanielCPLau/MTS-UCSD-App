@@ -44,6 +44,28 @@ public class ListOfLinesAndStopsIO {
         }
     }
 
+    public static boolean readable(Writable obj) {
+        try {
+            Context context = MyApplication.getAppContext();
+            ObjectInputStream ois = new ObjectInputStream(context.openFileInput(obj.getWritePreflix() + obj.getId()));
+
+            if(ois.available() == 0) {
+                return false;
+            }
+
+            return true;
+        }
+        catch(FileNotFoundException ex) {
+            // TODO
+            ex.printStackTrace();
+        }
+        catch(IOException ex) {
+            // TODO
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public static void writeLineInfoList() {
         try {
             Context context = MyApplication.getAppContext();
@@ -69,7 +91,7 @@ public class ListOfLinesAndStopsIO {
 
 
     // MUST USE getID() for id.
-    public static Line readLine(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static Line readLine(String id) {
         try {
             Context context = MyApplication.getAppContext();
             ObjectInputStream ois = new ObjectInputStream(context.openFileInput(FILENAME_LINE + id));
@@ -97,7 +119,7 @@ public class ListOfLinesAndStopsIO {
     }
 
     // MUST USE getID() for id.
-    public static Stop readStop(String id) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static Stop readStop(String id) {
         try {
             Context context = MyApplication.getAppContext();
             ObjectInputStream ois = new ObjectInputStream(context.openFileInput(FILENAME_STOP + id));

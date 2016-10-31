@@ -13,7 +13,26 @@ public class Line extends LineInfo implements Writable {
     // eg) 30 to Downtown and 30 to UTC
     public Line(String id) {
         super(id);
-        RemoteFetch.fillLineDetailInfo(this);
+        if( ListOfLinesAndStopsIO.readable(this)) {
+            fill(ListOfLinesAndStopsIO.readLine(getId()));
+        }
+        else {
+            RemoteFetch.fillLineDetailInfo(this);
+            ListOfLinesAndStopsIO.write(this);
+        }
+    }
+
+    private void fill(Line line) {
+        this.agency = line.agency;
+        this.shortName = line.shortName;
+        this.longName = line.longName;
+        this.color = line.color;
+        this.textColor = line.textColor;
+        this.favorite = line.favorite;
+        this.directionId = line.directionId;
+        this.directionName = line.directionName;
+        this.listOfStopsId = line.listOfStopsId;
+        this.oppositeDirectionId = line.oppositeDirectionId;
     }
 
     public String getWritePreflix() {
