@@ -20,6 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,14 +42,6 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    boolean isFilterOpen = false;
-
-    Animation translateLeftAnim;
-    Animation translateRightAnim;
-
-    LinearLayout slidingPage;
-    Button filterButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,11 +70,6 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
 
     }
 
@@ -86,10 +77,101 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.map_activity_list, null);
+
+        String[] buttonName = createButtonList();
+        Integer[] mapId = createMapList();
+        Integer[] iconId = createIconList();
+        ListView lv = (ListView) rootView.findViewById(R.id.android_list);
+
+
+        CustomListAdapter adapter = new CustomListAdapter(getActivity(), buttonName, mapId, iconId);
+        lv.setAdapter(adapter);
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.map_fragment, container, false);
+        return rootView;
     }
 
+    private String[] createButtonList(){
+        String[] buttonName;
+        buttonName = new String[]{
+                "201", "202", "150","30", "41", "237", "921", "City Shuttle(Arriba/Nobel)",
+                "Coaster East", "Coaster East/West", "Hillcrest/Campus A.M.",
+                "Hillcrest/Campus P.M.", "Clockwise Campus Loop", "Counter Campus Loop",
+                "Weekend Clockwise Campus Loop", "Weekend Counter Campus Loop", "Mesa",
+                "Regents", "SIO Loop", "Sanford Consortium Shuttle", "Coaster West",
+                "East Campus Connector"
+        };
+        return buttonName;
+    }
+
+
+    private Integer[] createMapList() {
+        // ids for the maps that pass through ucsd
+        Integer[] mapId;
+        mapId = new Integer[]{
+                R.drawable.map201,
+                R.drawable.map202,
+                R.drawable.map150,
+                R.drawable.map30,
+                R.drawable.map41,
+                R.drawable.map237,
+                R.drawable.map921,
+                R.drawable.mapcityshuttle,
+                R.drawable.mapcoastereast,
+                R.drawable.mapcoastereastwest,
+                R.drawable.maphillcrestam,
+                R.drawable.maphillcrestpm,
+                R.drawable.mapclockwisecampus,
+                R.drawable.countercampusloop,
+                R.drawable.eveningclockwise,
+                R.drawable.eveningcounterclockwise,
+                R.drawable.mapmesa,
+                R.drawable.mapregents,
+                R.drawable.mapsio,
+                R.drawable.mapsanford,
+                R.drawable.coasterwest,
+                R.drawable.eastcampus,
+
+        };
+        return mapId;
+    }
+
+
+
+
+    private Integer[] createIconList(){
+        // ids for the ucsd or mts icons
+        Integer[] iconId;
+        iconId = new Integer[]{
+                R.drawable.mtsicon,
+                R.drawable.mtsicon,
+                R.drawable.mtsicon,
+                R.drawable.mtsicon,
+                R.drawable.mtsicon,
+                R.drawable.mtsicon,
+                R.drawable.mtsicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon,
+                R.drawable.ucsdicon
+
+        };
+        return iconId;
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
