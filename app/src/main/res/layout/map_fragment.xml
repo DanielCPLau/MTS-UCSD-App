@@ -14,7 +14,7 @@
 
 
     <Button
-        android:id="@+id/map_button_201"
+        android:id="@+id/map_button_template"
         android:layout_width="201dp"
         android:layout_height="wrap_content"
         android:textSize="30sp"
@@ -43,15 +43,7 @@
 
 
 
-    <Button
-        android:id="@+id/filter_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/filter_string"
-        android:layout_gravity="right"
-        style="?android:attr/borderlessButtonStyle"
-        />
-
+   
 
 
 </FrameLayout>
