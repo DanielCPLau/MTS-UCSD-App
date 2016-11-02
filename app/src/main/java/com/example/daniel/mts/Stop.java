@@ -6,21 +6,22 @@ package com.example.daniel.mts;
 
 public class Stop implements Writable{
     public String id;
+    public String lineId;
     public String code;
     public String name;
     public String direction;
     public double lat;
     public double lon;
-    public String lineThatThisStopServesId;
-    public String[] stopsThatThisStopSharesWithId;
+    public String[] otherLinesThatThisStopServes;
     public boolean favorite;
     public boolean isUCSDShuttleStop;
     public boolean wheelchairBoarding;
 
-    public Stop(String id) {
+    public Stop(String id, String lineId) {
         this.id = id;
+        this.lineId = lineId;
         if( ListOfLinesAndStopsIO.readable(this)) {
-            fill(ListOfLinesAndStopsIO.readStop(getId()));
+            fill(ListOfLinesAndStopsIO.readStop(id, lineId));
         }
         else {
             RemoteFetch.fillStopInfo(this);
@@ -34,8 +35,8 @@ public class Stop implements Writable{
         this.direction = stop.direction;
         this.lat = stop.lat;
         this.lon = stop.lon;
-        this.lineThatThisStopServesId = stop.lineThatThisStopServesId;
-        this.stopsThatThisStopSharesWithId = stop.stopsThatThisStopSharesWithId;
+        this.lineId = stop.lineId;
+        this.otherLinesThatThisStopServes = stop.otherLinesThatThisStopServes;
         this.favorite = stop.favorite;
         this.isUCSDShuttleStop = stop.isUCSDShuttleStop;
         this.wheelchairBoarding = stop.wheelchairBoarding;
@@ -54,6 +55,6 @@ public class Stop implements Writable{
     }
 
     public String getId() {
-        return id;
+        return id + "_" + lineId;
     }
 }

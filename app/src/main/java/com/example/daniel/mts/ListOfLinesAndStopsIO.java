@@ -118,14 +118,14 @@ public class ListOfLinesAndStopsIO {
         return null;
     }
 
-    // MUST USE getID() for id.
-    public static Stop readStop(String id) {
+    // DO NOT USE stop.getId() for this method.
+    public static Stop readStop(String id, String lineId) {
         try {
             Context context = MyApplication.getAppContext();
-            ObjectInputStream ois = new ObjectInputStream(context.openFileInput(FILENAME_STOP + id));
+            ObjectInputStream ois = new ObjectInputStream(context.openFileInput(FILENAME_STOP + id + "_" + lineId));
 
             if(ois.available() == 0) {
-                write(new Stop(id));
+                write(new Stop(id, lineId));
             }
 
             Stop stop = (Stop) ois.readObject();
@@ -135,8 +135,9 @@ public class ListOfLinesAndStopsIO {
             return stop;
         }
         catch(FileNotFoundException ex) {
-            write(new Stop(id));
-            readStop(id);
+            // TODO
+
+            ex.printStackTrace();
         }
         catch(IOException | ClassNotFoundException ex) {
             // TODO

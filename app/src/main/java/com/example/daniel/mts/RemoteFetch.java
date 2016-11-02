@@ -343,8 +343,8 @@ public class RemoteFetch {
         }
     }
 
-    public static Stop[] getStopsNearLoc(double lat, double lon) {
-        Stop[] stops;
+    public static ArrayList<Stop> getStopsNearLoc(double lat, double lon) {
+        ArrayList<Stop> stops= new ArrayList<Stop>();
 
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, REQUEST_STOP_NEARBY) +
@@ -353,25 +353,22 @@ public class RemoteFetch {
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
                 //TODO
-                stops = new Stop[0];
                 return stops;
             }
-            System.out.println("2");
             JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
 
-            stops = new Stop[list.length()];
-
             for(int i = 0; i < list.length(); i++ ) {
-                stops[i] = new Stop(list.getJSONObject(i).getString("id"));
+                JSONArray routeIds = list.getJSONObject(i).getJSONArray("routeIds");
+                for(int j = 0; j < routeIds.length(); j++) {
+                    stops.add(new Stop(list.getJSONObject(i).getString("id"), routeIds.getString(j)));
+                }
             }
-            System.out.println("3");
             return stops;
 
 
         } catch (JSONException | IOException e) {
             e.printStackTrace();
 
-            stops = new Stop[0];
             return stops;
         }
     }

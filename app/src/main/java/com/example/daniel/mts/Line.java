@@ -17,12 +17,9 @@ public class Line extends LineInfo implements Writable {
         super(id);
         if( ListOfLinesAndStopsIO.readable(this)) {
             fill(ListOfLinesAndStopsIO.readLine(getId()));
-            Log.d("Hello", "1");
         }
         else {
-            Log.d("Hello", "2");
             RemoteFetch.fillLineDetailInfo(this);
-            Log.d("Hello", "3");
             ListOfLinesAndStopsIO.write(this);
         }
     }

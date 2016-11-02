@@ -37,6 +37,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
  * contain this fragment must implement the
@@ -167,23 +169,23 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
-        Stop[] arr = rf.getStopsNearLoc(32.877120, -117.235785);
+        ArrayList<Stop> arr = rf.getStopsNearLoc(32.877120, -117.235785);
 
-        System.out.println("ARR LEN " + arr.length);
-        System.out.println(arr[0]);
-        System.out.println(arr[0].lon);
-        for (int i = 0; i < arr.length; i ++) {
+        System.out.println("ARR LEN " + arr.size());
+        System.out.println(arr.get(0));
+        System.out.println(arr.get(0).lon);
+        for (int i = 0; i < arr.size(); i ++) {
             MarkerOptions busMarkerOptions = new MarkerOptions();
-            busMarkerOptions.position(new LatLng(arr[i].lat, arr[i].lon));
-            busMarkerOptions.title(arr[i].name);
+            busMarkerOptions.position(new LatLng(arr.get(i).lat, arr.get(i).lon));
+            busMarkerOptions.title(arr.get(i).name);
             busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
             mMap.addMarker(busMarkerOptions);
 
-            System.out.println(arr[i].name);
+            System.out.println(arr.get(i).name);
         }
         System.out.println(mMap == null);
-        mMap.addMarker(new MarkerOptions().position(new LatLng(arr[0].lat, arr[0].lon)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(arr.get(0).lat, arr.get(0).lon)));
     }
 
     protected synchronized void buildGoogleApiClient() {
