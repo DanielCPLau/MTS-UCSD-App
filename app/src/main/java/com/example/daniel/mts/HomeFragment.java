@@ -16,10 +16,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -50,6 +55,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+    RemoteFetch rf;
+    Location curLoc = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+
+        StrictMode.ThreadPolicy tp = StrictMode.ThreadPolicy.LAX;
+        StrictMode.setThreadPolicy(tp);
     }
 
     @Override
@@ -137,12 +147,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             mCurrLocationMarker.remove();
         }
 
+        curLoc = location;
+
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
@@ -155,6 +167,23 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
+        Stop[] arr = rf.getStopsNearLoc(32.877120, -117.235785);
+
+        System.out.println("ARR LEN " + arr.length);
+        System.out.println(arr[0]);
+        System.out.println(arr[0].lon);
+        for (int i = 0; i < arr.length; i ++) {
+            MarkerOptions busMarkerOptions = new MarkerOptions();
+            busMarkerOptions.position(new LatLng(arr[i].lat, arr[i].lon));
+            busMarkerOptions.title(arr[i].name);
+            busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
+            mMap.addMarker(busMarkerOptions);
+
+            System.out.println(arr[i].name);
+        }
+        System.out.println(mMap == null);
+        mMap.addMarker(new MarkerOptions().position(new LatLng(arr[0].lat, arr[0].lon)));
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -231,4 +260,5 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             // You can add here other case statements according to your requirement.
         }
     }
+
 }

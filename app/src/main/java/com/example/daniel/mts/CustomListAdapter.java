@@ -25,19 +25,19 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         this.iconid=iconid;
     }
 
-    @Override
-    public View getView(int position,View view,ViewGroup parent) {
-        LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=inflater.inflate(R.layout.map_fragment, null,true);
-
-        Button lineButton = (Button) rowView.findViewById(R.id.map_button_201);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.map_image);
-        ImageView iconImg = (ImageView) rowView.findViewById(R.id.icon_image);
-
-        lineButton.setText(linename[position]);
-        imageView.setImageResource(mapid[position]);
-        iconImg.setImageResource(iconid[position]);
-        return rowView;
-
-    }
+//    @Override
+//    public View getView(int position,View view,ViewGroup parent) {
+//        LayoutInflater inflater=context.getLayoutInflater();
+//        View rowView=inflater.inflate(R.layout.map_fragment, null,true);
+//
+//        Button lineButton = (Button) rowView.findViewById(R.id.map_button_201);
+//        ImageView imageView = (ImageView) rowView.findViewById(R.id.map_image);
+//        ImageView iconImg = (ImageView) rowView.findViewById(R.id.icon_image);
+//
+//        lineButton.setText(linename[position]);
+//        imageView.setImageResource(mapid[position]);
+//        iconImg.setImageResource(iconid[position]);
+//        return rowView;
+//
+//    }
 }

@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity
                 ListOfLinesAndStopsIO.writeLineInfoList();
             }
 
-            System.out.println("WHAT");
         } catch (IOException e) {
             e.printStackTrace();
         }

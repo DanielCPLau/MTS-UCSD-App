@@ -343,20 +343,20 @@ public class RemoteFetch {
         }
     }
 
-    public static Stop[] getStopsNearLoc(int lat, int lon) {
+    public static Stop[] getStopsNearLoc(double lat, double lon) {
         Stop[] stops;
 
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, REQUEST_STOP_NEARBY) +
                     String.format(REQUEST_END_LOC, lat, lon) );
-
+            System.out.println("1");
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
                 //TODO
                 stops = new Stop[0];
                 return stops;
             }
-
+            System.out.println("2");
             JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
 
             stops = new Stop[list.length()];
@@ -364,7 +364,7 @@ public class RemoteFetch {
             for(int i = 0; i < list.length(); i++ ) {
                 stops[i] = new Stop(list.getJSONObject(i).getString("id"));
             }
-
+            System.out.println("3");
             return stops;
 
 
