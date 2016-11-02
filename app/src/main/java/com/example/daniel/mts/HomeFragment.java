@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
     Marker mCurrLocationMarker;
     RemoteFetch rf;
     Location curLoc = null;
+    Marker[] mArr;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -143,6 +144,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onLocationChanged(Location location) {
+        if (mArr != null) {
+            for (int i = 0; i < mArr.length; i++) {
+                mArr[i].remove();
+            }
+            mCurrLocationMarker.remove();
+        }
+
 
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
@@ -156,7 +164,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
@@ -169,23 +177,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
-        ArrayList<Stop> arr = rf.getStopsNearLoc(32.877120, -117.235785);
+        ArrayList<Stop> arr = rf.getStopsNearLoc(location.getLatitude(), location.getLongitude());
+        Marker[] markerArray = new Marker[arr.size()];
 
         System.out.println("ARR LEN " + arr.size());
-        System.out.println(arr.get(0));
-        System.out.println(arr.get(0).lon);
+
         for (int i = 0; i < arr.size(); i ++) {
             MarkerOptions busMarkerOptions = new MarkerOptions();
             busMarkerOptions.position(new LatLng(arr.get(i).lat, arr.get(i).lon));
             busMarkerOptions.title(arr.get(i).name);
             busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
-            mMap.addMarker(busMarkerOptions);
+            markerArray[i] = mMap.addMarker(busMarkerOptions);
 
-            System.out.println(arr.get(i).name);
         }
-        System.out.println(mMap == null);
-        mMap.addMarker(new MarkerOptions().position(new LatLng(arr.get(0).lat, arr.get(0).lon)));
+
+        mArr = markerArray;
     }
 
     protected synchronized void buildGoogleApiClient() {
