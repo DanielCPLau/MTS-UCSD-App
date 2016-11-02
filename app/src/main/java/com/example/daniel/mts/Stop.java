@@ -13,8 +13,8 @@ public class Stop implements Writable{
     public double lat;
     public double lon;
     public String[] otherLinesThatThisStopServes;
-    public boolean favorite;
-    public boolean isUCSDShuttleStop;
+    public boolean favorite = false;
+    public boolean isUCSDShuttleStop = false;
     public boolean wheelchairBoarding;
 
     public Stop(String id, String lineId) {

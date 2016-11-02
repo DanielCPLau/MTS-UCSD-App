@@ -327,9 +327,12 @@ public class RemoteFetch {
             stop.name = entry.getString("name");
             stop.wheelchairBoarding = entry.getString("wheelchairBoarding").equals("ACCESSIBLE");
 
-            // TODO
-            // get line list
-            // get stops nearby
+            JSONArray routeIds = entry.getJSONArray("routeIds");
+            stop.otherLinesThatThisStopServes = new String[routeIds.length()];
+
+            for(int i = 0; i < routeIds.length(); i++) {
+                stop.otherLinesThatThisStopServes[i] = routeIds.getString(i);
+            }
         }
         catch (IOException ex) {
             // TODO

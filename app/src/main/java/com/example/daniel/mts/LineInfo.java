@@ -13,7 +13,7 @@ public class LineInfo implements Comparable<LineInfo>, Serializable {
     public String longName;
     public String color;
     public String textColor;
-    public boolean favorite;
+    public boolean favorite = false;
 
     public LineInfo () {
     }
