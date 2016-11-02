@@ -331,6 +331,8 @@ public class RemoteFetch {
             stop.otherLinesThatThisStopServes = new String[routeIds.length()];
 
             for(int i = 0; i < routeIds.length(); i++) {
+                if(routeIds.getString(i) == stop.lineId) continue;
+
                 stop.otherLinesThatThisStopServes[i] = routeIds.getString(i);
             }
         }
