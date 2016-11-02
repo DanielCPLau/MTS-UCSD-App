@@ -322,8 +322,8 @@ public class RemoteFetch {
             // poopulate basic info of bus stop from API
             stop.code = entry.getString("code");
             stop.direction = entry.getString("direction");
-            stop.lat = entry.getInt("lat");
-            stop.lon = entry.getInt("lon");
+            stop.lat = entry.getDouble("lat");
+            stop.lon = entry.getDouble("lon");
             stop.name = entry.getString("name");
             stop.wheelchairBoarding = entry.getString("wheelchairBoarding").equals("ACCESSIBLE");
 
@@ -349,20 +349,23 @@ public class RemoteFetch {
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, REQUEST_STOP_NEARBY) +
                     String.format(REQUEST_END_LOC, lat, lon) );
-            System.out.println("1");
+
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
                 //TODO
                 return stops;
             }
+
             JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
 
             for(int i = 0; i < list.length(); i++ ) {
                 JSONArray routeIds = list.getJSONObject(i).getJSONArray("routeIds");
+
                 for(int j = 0; j < routeIds.length(); j++) {
                     stops.add(new Stop(list.getJSONObject(i).getString("id"), routeIds.getString(j)));
                 }
             }
+
             return stops;
 
 
