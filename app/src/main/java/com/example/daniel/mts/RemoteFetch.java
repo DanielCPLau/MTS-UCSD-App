@@ -40,13 +40,15 @@ public class RemoteFetch {
 
     private static final String REQUEST_STOP_INFO = "stop/%S";                      // Need stop id
 
-    private static final String REQUEST_ROUTE_INFO = "route/%S";                    // Need route id;
+    private static final String REQUEST_ROUTE_INFO = "route/%S";                    // Need route id
 
     private static final String REQUEST_ROUTE_NEARBY = "routes-for-location";       // need lat and lon
 
     private static final String REQUEST_STOP_NEARBY = "stops-for-location";         // need lat and lon
 
-    private static final String REQUEST_ROUTE_STOP_LIST = "stops-for-route/%S";     // need route id;
+    private static final String REQUEST_ROUTE_STOP_LIST = "stops-for-route/%S";     // need route id
+
+    private static final String REQUEST_PREDICTION = "arrivals-and-departures-for-stop/%S"; // need stop id
 
     private static final int REQUEST_SUCCESS_CODE = 200;
     private static final String REQUEST_DATA = "data";
@@ -378,6 +380,41 @@ public class RemoteFetch {
             e.printStackTrace();
 
             return stops;
+        }
+    }
+
+    public static ArrayList<Long> getPrediction (Stop stop) {
+        ArrayList<Long> times = new ArrayList<Long>();
+
+        try {
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_PREDICTION, stop.id)));
+
+            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+                // Request to API failed
+                //TODO
+                return times;
+            }
+
+            long currentTime = json.getLong("currentTime");
+
+            JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
+            JSONArray arrivalsAndDepartures = entry.getJSONArray("arrivalsAndDepartures");
+
+            for(int i = 0; i < arrivalsAndDepartures.length(); i++ ) {
+                JSONObject time = arrivalsAndDepartures.getJSONObject(i);
+                if(!time.getString("routeId").equals(stop.lineId)) continue;
+                long predicted = time.getLong("predictedDepartureTime");
+
+                times.add(new Long(predicted - currentTime));
+            }
+
+            return times;
+
+
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+
+            return times;
         }
     }
 }
