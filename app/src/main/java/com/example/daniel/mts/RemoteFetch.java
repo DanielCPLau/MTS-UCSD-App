@@ -278,6 +278,7 @@ public class RemoteFetch {
 
                 dir = directions.getJSONObject(1);
 
+
                 Line oppositeDirLine = new Line(line);
 
                 oppositeDirLine.directionId = dir.getString("id");
@@ -294,7 +295,7 @@ public class RemoteFetch {
                     oppositeDirLine.listOfStopsId[i] = stops.getString(i);
                 }
 
-                ListOfLinesAndStopsIO.write(oppositeDirLine);
+                ListOfLinesAndStopsIO.writeLine(oppositeDirLine);
             }
 
             // TODO

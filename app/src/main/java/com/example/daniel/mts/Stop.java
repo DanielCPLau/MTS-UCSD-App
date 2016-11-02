@@ -25,7 +25,7 @@ public class Stop implements Writable{
         }
         else {
             RemoteFetch.fillStopInfo(this);
-            ListOfLinesAndStopsIO.write(this);
+            ListOfLinesAndStopsIO.writeStop(this);
         }
     }
 
