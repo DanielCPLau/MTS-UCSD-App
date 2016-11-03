@@ -394,8 +394,8 @@ public class RemoteFetch {
         }
     }
 
-    public static ArrayList<Long> getPrediction (String stopOfficialId, String lineOfficalId) {
-        ArrayList<Long> times = new ArrayList<Long>();
+    public static ArrayList<Integer> getPrediction (String stopOfficialId, String lineOfficalId) {
+        ArrayList<Integer> times = new ArrayList<Integer>();
 
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_PREDICTION, stopOfficialId)));
@@ -416,7 +416,11 @@ public class RemoteFetch {
                 if(!time.getString("routeId").equals(lineOfficalId)) continue;
                 long predicted = time.getLong("predictedDepartureTime");
 
-                times.add(new Long(predicted - currentTime));
+                int next = (int)(predicted - currentTime)/1000;
+
+                if(next >= 0) {
+                    times.add(next);
+                }
             }
 
             return times;
