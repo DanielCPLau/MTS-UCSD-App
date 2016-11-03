@@ -1,6 +1,7 @@
 package com.example.daniel.mts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -87,7 +89,7 @@ public class ListofStops extends ListFragment{
         String[] stopIds = lin.listOfStopsId;
 //        String stopid = (String)getItem(position);
 //        Stop stopInfo = new Stop(s, stopid);
-        ArrayAdapter<LineInfo> adapter = new ListofStops.stopAdapter(getActivity(),R.layout.stops_rowlayout, R.id.stoptxt,stopIds);
+        ArrayAdapter<String> adapter = new ListofStops.stopAdapter(getActivity(),R.layout.stops_rowlayout, R.id.stoptxt,stopIds);
         setListAdapter(adapter);
         setRetainInstance(true);
 
@@ -101,6 +103,21 @@ public class ListofStops extends ListFragment{
         }
     }
 
+    public void onListItemClick(ListView view1, View view, int position, long id)
+    {
+//        ViewGroup viewGroup = (ViewGroup)view;
+//        TextView txt = (TextView)viewGroup.findViewById(R.id.txtitem);
+//        Toast.makeText(getActivity(), txt.getText().toString(),Toast.LENGTH_LONG);
+        String stopId = (String)getListAdapter().getItem(position);
+
+        Toast.makeText(getActivity(), stopId, Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(getActivity(), StopActivity.class);
+        Bundle dataBundle = new Bundle();
+        dataBundle.putString("stopId", stopId);
+        dataBundle.putString("lineId", lineID);
+        i.putExtras(dataBundle);
+        startActivity(i);
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
