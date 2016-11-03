@@ -324,7 +324,6 @@ public class RemoteFetch {
 
             // poopulate basic info of bus stop from API
             stop.code = entry.getString("code");
-            stop.direction = entry.getString("direction");
             stop.lat = entry.getDouble("lat");
             stop.lon = entry.getDouble("lon");
             stop.name = entry.getString("name");

@@ -17,7 +17,7 @@ public class Stop implements Writable {
     public String lineId;
     public String code;
     public String name = "";
-    public String direction;
+    public String directionId = "0";
     public double lat;
     public double lon;
     public String[] otherLinesThatThisStopServes = new String[0];
@@ -63,7 +63,7 @@ public class Stop implements Writable {
         try {
             obj.put("code", code);
             obj.put("name", name);
-            obj.put("direction", direction);
+            obj.put("directionId", directionId);
             obj.put("lat", lat);
             obj.put("lon", lon);
             obj.put("favorite", favorite);
@@ -89,7 +89,7 @@ public class Stop implements Writable {
         try {
             this.code = obj.getString("code");
             this.name = obj.getString("name");
-            this.direction = obj.getString("direction");
+            this.directionId = obj.getString("directionId");
             this.lat = obj.getDouble("lat");
             this.lon = obj.getDouble("lon");
             this.favorite = obj.getBoolean("favorite");

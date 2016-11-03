@@ -33,6 +33,25 @@ public class Line extends LineInfo implements Writable {
         this.favorite = line.favorite;
     }
 
+    public Line getOppositeDirection() {
+        if(oppositeDirectionId.equals("")) {
+            // there is no other direction
+            return null;
+        }
+
+        Line line = new Line(this);
+        line.directionId = oppositeDirectionId;
+        ListOfLinesAndStopsIO.read(line);
+        return line;
+    }
+
+    public boolean partOfLine(String stopOfficialId) {
+        for(String s:listOfStopsId) {
+            if(s.equals(stopOfficialId)) return true;
+        }
+        return false;
+    }
+
     public String getWritePreflix() {
         return ListOfLinesAndStopsIO.FILENAME_LINE;
     }
