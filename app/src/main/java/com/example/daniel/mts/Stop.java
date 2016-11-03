@@ -1,10 +1,14 @@
 package com.example.daniel.mts;
 
+import android.util.Log;
+
+import java.io.Serializable;
+
 /**
  * Created by Isaac on 10/21/16.
  */
 
-public class Stop implements Writable{
+public class Stop implements Writable, Serializable {
     public String id;
     public String lineId;
     public String code;
@@ -22,8 +26,10 @@ public class Stop implements Writable{
         this.lineId = lineId;
         if( ListOfLinesAndStopsIO.readable(this)) {
             fill(ListOfLinesAndStopsIO.readStop(id, lineId));
+            Log.d("Hello", "Reading from file");
         }
         else {
+            Log.d("Hello", "Reading from API");
             RemoteFetch.fillStopInfo(this);
             ListOfLinesAndStopsIO.writeStop(this);
         }
