@@ -139,7 +139,7 @@ public class ListofStops extends ListFragment{
 
             View view = super.getView(position, convertView, parent);
             String stopid = (String)getItem(position);
-            Stop stopInfo = new Stop(lineID, stopid);
+            Stop stopInfo = new Stop(stopid, lineID);
 
             // alternating grey and white row backgrounds
             if (position % 2 == 1) {
