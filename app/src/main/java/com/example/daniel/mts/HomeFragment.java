@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
-        ArrayList<Stop> arr = rf.getStopsNearLoc(location.getLatitude(), location.getLongitude());
+        ArrayList<Stop> arr = rf.getStopsNearLoc(location.getLatitude(), location.getLongitude(), 100);
         Marker[] markerArray = new Marker[arr.size()];
 
         System.out.println("ARR LEN " + arr.size());

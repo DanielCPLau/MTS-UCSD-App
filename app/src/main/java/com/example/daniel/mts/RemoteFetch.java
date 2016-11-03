@@ -351,12 +351,12 @@ public class RemoteFetch {
         }
     }
 
-    public static ArrayList<Stop> getStopsNearLoc(double lat, double lon) {
+    public static ArrayList<Stop> getStopsNearLoc(double lat, double lon, double rad) {
         ArrayList<Stop> stops= new ArrayList<Stop>();
 
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, REQUEST_STOP_NEARBY) +
-                    String.format(REQUEST_END_LOC, lat, lon) );
+                    String.format(REQUEST_END_LOC, lat, lon) + "&radius=" + rad);
 
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
@@ -384,11 +384,11 @@ public class RemoteFetch {
         }
     }
 
-    public static ArrayList<Long> getPrediction (Stop stop) {
+    public static ArrayList<Long> getPrediction (String stopOfficialId, String lineOfficalId) {
         ArrayList<Long> times = new ArrayList<Long>();
 
         try {
-            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_PREDICTION, stop.id)));
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_PREDICTION, stopOfficialId)));
 
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
@@ -403,7 +403,7 @@ public class RemoteFetch {
 
             for(int i = 0; i < arrivalsAndDepartures.length(); i++ ) {
                 JSONObject time = arrivalsAndDepartures.getJSONObject(i);
-                if(!time.getString("routeId").equals(stop.lineId)) continue;
+                if(!time.getString("routeId").equals(lineOfficalId)) continue;
                 long predicted = time.getLong("predictedDepartureTime");
 
                 times.add(new Long(predicted - currentTime));
