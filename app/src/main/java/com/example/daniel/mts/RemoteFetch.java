@@ -337,6 +337,17 @@ public class RemoteFetch {
 
                 stop.otherLinesThatThisStopServes[i] = routeIds.getString(i);
             }
+
+            Line line = new Line(stop.lineId);
+            if(!line.partOfLine(stop.id)) {
+                line = line.getOppositeDirection();
+            }
+
+            stop.directionId = line.directionId;
+            stop.directionName = line.directionName;
+            stop.color = line.color;
+            stop.lineShortName = line.shortName;
+
         }
         catch (IOException ex) {
             // TODO
