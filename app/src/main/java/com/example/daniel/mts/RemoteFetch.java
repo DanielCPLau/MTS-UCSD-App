@@ -172,6 +172,7 @@ public class RemoteFetch {
     }
 
     public static LineInfo[] getListOfLinesInfo(String agency) {
+        Log.i("Reading from API", "occured in RemoteFetch.getListOfLinesInfo()");
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
@@ -294,7 +295,7 @@ public class RemoteFetch {
                     oppositeDirLine.listOfStopsId[i] = stops.getString(i);
                 }
 
-                ListOfLinesAndStopsIO.write(oppositeDirLine);
+                ListOfLinesAndStopsIO.read(oppositeDirLine);
             }
 
             // TODO

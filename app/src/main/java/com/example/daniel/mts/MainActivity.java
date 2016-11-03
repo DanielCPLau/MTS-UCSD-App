@@ -36,14 +36,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         // Load lineInfo from API to local
-        try {
-            if(openFileInput(ListOfLinesAndStopsIO.FILE_NAME_LINE_INFO_LIST).available() == 0) {
-                ListOfLinesAndStopsIO.writeLineInfoList();
-            }
+        ListOfLinesAndStopsIO.checkLineInfoList();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         setContentView(R.layout.activity_main);
 
         //Set toolbar to replace the action bar
