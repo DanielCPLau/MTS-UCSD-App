@@ -41,7 +41,7 @@ public class ListOfLinesAndStopsIO {
 
         } catch (IOException ex) {
             // TODO
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
     }
 
@@ -51,6 +51,8 @@ public class ListOfLinesAndStopsIO {
             FileOutputStream fos = context.openFileOutput(obj.getWritePreflix() + obj.getId(), Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
+            Log.d("Hello2", obj.getWritePreflix() + obj.getId());
+
             oos.writeObject(obj);
 
             oos.close();
@@ -58,7 +60,7 @@ public class ListOfLinesAndStopsIO {
 
         } catch (IOException ex) {
             // TODO
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
     }
 
