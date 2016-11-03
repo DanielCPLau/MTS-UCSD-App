@@ -2,57 +2,170 @@ package com.example.daniel.mts;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.SimpleCursorAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.io.IOException;
+public class DisplayListOfStops extends AppCompatActivity implements OnFragmentInteractionListener{
+    ListView  listview;
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
+    private ActionBarDrawerToggle drawerToggle;
 
-public class DisplayListOfStops extends ListActivity{
+    public String getId(){
+        Bundle bundle = getIntent().getExtras();
+        String id = bundle.getString("SelectedProperty");
+        return id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_stops);
-        Bundle b = getIntent().getExtras();
-        String id = b.getString("SelectedProperty");
-        Line lin = new Line(id);
-        String[] stopIds = lin.listOfStopsId;
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.stops_rowlayout, R.id.stoptxt, stopIds);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        // Bind to our new adapter.
-        setListAdapter(adapter);
-    }
-    public class stopAdapter extends ArrayAdapter {
-        public stopAdapter(Context context, int resource, int textViewResourceId, Object[] objects) {
-            super(context, resource, textViewResourceId, objects);
+        //find drawer view
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = setupDrawerToggle();
+
+        //Tie drawerlayout events to the action bar toggle for open and close
+        mDrawer.addDrawerListener(drawerToggle);
+
+        //Find our drawer view
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+
+        //Setup drawer view
+        setUpDrawerContent(nvDrawer);
+        Fragment fragment = null;
+        Class fragmentClass = ListofStops.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        FragmentTransaction def = getSupportFragmentManager().beginTransaction();
+        def.replace(R.id.flContent, fragment);
+        def.commit();
 
-            View view = super.getView(position, convertView, parent);
-
-            // alternating grey and white row backgrounds
-            if (position % 2 == 1) {
-                view.setBackgroundColor(Color.WHITE);
-            } else {
-                view.setBackgroundColor(Color.parseColor("#F7F7F7"));
+        Button homeButton = (Button)findViewById(R.id.home_button);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.home_button: {
+                        Fragment fragment = null;
+                        Class fragmentClass = HomeFragment.class;
+                        try {
+                            fragment = (Fragment) fragmentClass.newInstance();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        FragmentTransaction def = getSupportFragmentManager().beginTransaction();
+                        def.replace(R.id.flContent, fragment);
+                        def.commit();
+                    }
+                }
             }
+        });
 
-            return view;
+
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+    private void setUpDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment = null;
+        Class fragmentClass;
+        switch(menuItem.getItemId()) {
+            case R.id.home_frag:
+                fragmentClass = HomeFragment.class;
+                break;
+            case R.id.map_frag:
+                fragmentClass = MapFragment.class;
+                break;
+            case R.id.fav_frag:
+                fragmentClass = FavFragment.class;
+                break;
+            case R.id.lines_frag:
+                fragmentClass = LinesFragment.class;
+                break;
+            default:
+                fragmentClass = HomeFragment.class;
         }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawer.closeDrawers();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        //Sync toggle state after onrestore has happened
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onFragmentMessage(String MSG, Object data) {
+
     }
 
 }
