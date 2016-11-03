@@ -416,7 +416,7 @@ public class RemoteFetch {
                 if(!time.getString("routeId").equals(lineOfficalId)) continue;
                 long predicted = time.getLong("predictedDepartureTime");
 
-                int next = (int)(predicted - currentTime)/1000;
+                int next = (int)(predicted - currentTime)/60000;
 
                 if(next >= 0) {
                     times.add(next);
