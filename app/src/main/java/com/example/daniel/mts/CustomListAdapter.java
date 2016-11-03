@@ -1,19 +1,16 @@
 package com.example.daniel.mts;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Filter;
 import android.widget.ImageView;
-import android.app.Activity;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomListAdapter extends ArrayAdapter<String> {
 
