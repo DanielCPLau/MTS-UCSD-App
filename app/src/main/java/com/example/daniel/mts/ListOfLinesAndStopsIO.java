@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +16,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
+
+import static android.R.attr.id;
 
 /**
  * Created by Isaac on 10/22/16.
@@ -28,66 +32,86 @@ public class ListOfLinesAndStopsIO {
     public static void init() {
     }
 
-    public static void writeLine(Line obj) {
+    public static void write(Writable obj) {
         try {
             Context context = MyApplication.getAppContext();
-            FileOutputStream fos = context.openFileOutput(obj.getWritePreflix() + obj.getId(), Context.MODE_PRIVATE);
+
+            String path = obj.getWritePreflix() + obj.getId();
+            new File(path).delete();
+
+            FileOutputStream fos = context.openFileOutput(path, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            oos.writeObject(obj);
+            JSONObject jobj = obj.getJSONObject();
+            oos.writeObject(jobj.toString());
 
             oos.close();
             fos.close();
 
         } catch (IOException ex) {
-            // TODO
-            //ex.printStackTrace();
+            Log.w("IOException", "occured in ListOfLinesAndStopsIO.write()");
+            ex.printStackTrace();
         }
     }
 
-    public static void writeStop(Stop obj) {
+    public static void read(Writable obj) {
         try {
             Context context = MyApplication.getAppContext();
-            FileOutputStream fos = context.openFileOutput(obj.getWritePreflix() + obj.getId(), Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            Log.d("Hello2", obj.getWritePreflix() + obj.getId());
+            String path = obj.getWritePreflix() + obj.getId();
 
-            oos.writeObject(obj);
+            FileInputStream fis = context.openFileInput(path);
+            ObjectInputStream ois = new ObjectInputStream(fis);
 
-            oos.close();
-            fos.close();
+            String read = (String)ois.readObject();
+            JSONObject jobj = new JSONObject(read);
 
-        } catch (IOException ex) {
-            // TODO
-            //ex.printStackTrace();
+            obj.fillJSONObject(jobj);
+
+            ois.close();
         }
-    }
-
-    public static boolean readable(Writable obj) {
-        File file = new File(obj.getWritePreflix() + obj.getId());
-
-        if(file.exists()) {
-            return true;
+        catch(FileNotFoundException e) {
+            write(obj);
+            read(obj);
         }
-
-        return false;
+        catch(IOException e) {
+            Log.i("IOException", "occured in ListOfLinesAndStopsIO.read()");
+            e.printStackTrace();
+            write(obj);
+            read(obj);
+        }
+        catch(ClassNotFoundException e) {
+            Log.i("ClassNotFoundException", "occured in ListOfLinesAndStopsIO.read()");
+            e.printStackTrace();
+            write(obj);
+            read(obj);
+        } catch (JSONException e) {
+            Log.i("JSONException", "occured in ListOfLinesAndStopsIO.read()");
+            e.printStackTrace();
+            write(obj);
+            read(obj);
+        }
     }
 
     public static void writeLineInfoList() {
         try {
             Context context = MyApplication.getAppContext();
-            FileOutputStream fos = context.openFileOutput(FILE_NAME_LINE_INFO_LIST, Context.MODE_PRIVATE);
+
+            String path = FILE_NAME_LINE_INFO_LIST;
+            new File(path).delete();
+
+            FileOutputStream fos = context.openFileOutput(path, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             LineInfo[] array = RemoteFetch.getListOfLinesInfo("MTS");
+            JSONArray jarray = new JSONArray();
 
-            // write size first
-            oos.writeInt(array.length);
-
-            for(LineInfo l:array) {
-                oos.writeObject(l);
+            for(int i = 0; i < array.length; i++) {
+                jarray.put(array[i].getJSONObject());
             }
+
+            oos.writeInt(array.length);
+            oos.writeObject(jarray.toString());
 
             oos.close();
             fos.close();
@@ -95,65 +119,6 @@ public class ListOfLinesAndStopsIO {
             // TODO
             ex.printStackTrace();
         }
-    }
-
-
-    // MUST USE getID() for id.
-    public static Line readLine(String id) {
-        try {
-            Context context = MyApplication.getAppContext();
-            ObjectInputStream ois = new ObjectInputStream(context.openFileInput(FILENAME_LINE + id));
-
-            if(ois.available() == 0) {
-                ois.close();
-                writeLine(new Line(id));
-            }
-
-            Line line = (Line) ois.readObject();
-
-            ois.close();
-
-            return line;
-        }
-        catch(FileNotFoundException ex) {
-            // TODO
-            writeLine(new Line(id));
-            readLine(id);
-        }
-        catch(IOException | ClassNotFoundException ex) {
-            // TODO
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    // DO NOT USE stop.getId() for this method.
-    public static Stop readStop(String id, String lineId) {
-        try {
-            Context context = MyApplication.getAppContext();
-            ObjectInputStream ois = new ObjectInputStream(context.openFileInput(FILENAME_STOP + id + "_" + lineId));
-
-            if(ois.available() == 0) {
-                ois.close();
-                writeStop(new Stop(id, lineId));
-            }
-
-            Stop stop = (Stop) ois.readObject();
-
-            ois.close();
-
-            return stop;
-        }
-        catch(FileNotFoundException ex) {
-            // TODO
-
-            ex.printStackTrace();
-        }
-        catch(IOException | ClassNotFoundException ex) {
-            // TODO
-            ex.printStackTrace();
-        }
-        return null;
     }
 
     public static LineInfo[] readLineInfoList() {
@@ -162,33 +127,43 @@ public class ListOfLinesAndStopsIO {
             FileInputStream fis = context.openFileInput(FILE_NAME_LINE_INFO_LIST);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            if(ois.available() == 0) {
-                fis.close();
-                ois.close();
-                writeLineInfoList();
-            }
-
             int size = ois.readInt();
+            String read = (String) ois.readObject();
 
             LineInfo lineInfo[] = new LineInfo[size];
+            JSONArray jarray = new JSONArray(read);
 
             for(int i = 0; i < size; i++) {
-                lineInfo[i] = (LineInfo) ois.readObject();
+                JSONObject jobj = (JSONObject) jarray.get(i);
+                lineInfo[i] = new LineInfo(jobj);
             }
+
             ois.close();
             fis.close();
 
             return lineInfo;
         }
-        catch(FileNotFoundException ex) {
+        catch(FileNotFoundException e) {
             writeLineInfoList();
-            readLineInfoList();
+            return readLineInfoList();
         }
-        catch(IOException | ClassNotFoundException ex) {
+        catch(IOException e) {
             // TODO
-            ex.printStackTrace();
+            e.printStackTrace();
+            writeLineInfoList();
+            return readLineInfoList();
         }
-        return null;
+        catch(ClassNotFoundException e) {
+            // TODO
+            e.printStackTrace();
+            writeLineInfoList();
+            return readLineInfoList();
+        } catch (JSONException e) {
+            // TODO
+            e.printStackTrace();
+            writeLineInfoList();
+            return readLineInfoList();
+        }
     }
 
 }
