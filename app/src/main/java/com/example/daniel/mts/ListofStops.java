@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -82,6 +85,8 @@ public class ListofStops extends ListFragment{
         lineID = id;
         Line lin = new Line(id);
         String[] stopIds = lin.listOfStopsId;
+//        String stopid = (String)getItem(position);
+//        Stop stopInfo = new Stop(s, stopid);
         ArrayAdapter<LineInfo> adapter = new ListofStops.stopAdapter(getActivity(),R.layout.stops_rowlayout, R.id.stoptxt,stopIds);
         setListAdapter(adapter);
         setRetainInstance(true);
@@ -140,12 +145,15 @@ public class ListofStops extends ListFragment{
             View view = super.getView(position, convertView, parent);
             String stopid = (String)getItem(position);
             Stop stopInfo = new Stop(stopid, lineID);
-
+            TextView stopText = (TextView) view.findViewById(R.id.stoptxt);
+//            TextView stopDir = (TextView) view.findViewById(R.id.stopdir);
+            stopText.setText(stopInfo.name);
+//            stopDir.setText(stopInfo.direction);
             // alternating grey and white row backgrounds
             if (position % 2 == 1) {
                 view.setBackgroundColor(Color.WHITE);
             } else {
-                view.setBackgroundColor(Color.parseColor("#F7F7F7"));
+                view.setBackgroundColor(Color.parseColor("#eff5ff"));
             }
 
             return view;

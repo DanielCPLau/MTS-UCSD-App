@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,13 +13,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class DisplayListOfStops extends AppCompatActivity implements OnFragmentInteractionListener{
     ListView  listview;
@@ -26,10 +32,14 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    private TextView line;
+    private TextView lineName;
+    private View view;
 
     public String getId(){
         Bundle bundle = getIntent().getExtras();
         String id = bundle.getString("SelectedProperty");
+
         return id;
     }
 
@@ -39,6 +49,24 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         setContentView(R.layout.activity_display_stops);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle bundle = getIntent().getExtras();
+        String col = bundle.getString("color");
+        String name = bundle.getString("name");
+        String longName = bundle.getString("long");
+        String id = bundle.getString("SelectedProperty");
+
+        Line lineInfo = new Line(id);
+        String dir = lineInfo.directionName;
+        line = (TextView) findViewById(R.id.txtitem);
+        lineName = (TextView) findViewById(R.id.nameItem);
+        GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
+        tvBackground.setColor(Color.parseColor(col));
+        line.setText(name);
+        line.setTextColor(Color.WHITE);
+        view = line.getRootView();
+//        view.setBackgroundColor(Color.parseColor("#bac5d6"));
+        lineName.setText(longName + " to " + dir);
 
         //find drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -131,6 +159,8 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
             e.printStackTrace();
         }
 
+        line.setVisibility(View.GONE);
+        lineName.setVisibility(View.GONE);
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
