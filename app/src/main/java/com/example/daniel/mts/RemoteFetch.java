@@ -208,9 +208,8 @@ public class RemoteFetch {
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_INFO, line.id)));
 
-            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
-                // Request to API failed
-                //TODO
+            while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+                Log.w("API Request Fails", "occured in RemoteFetch.fillLineInfo()");
                 return;
             }
 
@@ -237,11 +236,11 @@ public class RemoteFetch {
             }
         }
         catch (IOException ex) {
-            // TODO
+            Log.i("IOException", "occured in RemoteFetch.fillLineInfo()");
             return;
         }
         catch (JSONException ex) {
-            // TODO
+            Log.i("JSONException", "occured in RemoteFetch.fillLineInfo()");
             return;
         }
     }
@@ -295,7 +294,7 @@ public class RemoteFetch {
                     oppositeDirLine.listOfStopsId[i] = stops.getString(i);
                 }
 
-                ListOfLinesAndStopsIO.writeLine(oppositeDirLine);
+                ListOfLinesAndStopsIO.write(oppositeDirLine);
             }
 
             // TODO
