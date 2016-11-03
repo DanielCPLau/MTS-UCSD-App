@@ -15,10 +15,13 @@
 
     <Button
         android:id="@+id/map_button_template"
-        android:layout_width="201dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:paddingTop="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="65dp"
         android:text="@string/map_201_string"
         style="?android:attr/borderlessButtonStyle"
          />
@@ -27,6 +30,8 @@
         android:id="@+id/icon_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
         android:src="@drawable/mtsicon"
         android:layout_alignParentRight="true"
         />
@@ -35,15 +40,18 @@
         android:id="@+id/map_image"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:layout_below="@+id/map_201"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="65dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:maxWidth="42dp"
+        android:maxHeight="42dp"
+        android:scaleType="fitCenter"
+        android:layout_below="@+id/map_button_template"
         android:layout_gravity="center"
-        android:scaleType="center"
         android:src="@drawable/map201"
        />
 
-
-
-   
 
 
 </FrameLayout>
