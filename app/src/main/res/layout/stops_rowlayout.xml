@@ -6,13 +6,6 @@ android:orientation="horizontal" android:layout_width="match_parent"
 android:layout_height="60dp"
 android:weightSum="1"
     android:id="@+id/stopLayout">
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/stoptxt"
@@ -24,15 +17,4 @@ android:weightSum="1"
         android:textSize="20sp"
         android:gravity="center_vertical"
         />
-
-    <!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--android:id="@+id/stopdir"-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:layout_marginBottom="5dp"-->
-        <!--android:layout_marginLeft="15dp"-->
-        <!--android:textSize="15sp"-->
-        <!--android:gravity="center"-->
-        <!--/>-->
 </LinearLayout>

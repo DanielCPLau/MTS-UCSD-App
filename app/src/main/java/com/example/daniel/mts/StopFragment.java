@@ -30,6 +30,9 @@ public class StopFragment extends Fragment {
     private TextView prediction;
     private ImageButton refresh;
     private View view;
+    private String stopId;
+    private String lineId;
+    private View myInflatedView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,23 +82,23 @@ public class StopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View myInflatedView = inflater.inflate(R.layout.fragment_stop, container,false);
+        myInflatedView = inflater.inflate(R.layout.fragment_stop, container,false);
 
         // Set the Text to try this out
         StopActivity act = (StopActivity) getActivity();
-        String stopId = act.getStopId();
-        String lineId = act.getLineId();
+        stopId = act.getStopId();
+        lineId = act.getLineId();
         Stop stop = new Stop(stopId, lineId);
 
         String color = "#" + stop.color;
         String lineShortNameString = stop.lineShortName;
         String stopNameString = stop.name;
         String lineDirectionNameString = stop.directionName;
-        ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
 
         line = (TextView) myInflatedView.findViewById(R.id.txtitem);
         stopName = (TextView) myInflatedView.findViewById(R.id.nameItem);
         directionName = (TextView) myInflatedView.findViewById(R.id.direction);
+        prediction = (TextView) myInflatedView.findViewById(R.id.prediction);
         refresh = (ImageButton) myInflatedView.findViewById(R.id.reverse);
 
         GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
@@ -107,14 +110,35 @@ public class StopFragment extends Fragment {
         view = line.getRootView();
 
         stopName.setText(stopNameString);
-        stopName.setTextColor(Color.BLACK);
+        stopName.setTextColor(Color.DKGRAY);
 
         directionName.setText("To " + lineDirectionNameString);
-        directionName.setTextColor(Color.DKGRAY);
+        directionName.setTextColor(Color.GRAY);
 
-        String times;
+        updatePrediction();
+        prediction.setTextColor(Color.BLACK);
+
+        return myInflatedView;
+    }
+
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public void updatePrediction() {
+        ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
+
+        String times = "";
         if( predictions.size() > 0) {
-            times = "Next bus in ";
             for (int i = 0; i < predictions.size(); i++) {
                 int time = predictions.get(i);
 
@@ -131,32 +155,11 @@ public class StopFragment extends Fragment {
             times += " minutes";
         }
         else {
-            times = "There is currently no prediction.";
+            times = "No prediction";
         }
 
-        prediction = (TextView) myInflatedView.findViewById(R.id.prediction);
         prediction.setText(times);
-        prediction.setTextColor(Color.BLACK);
 
-        return myInflatedView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     /**

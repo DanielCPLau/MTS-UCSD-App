@@ -52,7 +52,6 @@
                     android:id="@+id/direction"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:layout_marginBottom="10dp"
                     android:textSize="18sp"
                     android:gravity="left" />
 
@@ -62,8 +61,7 @@
                     android:layout_width="fill_parent"
                     android:layout_marginBottom="10dp"
                     android:textSize="23sp"
-                    android:gravity="left"
-                    android:textStyle="bold"/>
+                    android:gravity="left" />
             </LinearLayout>
 
             <ImageButton
@@ -88,18 +86,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/times"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="15dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="left" />
 
 </FrameLayout>
