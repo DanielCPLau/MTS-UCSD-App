@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
     private TextView line;
     private TextView lineName;
     private TextView directionName;
+    private ImageButton reverse;
     private View view;
 
     public String getId(){
@@ -64,6 +66,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         line = (TextView) findViewById(R.id.txtitem);
         lineName = (TextView) findViewById(R.id.nameItem);
         directionName = (TextView) findViewById(R.id.direction);
+        reverse = (ImageButton) findViewById(R.id.reverse);
 
         GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
         tvBackground.setColor(Color.parseColor(col));

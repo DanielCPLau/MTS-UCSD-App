@@ -79,7 +79,9 @@
                 android:src="@mipmap/reverse"
                 android:background="@android:color/transparent"
                 android:layout_gravity="right"
-                android:layout_weight = "0"/>
+                android:layout_weight = "0"
+                android:onClick="onClick"
+                android:clickable="true" />
         </LinearLayout>
 
 
