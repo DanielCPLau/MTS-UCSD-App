@@ -36,8 +36,6 @@ public class RemoteFetch {
     private static final String REQUEST_MTS = "MTS";
     private static final String REQUEST_NCTD = "NCTD";
 
-    private static final String REQUEST_LIST_OF_STOPS = "stop-ids-for-agency/%S";   // Might not need this
-
     private static final String REQUEST_STOP_INFO = "stop/%S";                      // Need stop id
 
     private static final String REQUEST_ROUTE_INFO = "route/%S";                    // Need route id

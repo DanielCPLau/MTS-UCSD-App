@@ -66,7 +66,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         line.setTextColor(Color.WHITE);
         view = line.getRootView();
 //        view.setBackgroundColor(Color.parseColor("#bac5d6"));
-        lineName.setText(longName + " to " + dir);
+        lineName.setText(longName + "\nTo " + dir);
 
         //find drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);

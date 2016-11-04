@@ -81,13 +81,27 @@ public class StopFragment extends Fragment {
         Stop stopInfo = new Stop(stopId, lineId);
         ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
 
-        String times = "Next bus in ";
-        for(int i = 0; i < predictions.size(); i++) {
-            times += predictions.get(i);
-            if(i < predictions.size() - 1) times += " , ";
-            if(i >= PREDICTION_LIMIT) break;
+        String times;
+        if( predictions.size() > 0) {
+            times = "Next bus in ";
+            for (int i = 0; i < predictions.size(); i++) {
+                int time = predictions.get(i);
+
+                if( time == 0) {
+                    times += "Arriving";
+                }
+                else {
+                    times += predictions.get(i);
+                }
+
+                if (i < predictions.size() - 1) times += ", ";
+                if (i >= PREDICTION_LIMIT) break;
+            }
+            times += " minutes";
         }
-        times += " minutes";
+        else {
+            times = "There is currently no prediction.";
+        }
 
         TextView timesText = (TextView) myInflatedView.findViewById(R.id.times);
         timesText.setText(times);
