@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -24,6 +25,9 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class StopFragment extends Fragment {
+    private static Date date = new Date();
+    private static long lastTime = date.getTime();
+
     private TextView line;
     private TextView stopName;
     private TextView directionName;
@@ -33,6 +37,8 @@ public class StopFragment extends Fragment {
     private String stopId;
     private String lineId;
     private View myInflatedView;
+
+    private static final int REFRESH_LIMIT = 500;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -104,7 +110,7 @@ public class StopFragment extends Fragment {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updatePrediction();
+                updatePrediction(false);
             }
         });
 
@@ -122,7 +128,7 @@ public class StopFragment extends Fragment {
         directionName.setText("To " + lineDirectionNameString);
         directionName.setTextColor(Color.GRAY);
 
-        updatePrediction();
+        updatePrediction(true);
         prediction.setTextColor(Color.BLACK);
 
         return myInflatedView;
@@ -141,7 +147,15 @@ public class StopFragment extends Fragment {
         mListener = null;
     }
 
-    public void updatePrediction() {
+    // b should always be false unless you want to force update the time
+    public void updatePrediction(boolean b) {
+        if(!b) {
+            long currentTime = date.getTime() - lastTime;
+            if (currentTime < REFRESH_LIMIT) {
+                return;
+            }
+        }
+
         ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
 
         String times = "";
@@ -167,6 +181,8 @@ public class StopFragment extends Fragment {
         }
 
         prediction.setText(times);
+
+        lastTime = date.getTime();
 
     }
 
