@@ -1,12 +1,21 @@
 package com.example.daniel.mts;
 
+import android.app.ListFragment;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import static com.example.daniel.mts.ListOfLinesAndStopsIO.readFavoriteList;
 
 
 /**
@@ -17,7 +26,7 @@ import android.view.ViewGroup;
  * Use the {@link FavFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavFragment extends android.support.v4.app.Fragment implements OnFragmentInteractionListener {
+public class FavFragment extends ListFragment implements OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,8 +72,24 @@ public class FavFragment extends android.support.v4.app.Fragment implements OnFr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment (DEFAULT CODE)
+        //return inflater.inflate(R.layout.fav_fragment, container, false);
+
+        // get permission to access networks
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fav_fragment, container, false);
+        ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.fav_fragment,container, false);
+
+        // Get the List of favorite stops
+        ArrayList<Favorite> favoriteList = readFavoriteList();
+
+        ArrayAdapter<Favorite> adapter = new FavAdapter(getActivity(), R.layout.stops_rowlayout, R.id.stoptxt, favoriteList);
+        setListAdapter(adapter);
+        setRetainInstance(true);
+
+        return rootview;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,4 +129,38 @@ public class FavFragment extends android.support.v4.app.Fragment implements OnFr
     public void onFragmentMessage(String MSG, Object data) {
 
     }
+
+    public class FavAdapter extends ArrayAdapter {
+
+        // Constructor
+        public FavAdapter(Context context, int resources, int textViewResourceID, ArrayList<Favorite> objects) {
+            super(context, resources, textViewResourceID, objects);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+
+            Favorite favStop = (Favorite)getItem(position);
+            String stopId = favStop.stopId;
+            String lineId = favStop.lineId;
+
+            Stop stopInfo = new Stop(stopId, lineId);
+            TextView stopText = (TextView)view.findViewById(R.id.stoptxt);
+
+            stopText.setText(stopInfo.lineShortName);
+            stopText.setText(stopInfo.name);
+
+            // alternate grey and white background
+            if (position % 2 == 1) {
+                view.setBackgroundColor(Color.WHITE);
+            } else {
+                view.setBackgroundColor(Color.parseColor("#eff5ff"));
+            }
+
+            return view;
+        }
+    }
+
 }
+

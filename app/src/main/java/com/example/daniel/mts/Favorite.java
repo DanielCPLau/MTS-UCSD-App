@@ -3,11 +3,12 @@ package com.example.daniel.mts;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 /**
  * Created by Isaac on 11/3/16.
  */
 
-class Favorite {
+class Favorite implements Comparable<Favorite> {
     public String stopId;
     public String lineId;
     public boolean favorite;
@@ -50,4 +51,11 @@ class Favorite {
     public boolean cancelsWith(Favorite f) {
         return (this.stopId.equals(f.stopId)) && (this.lineId.equals(f.lineId)) && (this.favorite != f.favorite);
     }
+
+    @Override
+    public int compareTo(Favorite f) {
+        return this.stopId.compareTo(f.stopId);
+    }
+
 }
+
