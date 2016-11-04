@@ -272,7 +272,6 @@ public class RemoteFetch {
             }
 
             if( directions.length() > 1) {
-
                 dir = directions.getJSONObject(1);
 
                 if(dir.getString("id").equals(line.directionId)) return;
