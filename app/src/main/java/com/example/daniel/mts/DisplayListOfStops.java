@@ -58,10 +58,8 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         String col = "#" + lineInfo.color;
         String name = lineInfo.shortName;
         String longName = lineInfo.longName;
-
-
-
         String dir = lineInfo.directionName;
+
         line = (TextView) findViewById(R.id.txtitem);
         lineName = (TextView) findViewById(R.id.nameItem);
         GradientDrawable tvBackground = (GradientDrawable) line.getBackground();

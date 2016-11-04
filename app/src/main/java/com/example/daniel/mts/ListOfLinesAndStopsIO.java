@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 
 /**
@@ -26,10 +27,9 @@ class ListOfLinesAndStopsIO {
     static final String FILENAME_LINE = "line_";
     static final String FILENAME_STOP = "stop_";
     static final String FILENAME_LINE_INFO_LIST = "lineInfoList";
-    static final String FILENAME_FAVORITE_LIST = "favouriteList";
+    static final String FILENAME_FAVORITE_LIST = "favoriteList";
 
-
-    private static void write(Writable obj) {
+    static void write(Writable obj) {
         try {
             Context context = MyApplication.getAppContext();
 
@@ -122,8 +122,8 @@ class ListOfLinesAndStopsIO {
 
             JSONArray jarray = new JSONArray();
 
-            for (LineInfo anArray : array) {
-                jarray.put(anArray.getJSONObject());
+            for (LineInfo lineInfo : array) {
+                jarray.put(lineInfo.getJSONObject());
             }
 
             oos.writeInt(array.length);
@@ -181,5 +181,128 @@ class ListOfLinesAndStopsIO {
             writeLineInfoList();
             return readLineInfoList();
         }
+    }
+
+    static void writeFavorite(Favorite f) {
+        try {
+            Context context = MyApplication.getAppContext();
+
+            String path = FILENAME_FAVORITE_LIST;
+
+            FileOutputStream fos = context.openFileOutput(path, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            JSONObject jobj = f.getJSONObject();
+            oos.writeObject(jobj.toString());
+
+            oos.close();
+            fos.close();
+
+        }
+        catch (IOException e) {
+            Log.w("IOException", "occured in ListOfLinesAndStopsIO.writeFavorite()");
+            e.printStackTrace();
+        }
+    }
+
+    static void writeFavoriteList(Favorite[] fArray) {
+        try {
+            Context context = MyApplication.getAppContext();
+
+            String path = FILENAME_FAVORITE_LIST;
+            new File(path).delete();
+
+            FileOutputStream fos = context.openFileOutput(path, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            JSONArray jarray = new JSONArray();
+
+            for (int i = 0; i < fArray.length; i++) {
+                Favorite f = fArray[i];
+                if(!f.favorite) {
+                    for(int j = 0; j < i; j++) {
+                        JSONObject jobj = jarray.getJSONObject(j);
+                        Favorite f2 = new Favorite(jobj);
+                        if(f.cancelsWith(f2)) {
+                            jarray.remove(j);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    jarray.put(f.getJSONObject());
+                }
+            }
+
+            oos.writeInt(fArray.length);
+            oos.writeObject(jarray.toString());
+
+            oos.close();
+            fos.close();
+
+        }
+        catch (IOException e) {
+            Log.w("IOException", "occured in ListOfLinesAndStopsIO.writeFavorite()");
+            e.printStackTrace();
+        }
+        catch (JSONException e) {
+            Log.w("IOException", "occured in ListOfLinesAndStopsIO.writeFavoriteList()");
+            e.printStackTrace();
+        }
+    }
+
+    static ArrayList<Favorite> readFavoriteList() {
+        ArrayList<Favorite> fArray = new ArrayList<Favorite>();
+
+        try {
+            Context context = MyApplication.getAppContext();
+
+            String path = FILENAME_FAVORITE_LIST;
+
+            FileInputStream fis = context.openFileInput(path);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            int size = ois.readInt();
+            String read = (String) ois.readObject();
+
+            JSONArray jarray = new JSONArray(read);
+
+            for(int i = 0; i < size; i++) {
+                JSONObject jobj = (JSONObject) jarray.get(i);
+                Favorite f = new Favorite(jobj);
+
+                if(!f.favorite) {
+                    for(int j = 0; j < i; j++) {
+                        Favorite f2 = fArray.get(j);
+                        if(f.cancelsWith(f2)) {
+                            jarray.remove(j);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    fArray.add(f);
+                }
+            }
+
+            ois.close();
+            fis.close();
+        }
+        catch(FileNotFoundException e) {
+            Log.i("FileNotFoundException", "occured in ListOfLinesAndStopsIO.readFavoriteList()");
+        }
+        catch(IOException e) {
+            Log.i("IOException", "occured in ListOfLinesAndStopsIO.readFavoriteList()");
+        }
+        catch(ClassNotFoundException e) {
+            Log.i("ClassNotFoundException", "occured in ListOfLinesAndStopsIO.readFavoriteList()");
+            e.printStackTrace();
+        }
+        catch (JSONException e) {
+            Log.i("JSONException", "occured in ListOfLinesAndStopsIO.readFavoriteList()");
+            e.printStackTrace();
+        }
+
+        return fArray;
     }
 }

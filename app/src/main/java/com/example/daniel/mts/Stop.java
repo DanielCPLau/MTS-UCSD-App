@@ -38,6 +38,8 @@ public class Stop implements Writable {
 
     public void switchFavorite() {
         favorite = !favorite;
+        new Favorite(id, lineId, favorite);
+        ListOfLinesAndStopsIO.write(this);
     }
 
     public String getWritePreflix() {

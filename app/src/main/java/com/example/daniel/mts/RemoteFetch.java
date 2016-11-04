@@ -411,7 +411,12 @@ public class RemoteFetch {
 
             for(int i = 0; i < arrivalsAndDepartures.length(); i++ ) {
                 JSONObject time = arrivalsAndDepartures.getJSONObject(i);
-                if(!time.getString("routeId").equals(lineOfficalId)) continue;
+                String routeId = time.getString("routeId");
+                boolean departureEnabled = time.getBoolean("departureEnabled");
+
+                if(!routeId.equals(lineOfficalId)) continue;
+                if(!departureEnabled) continue;
+
                 long predicted = time.getLong("predictedDepartureTime");
 
                 int next = (int)(predicted - currentTime)/60000;

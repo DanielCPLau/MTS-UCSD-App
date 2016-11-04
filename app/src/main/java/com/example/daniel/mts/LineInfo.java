@@ -17,7 +17,7 @@ public class LineInfo implements Comparable<LineInfo> {
     public String id;
     public String shortName;
     public String longName;
-    public String color;
+    public String color = "";
     public String textColor;
     public boolean favorite = false;
 

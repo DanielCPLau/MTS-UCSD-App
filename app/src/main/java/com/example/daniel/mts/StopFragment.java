@@ -78,7 +78,8 @@ public class StopFragment extends Fragment {
         StopActivity act = (StopActivity) getActivity();
         String stopId = act.getStopId();
         String lineId = act.getLineId();
-        Stop stopInfo = new Stop(stopId, lineId);
+        Stop stop = new Stop(stopId, lineId);
+
         ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
 
         String times;
