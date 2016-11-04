@@ -29,7 +29,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBz2Uzt6L_x6fdjWbWo51VpxR4MYGgHRbo" />
 
-        <activity android:name=".DisplayListOfStops"></activity>
+        <activity android:name=".DisplayListOfStops" />
+        <activity
+            android:name=".StopActivity"
+            android:label="@string/title_activity_stop"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
