@@ -37,6 +37,7 @@ public class StopFragment extends Fragment {
     private String stopId;
     private String lineId;
     private View myInflatedView;
+    private Stop stop;
 
     private static final int REFRESH_LIMIT = 500;
 
@@ -94,7 +95,7 @@ public class StopFragment extends Fragment {
         StopActivity act = (StopActivity) getActivity();
         stopId = act.getStopId();
         lineId = act.getLineId();
-        Stop stop = new Stop(stopId, lineId);
+        stop = new Stop(stopId, lineId);
 
         String color = "#" + stop.color;
         String lineShortNameString = stop.lineShortName;
@@ -156,7 +157,7 @@ public class StopFragment extends Fragment {
             }
         }
 
-        ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
+        ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId, stop.directionName);
 
         String times = "";
 
