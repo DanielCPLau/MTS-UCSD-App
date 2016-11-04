@@ -95,10 +95,8 @@ class ListOfLinesAndStopsIO {
     static void checkLineInfoList() {
         Context context = MyApplication.getAppContext();
 
-        String path = FILENAME_LINE_INFO_LIST;
-
         try {
-            FileInputStream fis = context.openFileInput(FILENAME_LINE_INFO_LIST);
+            context.openFileInput(FILENAME_LINE_INFO_LIST);
         }
         catch (FileNotFoundException e) {
             writeLineInfoList();
