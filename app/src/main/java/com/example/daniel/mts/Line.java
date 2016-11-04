@@ -31,7 +31,6 @@ public class Line extends LineInfo implements Writable {
         this.longName = line.longName;
         this.color = line.color;
         this.textColor = line.textColor;
-        this.favorite = line.favorite;
     }
 
     public Line getOppositeDirection() {
