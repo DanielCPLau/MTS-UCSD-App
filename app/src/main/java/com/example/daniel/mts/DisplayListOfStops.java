@@ -69,7 +69,6 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         lineName = (TextView) findViewById(R.id.nameItem);
         directionName = (TextView) findViewById(R.id.direction);
         reverse = (ImageButton) findViewById(R.id.reverse);
-        top = (LinearLayout) findViewById(R.id.stop_toolbar);
 
         GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
         tvBackground.setColor(Color.parseColor(col));
