@@ -234,7 +234,6 @@ class ListOfLinesAndStopsIO {
                 }
             }
 
-            oos.writeInt(fArray.size());
             oos.writeObject(jarray.toString());
 
             oos.close();
@@ -262,12 +261,11 @@ class ListOfLinesAndStopsIO {
             FileInputStream fis = context.openFileInput(path);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            int size = ois.readInt();
             String read = (String) ois.readObject();
 
             JSONArray jarray = new JSONArray(read);
 
-            for(int i = 0; i < size; i++) {
+            for(int i = 0; i < jarray.length(); i++) {
                 JSONObject jobj = (JSONObject) jarray.get(i);
                 Favorite f = new Favorite(jobj);
 
