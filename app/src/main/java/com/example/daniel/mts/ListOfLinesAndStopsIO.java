@@ -48,13 +48,14 @@ class ListOfLinesAndStopsIO {
         try {
             Context context = MyApplication.getAppContext();
 
+            JSONObject jobj = obj.getJSONObject();
+
             String path = obj.getWritePreflix() + obj.getId();
             new File(path).delete();
 
             FileOutputStream fos = context.openFileOutput(path, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            JSONObject jobj = obj.getJSONObject();
             oos.writeObject(jobj.toString());
 
             oos.close();
