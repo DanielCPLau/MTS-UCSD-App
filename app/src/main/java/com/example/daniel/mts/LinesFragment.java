@@ -114,7 +114,6 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         String col = "#" + (String)lineObj.color;
         String shtnm = (String)lineObj.shortName;
         String longnm = (String) lineObj.longName;
-        Toast.makeText(getActivity(), selectedValue, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(getActivity(), DisplayListOfStops.class);
         Bundle dataBundle = new Bundle();
         dataBundle.putString("SelectedProperty", selectedValue);

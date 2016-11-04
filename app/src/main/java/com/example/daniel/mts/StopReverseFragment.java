@@ -84,7 +84,6 @@ public class StopReverseFragment extends ListFragment implements OnFragmentInter
         String id = activity.getId();
         lineID = id;
         Line lin = new Line(id).getOppositeDirection();
-        Log.d("In reverse Fragment", "" + lin.directionId);
 
         String[] stopIds = lin.listOfStopsId;
         ArrayAdapter<String> adapter = new StopReverseFragment.stopAdapter(getActivity(),R.layout.stoplist_rowlayout, R.id.stoptxt,stopIds);

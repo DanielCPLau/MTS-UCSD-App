@@ -108,7 +108,6 @@ public class ListofStops extends ListFragment{
 //        Toast.makeText(getActivity(), txt.getText().toString(),Toast.LENGTH_LONG);
         String stopId = (String)getListAdapter().getItem(position);
 
-        Toast.makeText(getActivity(), stopId, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(getActivity(), StopActivity.class);
         Bundle dataBundle = new Bundle();
         dataBundle.putString("stopId", stopId);

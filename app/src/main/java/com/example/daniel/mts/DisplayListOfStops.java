@@ -134,31 +134,33 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
                 Fragment fragment = null;
                 Class fragmentClass = null;
                 Log.d("direction", direction + "");
-                if(direction){
-                    fragmentClass = StopReverseFragment.class;
-                    Log.d("In Fragment:", " StopReverse");
+                if(lineInfo.oppositeDirectionId.length() > 0){
+                    if(direction){
+                        fragmentClass = StopReverseFragment.class;
+                        Log.d("In Fragment:", " StopReverse");
 
-                    Line oppLineInfo = new Line(lineInfo.oppositeDirectionId);
-                    String dir = oppLineInfo.directionName;
-                    directionName.setText("To " + dir);
+                        Line oppLineInfo = new Line(lineInfo.oppositeDirectionId);
+                        String dir = oppLineInfo.directionName;
+                        directionName.setText("To " + dir);
+                    }
+                    else{
+                        String dir = lineInfo.directionName;
+                        directionName.setText("To " + dir);
+                        fragmentClass = ListofStops.class;
+                        Log.d("In Fragment:", " ListofStops");
+                    }
+                    direction = !direction;
+                    try {
+                        fragment = (Fragment) fragmentClass.newInstance();
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    FragmentTransaction def = getSupportFragmentManager().beginTransaction();
+                    def.replace(R.id.flContent, fragment);
+                    def.commit();
                 }
-                else{
-                    String dir = lineInfo.directionName;
-                    directionName.setText("To " + dir);
-                    fragmentClass = ListofStops.class;
-                    Log.d("In Fragment:", " ListofStops");
-                }
-                direction = !direction;
-                try {
-                    fragment = (Fragment) fragmentClass.newInstance();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                FragmentTransaction def = getSupportFragmentManager().beginTransaction();
-                        def.replace(R.id.flContent, fragment);
-                        def.commit();
             }
 
 
