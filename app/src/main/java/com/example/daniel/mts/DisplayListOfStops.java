@@ -36,7 +36,6 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
     private LinearLayout top;
     private Line lineInfo;
 
-
     public String getId(){
         Bundle bundle = getIntent().getExtras();
         String id = bundle.getString("SelectedProperty");
