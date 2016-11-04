@@ -3,6 +3,8 @@ package com.example.daniel.mts;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Isaac on 11/3/16.
@@ -18,7 +20,9 @@ class Favorite implements Comparable<Favorite> {
         this.lineId = lineId;
         this.favorite = favorite;
 
-        ListOfLinesAndStopsIO.writeFavorite(this);
+        ArrayList<Favorite> arrayList = ListOfLinesAndStopsIO.readFavoriteList();
+        arrayList.add(this);
+        ListOfLinesAndStopsIO.writeFavoriteList(arrayList);
     }
 
     public Favorite(JSONObject jobj) {

@@ -183,28 +183,6 @@ class ListOfLinesAndStopsIO {
         }
     }
 
-    static void writeFavorite(Favorite f) {
-        try {
-            Context context = MyApplication.getAppContext();
-
-            String path = FILENAME_FAVORITE_LIST;
-
-            FileOutputStream fos = context.openFileOutput(path, Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            JSONObject jobj = f.getJSONObject();
-            oos.writeObject(jobj.toString());
-
-            oos.close();
-            fos.close();
-
-        }
-        catch (IOException e) {
-            Log.w("IOException", "occured in ListOfLinesAndStopsIO.writeFavorite()");
-            e.printStackTrace();
-        }
-    }
-
     static void writeFavoriteList(ArrayList<Favorite> fArray) {
         try {
             Context context = MyApplication.getAppContext();

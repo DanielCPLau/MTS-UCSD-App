@@ -51,24 +51,6 @@ public class StopActivity extends AppCompatActivity implements OnFragmentInterac
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        Bundle bundle = getIntent().getExtras();
-//        String col = bundle.getString("color");
-//        String name = bundle.getString("name");
-//        String longName = bundle.getString("long");
-//        String id = bundle.getString("SelectedProperty");
-//
-//        Line lineInfo = new Line(id);
-//        String dir = lineInfo.directionName;
-//        line = (TextView) findViewById(R.id.txtitem);
-//        lineName = (TextView) findViewById(R.id.nameItem);
-//        GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
-//        tvBackground.setColor(Color.parseColor(col));
-//        line.setText(name);
-//        line.setTextColor(Color.WHITE);
-//        view = line.getRootView();
-////        view.setBackgroundColor(Color.parseColor("#bac5d6"));
-//        lineName.setText(longName + " to " + dir);
-
         //find drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = setupDrawerToggle();
@@ -92,27 +74,6 @@ public class StopActivity extends AppCompatActivity implements OnFragmentInterac
         FragmentTransaction def = getSupportFragmentManager().beginTransaction();
         def.replace(R.id.flContent, fragment);
         def.commit();
-
-        Button homeButton = (Button)findViewById(R.id.home_button);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.home_button: {
-                        Fragment fragment = null;
-                        Class fragmentClass = HomeFragment.class;
-                        try {
-                            fragment = (Fragment) fragmentClass.newInstance();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        FragmentTransaction def = getSupportFragmentManager().beginTransaction();
-                        def.replace(R.id.flContent, fragment);
-                        def.commit();
-                    }
-                }
-            }
-        });
 
 
     }
