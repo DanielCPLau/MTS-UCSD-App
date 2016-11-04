@@ -89,6 +89,14 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+        Button removeButton = (Button)findViewById(R.id.remove_files);
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListOfLinesAndStopsIO.removeSavedFile();
+            }
+        });
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
