@@ -118,9 +118,6 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         Intent i = new Intent(getActivity(), DisplayListOfStops.class);
         Bundle dataBundle = new Bundle();
         dataBundle.putString("SelectedProperty", selectedValue);
-        dataBundle.putString("color", col);
-        dataBundle.putString("name",shtnm);
-        dataBundle.putString("long", longnm);
         i.putExtras(dataBundle);
         startActivity(i);
     }

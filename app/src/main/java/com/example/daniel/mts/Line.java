@@ -18,7 +18,8 @@ public class Line extends LineInfo implements Writable {
 
     // eg) 30 to Downtown and 30 to UTC
     public Line(String id) {
-        super(id);
+        super();
+        this.id = id;
 
         ListOfLinesAndStopsIO.read(this);
     }

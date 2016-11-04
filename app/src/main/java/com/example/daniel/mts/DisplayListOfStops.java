@@ -51,12 +51,16 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
-        String col = bundle.getString("color");
-        String name = bundle.getString("name");
-        String longName = bundle.getString("long");
-        String id = bundle.getString("SelectedProperty");
 
+        String id = bundle.getString("SelectedProperty");
         Line lineInfo = new Line(id);
+
+        String col = "#" + lineInfo.color;
+        String name = lineInfo.shortName;
+        String longName = lineInfo.longName;
+
+
+
         String dir = lineInfo.directionName;
         line = (TextView) findViewById(R.id.txtitem);
         lineName = (TextView) findViewById(R.id.nameItem);
