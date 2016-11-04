@@ -248,7 +248,7 @@ class ListOfLinesAndStopsIO {
                 Favorite f = new Favorite(jobj);
 
                 if(!f.favorite) {
-                    for(int j = 0; j < i; j++) {
+                    for(int j = 0; j <= i; j++) {
                         Favorite f2 = fArray.get(j);
                         if(f.cancelsWith(f2)) {
                             jarray.remove(j);

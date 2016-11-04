@@ -27,7 +27,7 @@ class Favorite implements Comparable<Favorite> {
 
     public Favorite(JSONObject jobj) {
         try {
-            this.stopId = jobj.getString("stopID");
+            this.stopId = jobj.getString("stopId");
             this.lineId = jobj.getString("lineId");
             this.favorite = jobj.getBoolean("favorite");
         }
