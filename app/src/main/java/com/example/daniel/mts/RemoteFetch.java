@@ -261,8 +261,6 @@ public class RemoteFetch {
             JSONObject dir = directions.getJSONObject(0);
 
             line.directionId = dir.getString("id");
-
-            line.directionId = dir.getString("id");
             line.directionName = dir.getJSONObject("name").getString("name");
 
             JSONArray stops = dir.getJSONArray("stopIds");
