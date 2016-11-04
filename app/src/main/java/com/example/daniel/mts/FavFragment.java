@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,9 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private Stop stop;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -57,6 +61,7 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -67,6 +72,16 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        stop = new Stop("MTS_10374",  "MTS_150");
+        stop.switchFavorite();
+        String fav;
+        if(stop.favorite) {
+            fav = "true";
+        }
+        else {
+            fav = "false";
+        }
+        Log.d("stopFav", fav);
     }
 
     @Override
@@ -83,11 +98,15 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.fav_fragment,container, false);
 
         // Get the List of favorite stops
-        ArrayList<Favorite> favoriteList = readFavoriteList();
+        ArrayList<Favorite> favoriteList = ListOfLinesAndStopsIO.readFavoriteList();
+
+        Log.d("favListSize", favoriteList.size() + "");
 
         ArrayAdapter<Favorite> adapter = new FavAdapter(getActivity(), R.layout.stoplist_rowlayout, R.id.stoptxt, favoriteList);
         setListAdapter(adapter);
         setRetainInstance(true);
+
+
 
         return rootview;
     }
@@ -141,21 +160,25 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
 
+            // get favorite object at row position
             Favorite favStop = (Favorite)getItem(position);
             String stopId = favStop.stopId;
             String lineId = favStop.lineId;
 
-            Stop stopInfo = new Stop(stopId, lineId);
+            Stop stop = new Stop(stopId, lineId);
+            String stopName = stop.name;
+            String lineShortName = stop.lineShortName;
+
             TextView stopText = (TextView)view.findViewById(R.id.stoptxt);
 
-            stopText.setText(stopInfo.lineShortName);
-            stopText.setText(stopInfo.name);
+            stopText.setText(lineShortName + " - " + stopName);
+            stopText.setTextColor(Color.BLACK);
 
-            // alternate grey and white background
+            // alternate grey and white row background
             if (position % 2 == 1) {
                 view.setBackgroundColor(Color.WHITE);
             } else {
-                view.setBackgroundColor(Color.parseColor("#eff5ff"));
+                view.setBackgroundColor(Color.parseColor("#EFF5FF"));
             }
 
             return view;
