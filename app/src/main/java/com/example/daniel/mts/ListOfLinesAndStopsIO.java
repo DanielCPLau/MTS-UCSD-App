@@ -44,7 +44,8 @@ class ListOfLinesAndStopsIO {
             oos.close();
             fos.close();
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             Log.w("IOException", "occured in ListOfLinesAndStopsIO.write()");
             e.printStackTrace();
         }
@@ -81,7 +82,8 @@ class ListOfLinesAndStopsIO {
             e.printStackTrace();
             write(obj);
             read(obj);
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             Log.i("JSONException", "occured in ListOfLinesAndStopsIO.read()");
             e.printStackTrace();
             write(obj);
@@ -96,7 +98,8 @@ class ListOfLinesAndStopsIO {
 
         try {
             FileInputStream fis = context.openFileInput(FILE_NAME_LINE_INFO_LIST);
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             writeLineInfoList();
         }
     }
@@ -129,7 +132,8 @@ class ListOfLinesAndStopsIO {
 
             oos.close();
             fos.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             Log.w("IOException", "occured in ListOfLinesAndStopsIO.writeLineInfoList()");
             e.printStackTrace();
             writeLineInfoList();
@@ -171,12 +175,12 @@ class ListOfLinesAndStopsIO {
             e.printStackTrace();
             writeLineInfoList();
             return readLineInfoList();
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             Log.w("JSONException", "occured in ListOfLinesAndStopsIO.readLineInfoList()");
             e.printStackTrace();
             writeLineInfoList();
             return readLineInfoList();
         }
     }
-
 }
