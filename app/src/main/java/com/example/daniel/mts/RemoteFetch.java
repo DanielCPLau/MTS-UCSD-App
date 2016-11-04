@@ -262,6 +262,7 @@ public class RemoteFetch {
 
             line.directionId = dir.getString("id");
 
+            line.directionId = dir.getString("id");
             line.directionName = dir.getJSONObject("name").getString("name");
 
             JSONArray stops = dir.getJSONArray("stopIds");
@@ -293,7 +294,7 @@ public class RemoteFetch {
                     oppositeDirLine.listOfStopsId[i] = stops.getString(i);
                 }
 
-                ListOfLinesAndStopsIO.read(oppositeDirLine);
+                ListOfLinesAndStopsIO.write(oppositeDirLine);
             }
 
             // TODO
