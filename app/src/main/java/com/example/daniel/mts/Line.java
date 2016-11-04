@@ -34,14 +34,6 @@ public class Line extends LineInfo implements Writable {
         this.favorite = line.favorite;
     }
 
-    public JSONArray getListOfStopsId() {
-        JSONArray jarray = new JSONArray();
-        for(int i = 0; i < listOfStopsId.length; i++) {
-            jarray.put(listOfStopsId[i]);
-        }
-        return jarray;
-    }
-
     public Line getOppositeDirection() {
         if(oppositeDirectionId.equals("")) {
             // there is no other direction
