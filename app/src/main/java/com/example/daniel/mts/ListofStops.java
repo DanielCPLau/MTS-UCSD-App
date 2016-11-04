@@ -87,8 +87,6 @@ public class ListofStops extends ListFragment{
         lineID = id;
         Line lin = new Line(id);
         String[] stopIds = lin.listOfStopsId;
-//        String stopid = (String)getItem(position);
-//        Stop stopInfo = new Stop(s, stopid);
         ArrayAdapter<String> adapter = new ListofStops.stopAdapter(getActivity(),R.layout.stops_rowlayout, R.id.stoptxt,stopIds);
         setListAdapter(adapter);
         setRetainInstance(true);

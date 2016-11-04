@@ -34,6 +34,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
     private ActionBarDrawerToggle drawerToggle;
     private TextView line;
     private TextView lineName;
+    private TextView directionName;
     private View view;
 
     public String getId(){
@@ -62,13 +63,21 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
 
         line = (TextView) findViewById(R.id.txtitem);
         lineName = (TextView) findViewById(R.id.nameItem);
+        directionName = (TextView) findViewById(R.id.direction);
+
         GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
         tvBackground.setColor(Color.parseColor(col));
+
         line.setText(name);
         line.setTextColor(Color.WHITE);
+
         view = line.getRootView();
-//        view.setBackgroundColor(Color.parseColor("#bac5d6"));
-        lineName.setText(longName + "\nTo " + dir);
+
+        lineName.setText(longName);
+        lineName.setTextColor(Color.BLACK);
+
+        directionName.setText("To " + dir);
+        directionName.setTextColor(Color.DKGRAY);
 
         //find drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);

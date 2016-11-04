@@ -26,31 +26,61 @@
             layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
             <TextView
                 android:id="@+id/txtitem"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="15dp"
                 android:textSize="15sp"
                 android:gravity="center"
-                android:background="@drawable/circle" />
-            <TextView
-                android:id="@+id/nameItem"
-                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:layout_weight = "0"/>
+
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight = "1"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp">
+
+                <TextView
+                    android:id="@+id/nameItem"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:gravity="left" />
+
+                <TextView
+                    android:id="@+id/direction"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="18sp"
+                    android:gravity="left" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/reverse"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="80dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="left" />
-        </RelativeLayout>
+                android:src="@mipmap/reverse"
+                android:background="@android:color/transparent"
+                android:layout_gravity="right"
+                android:layout_weight = "0"/>
+        </LinearLayout>
 
 
         <!-- The main content view where fragments are loaded -->
