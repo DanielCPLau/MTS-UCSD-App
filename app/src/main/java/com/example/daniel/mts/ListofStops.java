@@ -103,9 +103,6 @@ public class ListofStops extends ListFragment{
 
     public void onListItemClick(ListView view1, View view, int position, long id)
     {
-//        ViewGroup viewGroup = (ViewGroup)view;
-//        TextView txt = (TextView)viewGroup.findViewById(R.id.txtitem);
-//        Toast.makeText(getActivity(), txt.getText().toString(),Toast.LENGTH_LONG);
         String stopId = (String)getListAdapter().getItem(position);
 
         Intent i = new Intent(getActivity(), StopActivity.class);
