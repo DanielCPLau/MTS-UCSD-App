@@ -29,7 +29,8 @@ class ListOfLinesAndStopsIO {
     static final String FILENAME_LINE_INFO_LIST = "lineInfoList";
     static final String FILENAME_FAVORITE_LIST = "favoriteList";
 
-    static void removeSavedFile() {
+    static void removeSavedFiles() {
+        Log.d("Remove Saved Files", ".");
         Context context = MyApplication.getAppContext();
 
         for(File f: context.getFilesDir().listFiles()) {

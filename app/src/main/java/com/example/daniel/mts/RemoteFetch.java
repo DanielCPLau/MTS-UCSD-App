@@ -67,6 +67,8 @@ public class RemoteFetch {
     }
 
     public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        Log.d("API Usage", url);
+
         long time =  date.getTime() - lastTime;
         if( time < TIMER) {
             try {

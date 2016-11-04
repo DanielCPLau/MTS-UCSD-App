@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListOfLinesAndStopsIO.removeSavedFile();
+                ListOfLinesAndStopsIO.removeSavedFiles();
             }
         });
     }
