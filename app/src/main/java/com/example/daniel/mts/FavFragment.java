@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -133,6 +134,11 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void onListItemClick(ListView view1, View view, int position, long id) {
+        Favorite favObj = (Favorite)getListAdapter().getItem(position);
+
     }
 
     /**
