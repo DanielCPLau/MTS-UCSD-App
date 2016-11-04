@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 
 /**
@@ -87,7 +84,7 @@ public class ListofStops extends ListFragment{
         lineID = id;
         Line lin = new Line(id);
         String[] stopIds = lin.listOfStopsId;
-        ArrayAdapter<String> adapter = new ListofStops.stopAdapter(getActivity(),R.layout.stops_rowlayout, R.id.stoptxt,stopIds);
+        ArrayAdapter<String> adapter = new ListofStops.stopAdapter(getActivity(),R.layout.stoplist_rowlayout, R.id.stoptxt,stopIds);
         setListAdapter(adapter);
         setRetainInstance(true);
 

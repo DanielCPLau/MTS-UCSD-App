@@ -396,7 +396,7 @@ public class RemoteFetch {
         ArrayList<Integer> times = new ArrayList<Integer>();
 
         try {
-            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_PREDICTION, stopOfficialId)));
+            JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_PREDICTION, stopOfficialId))+"&minutesBefore=0&minutesAfter=60");
 
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed

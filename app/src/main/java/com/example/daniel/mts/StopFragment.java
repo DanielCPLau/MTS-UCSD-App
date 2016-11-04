@@ -82,7 +82,7 @@ public class StopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        myInflatedView = inflater.inflate(R.layout.fragment_stop, container,false);
+        myInflatedView = inflater.inflate(R.layout.stopinfodisplay_fragment, container,false);
 
         // Set the Text to try this out
         StopActivity act = (StopActivity) getActivity();
@@ -99,7 +99,14 @@ public class StopFragment extends Fragment {
         stopName = (TextView) myInflatedView.findViewById(R.id.nameItem);
         directionName = (TextView) myInflatedView.findViewById(R.id.direction);
         prediction = (TextView) myInflatedView.findViewById(R.id.prediction);
-        refresh = (ImageButton) myInflatedView.findViewById(R.id.reverse);
+        refresh = (ImageButton) myInflatedView.findViewById(R.id.refresh);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updatePrediction();
+            }
+        });
 
         GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
         tvBackground.setColor(Color.parseColor(color));
@@ -138,6 +145,7 @@ public class StopFragment extends Fragment {
         ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
 
         String times = "";
+
         if( predictions.size() > 0) {
             for (int i = 0; i < predictions.size(); i++) {
                 int time = predictions.get(i);
@@ -149,10 +157,10 @@ public class StopFragment extends Fragment {
                     times += predictions.get(i);
                 }
 
-                if (i < predictions.size() - 1) times += ", ";
-                if (i >= PREDICTION_LIMIT) break;
+                if (i >= PREDICTION_LIMIT - 1) break;
+                if (i < predictions.size() - 1) times += ",  ";
             }
-            times += " minutes";
+            times += "  mins";
         }
         else {
             times = "No prediction";

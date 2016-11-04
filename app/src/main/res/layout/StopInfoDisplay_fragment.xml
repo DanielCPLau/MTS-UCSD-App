@@ -43,7 +43,6 @@
                     android:id="@+id/nameItem"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:layout_marginBottom="5dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:gravity="left" />
@@ -75,8 +74,8 @@
                 android:background="@android:color/transparent"
                 android:layout_gravity="right"
                 android:layout_weight = "0"
-                android:onClick="onClick"
                 android:clickable="true" />
+
         </LinearLayout>
 
 
