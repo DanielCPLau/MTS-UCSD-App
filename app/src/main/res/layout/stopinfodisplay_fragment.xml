@@ -10,7 +10,10 @@
         android:orientation="vertical">
 
         <!-- The toolbar displayed at the top -->
-
+        <include
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -68,32 +71,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"
                 android:src="@mipmap/refresh"
-                android:background="@android:color/transparent"
-                android:layout_gravity="right"
-                android:layout_weight = "0"
-                android:clickable="true" />
-
-            <ImageButton
-                android:id="@+id/favorite"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/favorite"
-                android:background="@android:color/transparent"
-                android:layout_gravity="right"
-                android:layout_weight = "0"
-                android:clickable="true" />
-
-            <ImageButton
-                android:id="@+id/unfavorite"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/unfavorite"
                 android:background="@android:color/transparent"
                 android:layout_gravity="right"
                 android:layout_weight = "0"
