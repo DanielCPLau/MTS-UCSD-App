@@ -81,11 +81,14 @@ public class ListofStops extends ListFragment{
         // Inflate the layout for this fragment
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
         DisplayListOfStops activity = (DisplayListOfStops)getActivity();
+
+        // get line id from activity
         String id = activity.getId();
         lineID = id;
         Line lin = new Line(id);
         Log.d("In regular Fragment", "" + lin.directionId);
 
+        // use line id to find and display list of stops
         String[] stopIds = lin.listOfStopsId;
         ArrayAdapter<String> adapter = new ListofStops.stopAdapter(getActivity(),R.layout.stoplist_rowlayout, R.id.stoptxt,stopIds);
         setListAdapter(adapter);
@@ -105,7 +108,10 @@ public class ListofStops extends ListFragment{
     {
         String stopId = (String)getListAdapter().getItem(position);
 
+        // start new activity to show stop info based on stop pressed
         Intent i = new Intent(getActivity(), StopActivity.class);
+
+        // pass in info about the stop
         Bundle dataBundle = new Bundle();
         dataBundle.putString("stopId", stopId);
         dataBundle.putString("lineId", lineID);
@@ -115,12 +121,6 @@ public class ListofStops extends ListFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -154,12 +154,15 @@ public class ListofStops extends ListFragment{
         public View getView(int position, View convertView, ViewGroup parent) {
 
             View view = super.getView(position, convertView, parent);
+
+            // get stop info from stop id
             String stopid = (String)getItem(position);
             Stop stopInfo = new Stop(stopid, lineID);
+
+            // update respective text in row
             TextView stopText = (TextView) view.findViewById(R.id.stoptxt);
-//            TextView stopDir = (TextView) view.findViewById(R.id.stopdir);
             stopText.setText(stopInfo.name);
-//            stopDir.setText(stopInfo.direction);
+
             // alternating grey and white row backgrounds
             if (position % 2 == 1) {
                 view.setBackgroundColor(Color.WHITE);

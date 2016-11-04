@@ -90,13 +90,7 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         // get MTS line ids
         LineInfo[] lineInfo = ListOfLinesAndStopsIO.readLineInfoList();    // Need to change later to read from IO
 
-//        String[] lineStrings = new String[lineInfo.length];
-//
-//        for(int i = 0; i < lineStrings.length; i++) {
-//            lineStrings[i] = lineInfo[i].shortName;
-//        }
-
-        // add in shortname to rows
+        // Display list of lines
         ArrayAdapter<LineInfo> adapter = new MyAdapter(getActivity(),R.layout.rowlayout, R.id.txtitem,lineInfo);
         setListAdapter(adapter);
         setRetainInstance(true);
@@ -106,12 +100,11 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
 
     public void onListItemClick(ListView view1, View view, int position, long id)
     {
-
+        // get the Line at this row
         LineInfo lineObj = (LineInfo)getListAdapter().getItem(position);
+
+        // start a new activity when row is clicked and pass in the Line's id
         String selectedValue = (String) lineObj.id;
-        String col = "#" + (String)lineObj.color;
-        String shtnm = (String)lineObj.shortName;
-        String longnm = (String) lineObj.longName;
         Intent i = new Intent(getActivity(), DisplayListOfStops.class);
         Bundle dataBundle = new Bundle();
         dataBundle.putString("SelectedProperty", selectedValue);

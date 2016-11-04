@@ -80,11 +80,14 @@ public class StopReverseFragment extends ListFragment implements OnFragmentInter
 
         // Inflate the layout for this fragment
         ViewGroup rootview = (ViewGroup)inflater.inflate(R.layout.lines_fragment,container, false);
+
+        // obtain line id from activity
         DisplayListOfStops activity = (DisplayListOfStops)getActivity();
         String id = activity.getId();
         lineID = id;
-        Line lin = new Line(id).getOppositeDirection();
 
+        // use line id to find and display stops in the opposite direction
+        Line lin = new Line(id).getOppositeDirection();
         String[] stopIds = lin.listOfStopsId;
         ArrayAdapter<String> adapter = new StopReverseFragment.stopAdapter(getActivity(),R.layout.stoplist_rowlayout, R.id.stoptxt,stopIds);
         setListAdapter(adapter);
@@ -154,12 +157,13 @@ public class StopReverseFragment extends ListFragment implements OnFragmentInter
         public View getView(int position, View convertView, ViewGroup parent) {
 
             View view = super.getView(position, convertView, parent);
+
+            // get stop info and set text accordingly
             String stopid = (String)getItem(position);
             Stop stopInfo = new Stop(stopid, lineID);
             TextView stopText = (TextView) view.findViewById(R.id.stoptxt);
-//            TextView stopDir = (TextView) view.findViewById(R.id.stopdir);
             stopText.setText(stopInfo.name);
-//            stopDir.setText(stopInfo.direction);
+
             // alternating grey and white row backgrounds
             if (position % 2 == 1) {
                 view.setBackgroundColor(Color.WHITE);

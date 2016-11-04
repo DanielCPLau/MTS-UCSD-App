@@ -54,8 +54,8 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // get line id from line selected
         Bundle bundle = getIntent().getExtras();
-
         String id = bundle.getString("SelectedProperty");
         lineInfo = new Line(id);
 
@@ -64,6 +64,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         String longName = lineInfo.longName;
         String dir = lineInfo.directionName;
 
+        // assign text and buttons attached to toolbar
         line = (TextView) findViewById(R.id.txtitem);
         lineName = (TextView) findViewById(R.id.nameItem);
         directionName = (TextView) findViewById(R.id.direction);
@@ -72,14 +73,18 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
         tvBackground.setColor(Color.parseColor(col));
 
+        // don't show reverse button if line doesn't have an opposite direction
+        if(lineInfo.oppositeDirectionId.equals("")){
+            reverse.setVisibility(View.GONE);
+        }
+
+        // set colors for circle / line
         line.setText(name);
         line.setTextColor(Color.WHITE);
 
-        view = line.getRootView();
-
+        // set colors of text representing line
         lineName.setText(longName);
         lineName.setTextColor(Color.BLACK);
-
         directionName.setText("To " + dir);
         directionName.setTextColor(Color.DKGRAY);
 
@@ -127,14 +132,18 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
                 }
             }
         });
-        ImageButton reverse = (ImageButton)view.findViewById(R.id.reverse);
+
+        // actions performed when reverse button is clicked
         reverse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = null;
                 Class fragmentClass = null;
                 Log.d("direction", direction + "");
-                if(lineInfo.oppositeDirectionId.length() > 0){
+
+                // switch the fragment if an opposite direction exists
+                if(!lineInfo.oppositeDirectionId.equals("")){
+                    // change to opposite direction
                     if(direction){
                         fragmentClass = StopReverseFragment.class;
                         Log.d("In Fragment:", " StopReverse");
@@ -143,12 +152,15 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
                         String dir = oppLineInfo.directionName;
                         directionName.setText("To " + dir);
                     }
+                    // change to original direction
                     else{
                         String dir = lineInfo.directionName;
                         directionName.setText("To " + dir);
                         fragmentClass = ListofStops.class;
                         Log.d("In Fragment:", " ListofStops");
                     }
+
+                    // update direction to switch to
                     direction = !direction;
                     try {
                         fragment = (Fragment) fragmentClass.newInstance();
@@ -157,6 +169,8 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
+
+                    // load appropriate fragment
                     FragmentTransaction def = getSupportFragmentManager().beginTransaction();
                     def.replace(R.id.flContent, fragment);
                     def.commit();
@@ -211,6 +225,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
             e.printStackTrace();
         }
 
+        // hide items attached to toolbar when moving to other fragment
         line.setVisibility(View.GONE);
         lineName.setVisibility(View.GONE);
         directionName.setVisibility(View.GONE);
