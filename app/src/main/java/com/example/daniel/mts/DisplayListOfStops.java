@@ -12,10 +12,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,13 +32,21 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
     private TextView directionName;
     private ImageButton reverse;
     private View view;
+    private boolean direction = false;
+    private LinearLayout top;
+    private Line lineInfo;
+
 
     public String getId(){
         Bundle bundle = getIntent().getExtras();
         String id = bundle.getString("SelectedProperty");
-
         return id;
     }
+
+    public boolean getDirection() {
+        return direction;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +58,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         Bundle bundle = getIntent().getExtras();
 
         String id = bundle.getString("SelectedProperty");
-        Line lineInfo = new Line(id);
+        lineInfo = new Line(id);
 
         String col = "#" + lineInfo.color;
         String name = lineInfo.shortName;
@@ -59,6 +69,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         lineName = (TextView) findViewById(R.id.nameItem);
         directionName = (TextView) findViewById(R.id.direction);
         reverse = (ImageButton) findViewById(R.id.reverse);
+        top = (LinearLayout) findViewById(R.id.stop_toolbar);
 
         GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
         tvBackground.setColor(Color.parseColor(col));
@@ -118,7 +129,42 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
                 }
             }
         });
+        ImageButton reverse = (ImageButton)view.findViewById(R.id.reverse);
+        reverse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = null;
+                Class fragmentClass = null;
+                Log.d("direction", direction + "");
+                if(direction){
+                    fragmentClass = StopReverseFragment.class;
+                    Log.d("In Fragment:", " StopReverse");
 
+                    Line oppLineInfo = new Line(lineInfo.oppositeDirectionId);
+                    String dir = oppLineInfo.directionName;
+                    directionName.setText("To " + dir);
+                }
+                else{
+                    String dir = lineInfo.directionName;
+                    directionName.setText("To " + dir);
+                    fragmentClass = ListofStops.class;
+                    Log.d("In Fragment:", " ListofStops");
+                }
+                direction = !direction;
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                FragmentTransaction def = getSupportFragmentManager().beginTransaction();
+                        def.replace(R.id.flContent, fragment);
+                        def.commit();
+            }
+
+
+        });
 
     }
 
@@ -167,6 +213,9 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
 
         line.setVisibility(View.GONE);
         lineName.setVisibility(View.GONE);
+        directionName.setVisibility(View.GONE);
+        reverse.setVisibility(View.GONE);
+        top.setVisibility(View.GONE);
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();

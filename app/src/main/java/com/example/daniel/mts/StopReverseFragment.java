@@ -21,12 +21,12 @@ import android.widget.Toast;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ListofStops.OnFragmentInteractionListener} interface
+ * {@link StopReverseFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ListofStops#newInstance} factory method to
+ * Use the {@link StopReverseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListofStops extends ListFragment{
+public class StopReverseFragment extends ListFragment implements OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,7 +39,7 @@ public class ListofStops extends ListFragment{
 
     private OnFragmentInteractionListener mListener;
 
-    public ListofStops() {
+    public StopReverseFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +49,11 @@ public class ListofStops extends ListFragment{
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ListofStops.
+     * @return A new instance of fragment StopReverseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ListofStops newInstance(String param1, String param2) {
-        ListofStops fragment = new ListofStops();
+    public static StopReverseFragment newInstance(String param1, String param2) {
+        StopReverseFragment fragment = new StopReverseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,11 +83,11 @@ public class ListofStops extends ListFragment{
         DisplayListOfStops activity = (DisplayListOfStops)getActivity();
         String id = activity.getId();
         lineID = id;
-        Line lin = new Line(id);
-        Log.d("In regular Fragment", "" + lin.directionId);
+        Line lin = new Line(id).getOppositeDirection();
+        Log.d("In reverse Fragment", "" + lin.directionId);
 
         String[] stopIds = lin.listOfStopsId;
-        ArrayAdapter<String> adapter = new ListofStops.stopAdapter(getActivity(),R.layout.stoplist_rowlayout, R.id.stoptxt,stopIds);
+        ArrayAdapter<String> adapter = new StopReverseFragment.stopAdapter(getActivity(),R.layout.stoplist_rowlayout, R.id.stoptxt,stopIds);
         setListAdapter(adapter);
         setRetainInstance(true);
 
@@ -119,12 +119,6 @@ public class ListofStops extends ListFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -133,6 +127,10 @@ public class ListofStops extends ListFragment{
         mListener = null;
     }
 
+    @Override
+    public void onFragmentMessage(String MSG, Object data) {
+
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -148,7 +146,6 @@ public class ListofStops extends ListFragment{
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
     public class stopAdapter extends ArrayAdapter {
         public stopAdapter(Context context, int resource, int textViewResourceId, Object[] objects) {
             super(context, resource, textViewResourceId, objects);
