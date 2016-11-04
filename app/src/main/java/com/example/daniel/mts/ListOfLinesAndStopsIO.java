@@ -25,7 +25,8 @@ import java.io.ObjectInputStream;
 class ListOfLinesAndStopsIO {
     static final String FILENAME_LINE = "line_";
     static final String FILENAME_STOP = "stop_";
-    static final String FILE_NAME_LINE_INFO_LIST = "lineInfoList";
+    static final String FILENAME_LINE_INFO_LIST = "lineInfoList";
+    static final String FILENAME_FAVORITE_LIST = "favouriteList";
 
 
     private static void write(Writable obj) {
@@ -94,10 +95,10 @@ class ListOfLinesAndStopsIO {
     static void checkLineInfoList() {
         Context context = MyApplication.getAppContext();
 
-        String path = FILE_NAME_LINE_INFO_LIST;
+        String path = FILENAME_LINE_INFO_LIST;
 
         try {
-            FileInputStream fis = context.openFileInput(FILE_NAME_LINE_INFO_LIST);
+            FileInputStream fis = context.openFileInput(FILENAME_LINE_INFO_LIST);
         }
         catch (FileNotFoundException e) {
             writeLineInfoList();
@@ -108,7 +109,7 @@ class ListOfLinesAndStopsIO {
         try {
             Context context = MyApplication.getAppContext();
 
-            String path = FILE_NAME_LINE_INFO_LIST;
+            String path = FILENAME_LINE_INFO_LIST;
             new File(path).delete();
 
             FileOutputStream fos = context.openFileOutput(path, Context.MODE_PRIVATE);
@@ -143,7 +144,7 @@ class ListOfLinesAndStopsIO {
     static LineInfo[] readLineInfoList() {
         try {
             Context context = MyApplication.getAppContext();
-            FileInputStream fis = context.openFileInput(FILE_NAME_LINE_INFO_LIST);
+            FileInputStream fis = context.openFileInput(FILENAME_LINE_INFO_LIST);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             int size = ois.readInt();

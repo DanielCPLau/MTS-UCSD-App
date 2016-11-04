@@ -26,6 +26,8 @@ public class StopFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final int PREDICTION_LIMIT = 5;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -78,11 +80,15 @@ public class StopFragment extends Fragment {
         String lineId = act.getLineId();
         Stop stopInfo = new Stop(stopId, lineId);
         ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
+
         String times = "Next bus in ";
-        for(long prediction : predictions) {
-            times += (prediction + " , ");
+        for(int i = 0; i < predictions.size(); i++) {
+            times += predictions.get(i);
+            if(i < predictions.size() - 1) times += " , ";
+            if(i >= PREDICTION_LIMIT) break;
         }
         times += " minutes";
+
         TextView timesText = (TextView) myInflatedView.findViewById(R.id.times);
         timesText.setText(times);
 
