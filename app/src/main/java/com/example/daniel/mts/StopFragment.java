@@ -1,12 +1,15 @@
 package com.example.daniel.mts;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,6 +24,13 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class StopFragment extends Fragment {
+    private TextView line;
+    private TextView stopName;
+    private TextView directionName;
+    private TextView prediction;
+    private ImageButton refresh;
+    private View view;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,9 +73,6 @@ public class StopFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
     }
 
     @Override
@@ -80,7 +87,30 @@ public class StopFragment extends Fragment {
         String lineId = act.getLineId();
         Stop stop = new Stop(stopId, lineId);
 
+        String color = "#" + stop.color;
+        String lineShortNameString = stop.lineShortName;
+        String stopNameString = stop.name;
+        String lineDirectionNameString = stop.directionName;
         ArrayList<Integer> predictions = RemoteFetch.getPrediction(stopId, lineId);
+
+        line = (TextView) myInflatedView.findViewById(R.id.txtitem);
+        stopName = (TextView) myInflatedView.findViewById(R.id.nameItem);
+        directionName = (TextView) myInflatedView.findViewById(R.id.direction);
+        refresh = (ImageButton) myInflatedView.findViewById(R.id.reverse);
+
+        GradientDrawable tvBackground = (GradientDrawable) line.getBackground();
+        tvBackground.setColor(Color.parseColor(color));
+
+        line.setText(lineShortNameString);
+        line.setTextColor(Color.WHITE);
+
+        view = line.getRootView();
+
+        stopName.setText(stopNameString);
+        stopName.setTextColor(Color.BLACK);
+
+        directionName.setText("To " + lineDirectionNameString);
+        directionName.setTextColor(Color.DKGRAY);
 
         String times;
         if( predictions.size() > 0) {
@@ -104,8 +134,9 @@ public class StopFragment extends Fragment {
             times = "There is currently no prediction.";
         }
 
-        TextView timesText = (TextView) myInflatedView.findViewById(R.id.times);
-        timesText.setText(times);
+        prediction = (TextView) myInflatedView.findViewById(R.id.prediction);
+        prediction.setText(times);
+        prediction.setTextColor(Color.BLACK);
 
         return myInflatedView;
     }
