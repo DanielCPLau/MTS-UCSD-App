@@ -117,7 +117,7 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         ArrayList<Favorite> favoriteList = ListOfLinesAndStopsIO.readFavoriteList();
 
 
-        ArrayAdapter<Favorite> adapter = new FavAdapter(getActivity(), R.layout.fav_fragment, R.id.favLineStop, favoriteList);
+        ArrayAdapter<Favorite> adapter = new FavAdapter(getActivity(), R.layout.favoritestops_layout, R.id.favLineStop, favoriteList);
         setListAdapter(adapter);
         setRetainInstance(true);
 
@@ -265,6 +265,9 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             } else {
                 view.setBackgroundColor(Color.parseColor("#EFF5FF"));
             }
+// no
+            Log.d("help","help me push/pull");
+
 
             return view;
         }
