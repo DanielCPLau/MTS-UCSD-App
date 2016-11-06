@@ -5,79 +5,11 @@
     tools:context="com.example.daniel.mts.FavFragment">
 
 
-    <LinearLayout
+    <!-- TODO: Update blank fragment layout -->
+    <ListView
+        android:id="@id/android:list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-
-
-        <!-- The toolbar displayed at the top -->
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-
-            <TextView
-                android:id="@+id/favLineStop"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="15dp"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:background="@drawable/circle"
-                android:layout_weight = "0"/>
-
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight = "1"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="15dp">
-
-
-                <TextView
-                    android:id="@+id/favStopName"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="left" />
-
-
-                <TextView
-                    android:id="@+id/favStopDir"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:textSize="18sp"
-                    android:gravity="left" />
-
-
-                <TextView
-                    android:id="@+id/favPrediction"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="23sp"
-                    android:gravity="left" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-        <!-- The main content view where fragments are loaded -->
-        <FrameLayout
-            android:id="@+id/flContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-
+        android:layout_height="wrap_content"
+        android:divider="#E2E1E1"
+        android:dividerHeight="3.0sp"/>
 </FrameLayout>
-
-
