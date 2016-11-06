@@ -32,7 +32,7 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
     private TextView directionName;
     private ImageButton reverse;
     private View view;
-    private boolean direction = false;
+    private boolean original = true;
     private LinearLayout top;
     private Line lineInfo;
 
@@ -42,9 +42,6 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         return id;
     }
 
-    public boolean getDirection() {
-        return direction;
-    }
 
 
     @Override
@@ -139,18 +136,18 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
             public void onClick(View v) {
                 Fragment fragment = null;
                 Class fragmentClass = null;
-                Log.d("direction", direction + "");
 
                 // switch the fragment if an opposite direction exists
                 if(!lineInfo.oppositeDirectionId.equals("")){
-                    // change to opposite direction
-                    if(direction){
+                    // change fragment depending on current fragment
+                    if(original){
                         fragmentClass = StopReverseFragment.class;
                         Log.d("In Fragment:", " StopReverse");
 
-                        Line oppLineInfo = new Line(lineInfo.oppositeDirectionId);
+                        Line oppLineInfo = lineInfo.getOppositeDirection();
                         String dir = oppLineInfo.directionName;
                         directionName.setText("To " + dir);
+                        original = false;
                     }
                     // change to original direction
                     else{
@@ -158,10 +155,9 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
                         directionName.setText("To " + dir);
                         fragmentClass = ListofStops.class;
                         Log.d("In Fragment:", " ListofStops");
+                        original = true;
                     }
 
-                    // update direction to switch to
-                    direction = !direction;
                     try {
                         fragment = (Fragment) fragmentClass.newInstance();
                     } catch (InstantiationException e) {
