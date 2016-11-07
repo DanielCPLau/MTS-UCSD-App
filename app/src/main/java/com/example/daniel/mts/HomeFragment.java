@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
-        ArrayList<Stop> arr = rf.getStopsNearLoc(location.getLatitude(), location.getLongitude(), 100);
+        ArrayList<Stop> arr = rf.getStopsNearLoc(location.getLatitude(), location.getLongitude(), 200);
         Marker[] markerArray = new Marker[arr.size()];
 
         System.out.println("ARR LEN " + arr.size());
@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
         for (int i = 0; i < arr.size(); i ++) {
             MarkerOptions busMarkerOptions = new MarkerOptions();
             busMarkerOptions.position(new LatLng(arr.get(i).lat, arr.get(i).lon));
-            busMarkerOptions.title(arr.get(i).name);
+            busMarkerOptions.title(arr.get(i).name + " " + arr.get(i).lineId);
             busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
             markerArray[i] = mMap.addMarker(busMarkerOptions);
