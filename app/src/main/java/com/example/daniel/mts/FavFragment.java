@@ -1,6 +1,7 @@
 package com.example.daniel.mts;
 
 
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
@@ -127,6 +128,22 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         return rootview;
     }
 
+    public void onListItemClick(ListView view1, View view, int position, long id)
+    {
+        Favorite favStop = (Favorite) getListAdapter().getItem(position);
+        String stopId = favStop.stopId;
+        String lineID = favStop.lineId;
+
+        // start new activity to show stop info based on stop pressed
+        Intent i = new Intent(getActivity(), StopActivity.class);
+
+        // pass in info about the stop
+        Bundle dataBundle = new Bundle();
+        dataBundle.putString("stopId", stopId);
+        dataBundle.putString("lineId", lineID);
+        i.putExtras(dataBundle);
+        startActivity(i);
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -153,14 +170,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         super.onDetach();
         mListener = null;
     }
-
-
-    public void onListItemClick(ListView view1, View view, int position, long id) {
-        Favorite favObj = (Favorite)getListAdapter().getItem(position);
-
-
-    }
-
 
     /**
      * This interface must be implemented by activities that contain this
