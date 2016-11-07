@@ -33,6 +33,7 @@ public class StopFragment extends Fragment {
     private TextView directionName;
     private TextView prediction;
     private ImageButton refresh;
+    private ImageButton favorite;
     private View view;
     private String stopId;
     private String lineId;
@@ -107,11 +108,18 @@ public class StopFragment extends Fragment {
         directionName = (TextView) myInflatedView.findViewById(R.id.direction);
         prediction = (TextView) myInflatedView.findViewById(R.id.prediction);
         refresh = (ImageButton) myInflatedView.findViewById(R.id.refresh);
+        favorite = (ImageButton) myInflatedView.findViewById(R.id.favorite);
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updatePrediction(false);
+            }
+        });
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchFavorite();
             }
         });
 
@@ -132,6 +140,13 @@ public class StopFragment extends Fragment {
         updatePrediction(true);
         prediction.setTextColor(Color.BLACK);
 
+        if(stop.favorite) {
+            favorite.setImageResource(R.mipmap.favorite);
+        }
+        else {
+            favorite.setImageResource(R.mipmap.unfavorite);
+        }
+
         return myInflatedView;
     }
 
@@ -149,7 +164,7 @@ public class StopFragment extends Fragment {
     }
 
     // b should always be false unless you want to force update the time
-    public void updatePrediction(boolean b) {
+    private void updatePrediction(boolean b) {
         if(!b) {
             long currentTime = date.getTime() - lastTime;
             if (currentTime < REFRESH_LIMIT) {
@@ -185,6 +200,16 @@ public class StopFragment extends Fragment {
 
         lastTime = date.getTime();
 
+    }
+
+    private void switchFavorite() {
+        stop.switchFavorite();
+        if(stop.favorite) {
+            favorite.setImageResource(R.mipmap.favorite);
+        }
+        else {
+            favorite.setImageResource(R.mipmap.unfavorite);
+        }
     }
 
     /**

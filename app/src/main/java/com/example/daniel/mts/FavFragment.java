@@ -42,13 +42,8 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
     // limit of predictions to show
     private static final int LIMIT = 5;
-    private Stop stop;
-
-
-
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -91,10 +86,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        stop = new Stop("MTS_10374",  "MTS_150");
-        stop.switchFavorite();
-
-
     }
 
 
@@ -218,7 +209,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             TextView stopText = (TextView)view.findViewById(R.id.favStopName);
             TextView dirName = (TextView)view.findViewById(R.id.favStopDir);
             TextView prediction = (TextView)view.findViewById(R.id.favPrediction);
-            ImageButton noRefresh = null;
 
 
             GradientDrawable lineCircleBg = (GradientDrawable)line.getBackground();
@@ -274,8 +264,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             } else {
                 view.setBackgroundColor(Color.parseColor("#EFF5FF"));
             }
-// no
-            Log.d("help","help me push/pull");
 
 
             return view;

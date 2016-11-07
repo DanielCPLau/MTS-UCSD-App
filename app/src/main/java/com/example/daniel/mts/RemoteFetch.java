@@ -418,7 +418,7 @@ public class RemoteFetch {
 
                 if(!routeId.equals(lineOfficalId)) continue;
                 if(!departureEnabled) continue;
-                if(!directionName.equals(dirName)) continue;
+                if(!directionName.equals(dirName) && !(routeId.equals("MTS_201") || routeId.equals("MTS_202")))continue;
 
                 long predicted = time.getLong("predictedDepartureTime");
 
