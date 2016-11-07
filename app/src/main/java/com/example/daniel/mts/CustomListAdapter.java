@@ -1,6 +1,8 @@
 package com.example.daniel.mts;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,15 +57,27 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.map_image);
         ImageView iconImg = (ImageView) rowView.findViewById(R.id.icon_image);
 
+
         Picasso.with(context).load(filterMapArray.get(position)).into(imageView);
         Picasso.with(context).load(filterIconArray.get(position)).into(iconImg);
         lineButton.setText(filterNameArray.get(position));
         //imageView.setImageResource(mapid[position]);
         //iconImg.setImageResource(iconid[position]);
 
-
+        lineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Intent intent = new Intent ( getContext(),DisplayListOfStops.class);
+                    Bundle dataBundle = new Bundle();
+                    Button b= (Button)view;
+                    dataBundle.putString("SelectedProperty", "MTS_"+b.getText().toString());
+                    intent.putExtras(dataBundle);
+                    context.startActivity(intent);
+            }
+        });
         return rowView;
 
     }
 
 }
+
