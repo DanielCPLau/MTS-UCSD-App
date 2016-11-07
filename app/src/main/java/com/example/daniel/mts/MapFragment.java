@@ -119,6 +119,11 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
                 //MapFragment.this.adapter.getFilter().filter(charSequence);
                 String input = (charSequence.toString()).toLowerCase();
                 int length = input.length();
+                
+                final ArrayList<String> filterNameArray = createButtonList();
+                final ArrayList<Integer> filterMapArray = createMapList();
+                final ArrayList<Integer> filterIconArray = createIconList();
+                
                 String[] buttonNameLower = new String[filterNameArray.size()];
 
                 for(int k = 0; k < filterNameArray.size(); k++) {
