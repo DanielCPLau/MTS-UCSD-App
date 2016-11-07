@@ -21,6 +21,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private final String[] linename;
     private final Integer[] mapid;
     private final Integer[] iconid;
+    hello
 */
 
     private final ArrayList<String> filterNameArray;
