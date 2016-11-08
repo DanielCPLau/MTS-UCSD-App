@@ -199,7 +199,7 @@ class ListOfLinesAndStopsIO {
         }
     }
 
-    static void writeFavoriteList(ArrayList<Favorite> fArray) {
+    static void writeFavoriteList(Favorite[] fArray) {
         try {
             Context context = MyApplication.getAppContext();
 
@@ -211,8 +211,8 @@ class ListOfLinesAndStopsIO {
 
             JSONArray jarray = new JSONArray();
 
-            for (int i = 0; i < fArray.size(); i++) {
-                Favorite f = fArray.get(i);
+            for (int i = 0; i < fArray.length; i++) {
+                Favorite f = fArray[i];
                 if(!f.favorite) {
                     for(int j = 0; j < i; j++) {
                         JSONObject jobj = jarray.getJSONObject(j);
@@ -244,7 +244,7 @@ class ListOfLinesAndStopsIO {
         }
     }
 
-    static ArrayList<Favorite> readFavoriteList() {
+    static Favorite[] readFavoriteList() {
         ArrayList<Favorite> fArray = new ArrayList<Favorite>();
 
         try {
@@ -295,6 +295,6 @@ class ListOfLinesAndStopsIO {
             e.printStackTrace();
         }
 
-        return fArray;
+        return fArray.toArray(new Favorite[fArray.size()]);
     }
 }

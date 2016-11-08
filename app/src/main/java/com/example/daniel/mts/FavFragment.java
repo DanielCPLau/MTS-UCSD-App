@@ -106,7 +106,7 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
 
 
         // Get the List of favorite stops
-        ArrayList<Favorite> favoriteList = ListOfLinesAndStopsIO.readFavoriteList();
+        Favorite[] favoriteList = ListOfLinesAndStopsIO.readFavoriteList();
 
 
         ArrayAdapter<Favorite> adapter = new FavAdapter(getActivity(), R.layout.favoritestops_layout, R.id.favLineStop, favoriteList);
@@ -182,7 +182,7 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
 
 
         // Constructor
-        public FavAdapter(Context context, int resources, int textViewResourceID, ArrayList<Favorite> objects) {
+        public FavAdapter(Context context, int resources, int textViewResourceID, Favorite[] objects) {
             super(context, resources, textViewResourceID, objects);
         }
 
