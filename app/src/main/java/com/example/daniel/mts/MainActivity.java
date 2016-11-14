@@ -97,6 +97,14 @@ public class MainActivity extends AppCompatActivity
                 ListOfLinesAndStopsIO.removeSavedFiles();
             }
         });
+
+        Button fetchButton = (Button)findViewById(R.id.fetch_all_info);
+        fetchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListOfLinesAndStopsIO.fetchAllInfo();
+            }
+        });
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {

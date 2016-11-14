@@ -29,6 +29,22 @@ class ListOfLinesAndStopsIO {
     static final String FILENAME_LINE_INFO_LIST = "lineInfoList";
     static final String FILENAME_FAVORITE_LIST = "favoriteList";
 
+    static void fetchAllInfo() {
+        LineInfo[] lineInfo = readLineInfoList();
+        for(int i = 0; i < lineInfo.length; i++) {
+            Line l = new Line(lineInfo[i].id);
+            for(int j = 0; j < l.listOfStopsId.length; j++) {
+                Stop s = new Stop(l.listOfStopsId[j], l.id);
+            }
+            if(!l.directionName.equals("")) {
+                Line l2 = l.getOppositeDirection();
+                for(int j = 0; j < l2.listOfStopsId.length; j++) {
+                    Stop s = new Stop(l2.listOfStopsId[j], l.id);
+                }
+            }
+        }
+    }
+
     static void removeSavedFiles() {
         Log.d("Remove Saved Files", ".");
         Context context = MyApplication.getAppContext();
