@@ -53,7 +53,7 @@ public class RemoteFetch {
     private static final String REQUEST_LIST = "list";
     private static final String REQUEST_ENTRY = "entry";
 
-    private static final int TIMER = 80; // Min is 80
+    private static final int TIMER = 100; // Min is 80
 
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();

@@ -20,8 +20,8 @@ class Favorite implements Comparable<Favorite> {
         this.lineId = lineId;
         this.favorite = favorite;
 
-        Favorite[] arrayList = ListOfLinesAndStopsIO.readFavoriteList();
-        arrayList[arrayList.length-1] = this;
+        ArrayList<Favorite> arrayList = ListOfLinesAndStopsIO.readFavoriteList();
+        arrayList.add(this);
         ListOfLinesAndStopsIO.writeFavoriteList(arrayList);
     }
 
