@@ -36,8 +36,8 @@ class ListOfLinesAndStopsIO {
             for(int j = 0; j < l.listOfStopsId.length; j++) {
                 Stop s = new Stop(l.listOfStopsId[j], l.id);
             }
-            if(!l.directionName.equals("")) {
-                Line l2 = l.getOppositeDirection();
+            Line l2 = l.getOppositeDirection();
+            if(l2 != null) {
                 for(int j = 0; j < l2.listOfStopsId.length; j++) {
                     Stop s = new Stop(l2.listOfStopsId[j], l.id);
                 }
