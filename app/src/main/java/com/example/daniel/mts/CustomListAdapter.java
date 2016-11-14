@@ -2,6 +2,8 @@ package com.example.daniel.mts;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +26,14 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     hello
 */
 
+    private final ArrayList<Integer> filterNameArrayColor;
     private final ArrayList<String> filterNameArray;
     private final ArrayList<Integer> filterMapArray;
     private final ArrayList<Integer> filterIconArray;
 
     //public CustomListAdapter(Activity context, String[] linename, Integer[] mapid, Integer[] iconid) {
     public CustomListAdapter(Activity context, ArrayList<String> filterNameArray, ArrayList<Integer> filterMapArray,
-                             ArrayList<Integer> filterIconArray) {
+                             ArrayList<Integer> filterIconArray, ArrayList<Integer> filterNameArrayColor) {
 
         super(context, R.layout.map_activity_list, filterNameArray);
         // TODO Auto-generated constructor stub
@@ -40,6 +43,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         this.filterNameArray=filterNameArray;
         this.filterMapArray=filterMapArray;
         this.filterIconArray=filterIconArray;
+        this.filterNameArrayColor=filterNameArrayColor;
         /*
         this.linename=linename;
         this.mapid=mapid;
@@ -55,6 +59,24 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
 
         Button lineButton = (Button) rowView.findViewById(R.id.map_button_template);
+
+/*
+        if (lineButton.getText().toString().equals("201") || lineButton.getText().toString().equals(202)){
+            lineButton.setBackgroundColor(Color.RED);
+        }
+        else{
+            lineButton.setBackgroundColor(Color.BLUE);
+        }
+
+*/
+        /*
+        // ucsd busline
+        if (filterMapArray.get(position) == R.drawable.ucsdicon) {
+            lineButton.setBackgroundColor(Color.BLUE);
+        } else { //mts busline
+            lineButton.setBackgroundColor(Color.RED);
+        }*/
+
         ImageView imageView = (ImageView) rowView.findViewById(R.id.map_image);
         ImageView iconImg = (ImageView) rowView.findViewById(R.id.icon_image);
 
@@ -62,6 +84,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         Picasso.with(context).load(filterMapArray.get(position)).into(imageView);
         Picasso.with(context).load(filterIconArray.get(position)).into(iconImg);
         lineButton.setText(filterNameArray.get(position));
+        lineButton.setBackgroundColor(filterNameArrayColor.get(position));
         //imageView.setImageResource(mapid[position]);
         //iconImg.setImageResource(iconid[position]);
 
