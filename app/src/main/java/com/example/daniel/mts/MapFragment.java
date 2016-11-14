@@ -1,6 +1,7 @@
 package com.example.daniel.mts;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -104,8 +105,8 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
         final ArrayList<String> filterNameArray = createButtonList();
         final ArrayList<Integer> filterMapArray = createMapList();
         final ArrayList<Integer> filterIconArray = createIconList();
-
-        adapter = new CustomListAdapter(getActivity(), filterNameArray, filterMapArray, filterIconArray);
+        final ArrayList<Integer> filterNameArrayColor = createColor();
+        adapter = new CustomListAdapter(getActivity(), filterNameArray, filterMapArray, filterIconArray, filterNameArrayColor);
         lv.setAdapter(adapter);
 
         inputSearch.addTextChangedListener(new TextWatcher() {
@@ -123,7 +124,8 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
                 final ArrayList<String> filterNameArray = createButtonList();
                 final ArrayList<Integer> filterMapArray = createMapList();
                 final ArrayList<Integer> filterIconArray = createIconList();
-                
+                final ArrayList<Integer> filterNameArrayColor = createColor();
+
                 String[] buttonNameLower = new String[filterNameArray.size()];
 
                 for(int k = 0; k < filterNameArray.size(); k++) {
@@ -149,6 +151,11 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
                 }
                 filterIconArray.clear();
 
+                ArrayList<Integer> copyColor = new ArrayList<Integer>(filterNameArrayColor.size());
+                for (int index3 = 0; index3 < filterNameArrayColor.size(); index3++){
+                    copyColor.add(filterNameArrayColor.get(index3));
+                }
+                filterNameArrayColor.clear();
 
                 for (int j = 0; j < buttonNameLower.length; j++) {
                     if (length <= buttonNameLower[j].length()) {
@@ -157,13 +164,13 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
                             filterNameArray.add(buttonNameLower[j]);
                             filterMapArray.add(copyMapArray.get(j));
                             filterIconArray.add(copyIconArray.get(j));
-
+                            filterNameArrayColor.add(copyColor.get(j));
                         }
                     }
                 }
 
 
-                adapter = new CustomListAdapter(getActivity(), filterNameArray, filterMapArray, filterIconArray);
+                adapter = new CustomListAdapter(getActivity(), filterNameArray, filterMapArray, filterIconArray, filterNameArrayColor);
                 lv.setAdapter(adapter);
                 /*
 
@@ -206,6 +213,42 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnFr
         return toReturn;
     }
 
+    private ArrayList <Integer> createColor(){
+        Integer[] colorId;
+        ArrayList<Integer> toReturn = new ArrayList<Integer>();
+        colorId = new Integer[]{
+                Color.RED,
+                Color.RED,
+                Color.RED,
+                Color.RED,
+                Color.RED,
+                Color.RED,
+                Color.RED,
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191),
+                Color.rgb(44, 74, 191)
+
+        };
+
+        for (int index = 0; index < colorId.length; index++){
+
+            toReturn.add(index, colorId[index]);
+
+        }
+        return toReturn;
+    }
 
     private ArrayList<Integer> createMapList() {
         // ids for the maps that pass through ucsd
