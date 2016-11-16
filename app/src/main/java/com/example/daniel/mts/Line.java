@@ -71,7 +71,7 @@ public class Line extends LineInfo implements Writable {
     public JSONObject getJSONObject() {
         JSONObject obj = super.getJSONObject();
 
-        if( directionName.equals("")) {
+        while( directionName.equals("")) {
             RemoteFetch.fillLineDetailInfo(this);
         }
 

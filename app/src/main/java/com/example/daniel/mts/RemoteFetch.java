@@ -115,10 +115,10 @@ public class RemoteFetch {
     public static Line[] getListOfLines(String agency) {
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
-            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+            while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
-                //TODO
-                return null;
+                Log.w("API Request Fails", "occured in RemoteFetch.getListOfLines()");
+                json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
             }
 
             JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
@@ -175,10 +175,10 @@ public class RemoteFetch {
         Log.i("Reading from API", "occured in RemoteFetch.getListOfLinesInfo()");
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
-            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+            while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
-                //TODO
-                return null;
+                Log.w("API Request Fails", "occured in RemoteFetch.getListOfLinesInfo()");
+                json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
             }
 
             JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
@@ -211,7 +211,7 @@ public class RemoteFetch {
 
             while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 Log.w("API Request Fails", "occured in RemoteFetch.fillLineInfo()");
-                return;
+                json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_INFO, line.id)));
             }
 
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
@@ -250,10 +250,10 @@ public class RemoteFetch {
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_STOP_LIST, line.id))+"&includePolylines=false");
 
-            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+            while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
-                //TODO
-                return;
+                Log.w("API Request Fails", "occured in RemoteFetch.fillLineDetailInfo()");
+                json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_ROUTE_STOP_LIST, line.id))+"&includePolylines=false");
             }
 
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
@@ -313,10 +313,10 @@ public class RemoteFetch {
         try {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_STOP_INFO, stop.id)));
 
-            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+            while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
-                //TODO
-                return;
+                Log.w("API Request Fails", "occured in RemoteFetch.fillStopInfo()");
+                json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_STOP_INFO, stop.id)));
             }
 
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
@@ -367,10 +367,11 @@ public class RemoteFetch {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, REQUEST_STOP_NEARBY) +
                     String.format(REQUEST_END_LOC, lat, lon) + "&radius=" + rad);
 
-            if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
+            while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
-                //TODO
-                return stops;
+                Log.w("API Request Fails", "occured in RemoteFetch.getStopsNearLoc()");
+                json = readJsonFromUrl(String.format(REQUEST, REQUEST_STOP_NEARBY) +
+                        String.format(REQUEST_END_LOC, lat, lon) + "&radius=" + rad);
             }
 
             JSONArray list = json.getJSONObject(REQUEST_DATA).getJSONArray(REQUEST_LIST);
@@ -401,8 +402,8 @@ public class RemoteFetch {
 
             if (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
-                //TODO
-                return times;
+                Log.w("API Request Fails", "occured in RemoteFetch.getPrediction()");
+                json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_PREDICTION, stopOfficialId))+"&minutesBefore=0&minutesAfter=60");
             }
 
             long currentTime = json.getLong("currentTime");

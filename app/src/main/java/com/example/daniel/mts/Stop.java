@@ -61,7 +61,7 @@ public class Stop implements Writable {
     public JSONObject getJSONObject() {
         JSONObject obj = new JSONObject();
 
-        if(name.equals("")) {
+        while(name.equals("")) {
             RemoteFetch.fillStopInfo(this);
         }
 
