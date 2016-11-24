@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,12 +92,26 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         lineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent ( getContext(),DisplayListOfStops.class);
-                    Bundle dataBundle = new Bundle();
-                    Button b= (Button)view;
-                    dataBundle.putString("SelectedProperty", "MTS_"+b.getText().toString());
-                    intent.putExtras(dataBundle);
-                    context.startActivity(intent);
+                    Button viewButton = (Button) view;
+                    if (viewButton.getText().toString().contains("921") ||
+                            viewButton.getText().toString().contains("237") ||
+                        viewButton.getText().toString().contains("41") ||
+                            viewButton.getText().toString().contains("30") ||
+                            viewButton.getText().toString().contains("150") ||
+                            viewButton.getText().toString().contains("201") ||
+                            viewButton.getText().toString().contains("202")) {
+                        Intent intent = new Intent(getContext(), DisplayListOfStops.class);
+                        Bundle dataBundle = new Bundle();
+                        Button b = (Button) view;
+                        dataBundle.putString("SelectedProperty", "MTS_" + b.getText().toString());
+                        intent.putExtras(dataBundle);
+                        context.startActivity(intent);
+                    }
+                    else{
+                        Uri uriUrl = Uri.parse("https://www.ucsdbus.com/arrivals");
+                        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                        context.startActivity(launchBrowser);
+                    }
             }
         });
         return rowView;
@@ -104,4 +119,5 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     }
 
 }
+
 
