@@ -1,5 +1,6 @@
 package com.example.daniel.mts;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -103,13 +104,22 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
         // get the Line at this row
         LineInfo lineObj = (LineInfo)getListAdapter().getItem(position);
 
-        // start a new activity when row is clicked and pass in the Line's id
-        String selectedValue = (String) lineObj.id;
-        Intent i = new Intent(getActivity(), DisplayListOfStops.class);
-        Bundle dataBundle = new Bundle();
-        dataBundle.putString("SelectedProperty", selectedValue);
-        i.putExtras(dataBundle);
-        startActivity(i);
+        // open campus loop website for UCSD lines
+        if(lineObj.agency.equals("UCSD")) {
+            Uri uriUrl = Uri.parse("https://www.ucsdbus.com/arrivals");
+            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+            startActivity(launchBrowser);
+        }
+        else {
+            // start a new activity when row is clicked and pass in the Line's id
+            String selectedValue = (String) lineObj.id;
+            Intent i = new Intent(getActivity(), DisplayListOfStops.class);
+            Bundle dataBundle = new Bundle();
+            dataBundle.putString("SelectedProperty", selectedValue);
+            i.putExtras(dataBundle);
+            startActivity(i);
+        }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -150,9 +160,14 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
 
     }
 
+    /**
+     *  Sources of help : http://www.ezzylearning.com/tutorial/customizing-android-listview-items-with-custom-arrayadapter
+     */
     public class MyAdapter extends ArrayAdapter {
+        private final Context context;
         public MyAdapter(Context context, int resource, int textViewResourceId, Object[] objects) {
             super(context, resource, textViewResourceId, objects);
+            this.context = context;
         }
 
         @Override
@@ -165,6 +180,9 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
             String col = "#" + obj.color;
             String shortNm = obj.shortName;
             String longNm = obj.longName;
+            String agency = obj.agency;
+            String txtCol = "#" + obj.textColor;
+
 
             longNm = longNm.replaceAll("Center", "Ctr");
             longNm = longNm.replaceAll("Clockwise", "CW");
@@ -188,7 +206,12 @@ public class LinesFragment extends ListFragment implements OnFragmentInteraction
 
             // set text to be line number from the lineinfo object
             tv.setText(shortNm);
-            tv.setTextColor(Color.WHITE);
+            if(agency.equals("UCSD")) {
+                tv.setTextColor(Color.parseColor(txtCol));
+            }
+            else {
+                tv.setTextColor(Color.WHITE);
+            }
 
             tv = (TextView) view.findViewById(R.id.nameItem);
 
