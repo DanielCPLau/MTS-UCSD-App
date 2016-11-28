@@ -11,12 +11,5 @@
     android:background="?attr/colorPrimaryDark">
 
     <!-- DOESN'T DO ANYTHING, NEEDS TO BE HOOKED UP !-->
-    <Button
-        android:id="@+id/home_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:layout_gravity="right"
-        />
 
 </android.support.v7.widget.Toolbar>

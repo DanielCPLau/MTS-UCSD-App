@@ -109,32 +109,6 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
         def.replace(R.id.flContent, fragment);
         def.commit();
 
-        Button homeButton = (Button)findViewById(R.id.home_button);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.home_button: {
-                        line.setVisibility(View.GONE);
-                        lineName.setVisibility(View.GONE);
-                        directionName.setVisibility(View.GONE);
-                        reverse.setVisibility(View.GONE);
-                        top.setVisibility(View.GONE);
-                        Fragment fragment = null;
-                        Class fragmentClass = HomeFragment.class;
-                        try {
-                            fragment = (Fragment) fragmentClass.newInstance();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        FragmentTransaction def = getSupportFragmentManager().beginTransaction();
-                        def.replace(R.id.flContent, fragment);
-                        def.commit();
-                    }
-                }
-            }
-        });
-
         // actions performed when reverse button is clicked
         reverse.setOnClickListener(new View.OnClickListener() {
             @Override

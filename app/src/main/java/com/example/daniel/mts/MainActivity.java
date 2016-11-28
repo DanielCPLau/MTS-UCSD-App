@@ -65,27 +65,6 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction def = getSupportFragmentManager().beginTransaction();
         def.replace(R.id.flContent, fragment);
         def.commit();
-
-        Button homeButton = (Button)findViewById(R.id.home_button);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.home_button: {
-                        Fragment fragment = null;
-                        Class fragmentClass = HomeFragment.class;
-                        try {
-                            fragment = (Fragment) fragmentClass.newInstance();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        FragmentTransaction def = getSupportFragmentManager().beginTransaction();
-                        def.replace(R.id.flContent, fragment);
-                        def.commit();
-                    }
-                }
-            }
-        });
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
