@@ -236,7 +236,7 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             dirName.setText("To " + lineDirName);
             dirName.setTextColor(Color.GRAY);
 
-            if(count > numOfRows && count <= numOfRows * 2) {
+            if(count >= numOfRows && count <= numOfRows * 2) {
                 ArrayList<Integer> pred = RemoteFetch.getPrediction(stopId, lineId, lineDirName);
                 String times = "";
 
