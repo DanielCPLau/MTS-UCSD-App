@@ -414,19 +414,33 @@ public class RemoteFetch {
             JSONObject entry = json.getJSONObject(REQUEST_DATA).getJSONObject(REQUEST_ENTRY);
             JSONArray arrivalsAndDepartures = entry.getJSONArray("arrivalsAndDepartures");
 
+            boolean end = false;
+
             for(int i = 0; i < arrivalsAndDepartures.length(); i++ ) {
                 JSONObject time = arrivalsAndDepartures.getJSONObject(i);
                 String routeId = time.getString("routeId");
                 String dirName = time.getString("tripHeadsign");
                 boolean departureEnabled = time.getBoolean("departureEnabled");
+                int stopSequence = time.getInt("stopSequence");
+                boolean predictedBool = time.getBoolean("predicted");
 
                 if(!routeId.equals(lineOfficalId)) continue;
                 if(!departureEnabled) continue;
                 if(!directionName.equals(dirName) && !(routeId.equals("MTS_201") || routeId.equals("MTS_202")))continue;
+                if(stopSequence == 0) end = true;
+                if(end && stopSequence != 0) continue;
 
-                long predicted = time.getLong("predictedDepartureTime");
+                long predicted = 0;
+                if(!predictedBool) {
+                    predicted = time.getLong("scheduledDepartureTime");
+                }
+                else {
+                    predicted = time.getLong("predictedDepartureTime");
+                }
 
-                int next = (int)(predicted - currentTime)/60000;
+                int next = (int)((double)(predicted - currentTime)/60000);
+
+                if(next > 60) continue;
 
                 if(next >= 0) {
                     times.add(next);

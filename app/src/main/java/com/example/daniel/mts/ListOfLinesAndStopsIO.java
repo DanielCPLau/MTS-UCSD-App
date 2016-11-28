@@ -154,6 +154,8 @@ class ListOfLinesAndStopsIO {
 
             JSONArray jarray = new JSONArray();
 
+            // put UCSD shuttle
+
             for (LineInfo lineInfo : array) {
                 jarray.put(lineInfo.getJSONObject());
             }
