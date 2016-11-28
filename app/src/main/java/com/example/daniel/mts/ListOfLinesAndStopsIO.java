@@ -31,17 +31,28 @@ class ListOfLinesAndStopsIO {
 
     static void fetchAllInfo() {
         LineInfo[] lineInfo = readLineInfoList();
+
+        int total = 6303;
+        int count = 1;
+
         for(int i = 0; i < lineInfo.length; i++) {
             if (lineInfo[i].agency.equals("UCSD")) continue;
 
             Line l = new Line(lineInfo[i].id);
+            count++;
+            Log.d("Progess", String.format("%.2f", (double)count/total*100) + "%");
+
             for(int j = 0; j < l.listOfStopsId.length; j++) {
                 Stop s = new Stop(l.listOfStopsId[j], l.id);
+                count++;
+                Log.d("Progess", String.format("%.2f", (double)count/total*100) + "%");
             }
             Line l2 = l.getOppositeDirection();
             if(l2 != null) {
                 for(int j = 0; j < l2.listOfStopsId.length; j++) {
                     Stop s = new Stop(l2.listOfStopsId[j], l.id);
+                    count++;
+                    Log.d("Progess", String.format("%.2f", (double)count/total*100) + "%");
                 }
             }
         }
