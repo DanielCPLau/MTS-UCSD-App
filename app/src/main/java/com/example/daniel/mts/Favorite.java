@@ -14,6 +14,7 @@ class Favorite implements Comparable<Favorite> {
     public String stopId;
     public String lineId;
     public boolean favorite;
+    public String prediction;
 
     public Favorite(String stopId, String lineId, boolean favorite) {
         this.stopId = stopId;
