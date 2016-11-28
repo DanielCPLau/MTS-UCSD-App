@@ -132,12 +132,12 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
                     if (time == 0) {
                         times += "Arriving";
                     } else {
-                        times += pred.get(i);
+                        times += pred.get(j);
                     }
 
 
-                    if (i >= LIMIT - 1) break;
-                    if (i < pred.size() - 1) times += ", ";
+                    if (j >= LIMIT - 1) break;
+                    if (j < pred.size() - 1) times += ", ";
                 }
                 times += " mins";
             } else {
