@@ -181,13 +181,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
 
         System.out.println("ARR LEN " + arr.size());
 
+        int count = 0;
+
         for (int i = 0; i < arr.size(); i ++) {
+            double lat = arr.get(i).lat;
+            double lon = arr.get(i).lon;
+
             MarkerOptions busMarkerOptions = new MarkerOptions();
-            busMarkerOptions.position(new LatLng(arr.get(i).lat, arr.get(i).lon));
-            busMarkerOptions.title(arr.get(i).name + " " + arr.get(i).lineId);
+            busMarkerOptions.position(new LatLng(lat, lon));
+            busMarkerOptions.title(arr.get(i).name + " Line " + arr.get(i).lineShortName);
             busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
             markerArray[i] = mMap.addMarker(busMarkerOptions);
+            count++;
 
         }
 
