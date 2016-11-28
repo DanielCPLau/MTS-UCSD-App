@@ -114,13 +114,9 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             favoriteList[i] = favoriteArray.get(i);
         }
 
-
         ArrayAdapter<Favorite> adapter = new FavAdapter(getActivity(), R.layout.favoritestops_layout, R.id.favLineStop, favoriteList);
         setListAdapter(adapter);
         setRetainInstance(true);
-
-
-
 
         return rootview;
     }
@@ -185,8 +181,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
 
 
     public class FavAdapter extends ArrayAdapter {
-
-
         // Constructor
         public FavAdapter(Context context, int resources, int textViewResourceID, Object[] objects) {
             super(context, resources, textViewResourceID, objects);
@@ -196,7 +190,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
-
 
             // get favorite object at row position
             Favorite favStop = (Favorite)getItem(position);
@@ -232,36 +225,37 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             dirName.setText("To " + lineDirName);
             dirName.setTextColor(Color.GRAY);
 
+            if(true) {
 
-            ArrayList<Integer> pred = RemoteFetch.getPrediction(stopId, lineId, lineDirName);
-            String times = "";
-
-
-            if(pred.size() > 0) {
-                for(int i = 0; i < pred.size(); i++) {
-                    int time = pred.get(i);
+                ArrayList<Integer> pred = RemoteFetch.getPrediction(stopId, lineId, lineDirName);
+                String times = "";
 
 
-                    if(time == 0) {
-                        times += "Arriving";
+                if (pred.size() > 0) {
+                    for (int i = 0; i < pred.size(); i++) {
+                        int time = pred.get(i);
+
+
+                        if (time == 0) {
+                            times += "Arriving";
+                        } else {
+                            times += pred.get(i);
+                        }
+
+
+                        if (i >= LIMIT - 1) break;
+                        if (i < pred.size() - 1) times += ", ";
                     }
-                    else {
-                        times += pred.get(i);
-                    }
-
-
-                    if(i >= LIMIT - 1) break;
-                    if(i < pred.size() - 1) times += ", ";
+                    times += " mins";
+                } else {
+                    times = "No prediction";
                 }
-                times += " mins";
-            }
-            else {
-                times = "No prediction";
-            }
 
 
-            prediction.setText(times);
-            prediction.setTextColor(Color.BLACK);
+                prediction.setText(times);
+                prediction.setTextColor(Color.BLACK);
+
+            }
 
 
             // alternate grey and white row background

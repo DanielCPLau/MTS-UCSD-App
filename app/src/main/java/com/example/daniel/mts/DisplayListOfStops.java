@@ -115,6 +115,11 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.home_button: {
+                        line.setVisibility(View.GONE);
+                        lineName.setVisibility(View.GONE);
+                        directionName.setVisibility(View.GONE);
+                        reverse.setVisibility(View.GONE);
+                        top.setVisibility(View.GONE);
                         Fragment fragment = null;
                         Class fragmentClass = HomeFragment.class;
                         try {
