@@ -206,7 +206,6 @@ class ListOfLinesAndStopsIO {
 
     static LineInfo[] readLineInfoList() {
         try {
-            writeLineInfoList();
             Context context = MyApplication.getAppContext();
             FileInputStream fis = context.openFileInput(FILENAME_LINE_INFO_LIST);
             ObjectInputStream ois = new ObjectInputStream(fis);
