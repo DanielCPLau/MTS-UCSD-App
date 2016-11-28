@@ -41,8 +41,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static int count = 0;
-    private static int numOfRows = 0;
 
     // limit of predictions to show
     private static final int LIMIT = 5;
@@ -115,16 +113,10 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         for(int i = 0; i < favoriteList.length; i++) {
             favoriteList[i] = favoriteArray.get(i);
         }
-        count = 0;
-        numOfRows = favoriteList.length;
-
 
         ArrayAdapter<Favorite> adapter = new FavAdapter(getActivity(), R.layout.favoritestops_layout, R.id.favLineStop, favoriteList);
         setListAdapter(adapter);
         setRetainInstance(true);
-
-
-
 
         return rootview;
     }
@@ -199,9 +191,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
 
-            count++;
-
-
             // get favorite object at row position
             Favorite favStop = (Favorite)getItem(position);
             String stopId = favStop.stopId;
@@ -236,7 +225,8 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             dirName.setText("To " + lineDirName);
             dirName.setTextColor(Color.GRAY);
 
-            if(count >= numOfRows && count <= numOfRows * 2) {
+            if(true) {
+
                 ArrayList<Integer> pred = RemoteFetch.getPrediction(stopId, lineId, lineDirName);
                 String times = "";
 
