@@ -70,7 +70,7 @@ public class RemoteFetch {
     }
 
     public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-        Log.d("API Usage", url);
+        //Log.d("API Usage", url);
 
         long time =  date.getTime() - lastTime;
         if( time < TIMER) {
@@ -120,7 +120,7 @@ public class RemoteFetch {
             JSONObject json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
             while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
-                Log.w("API Request Fails", "occured in RemoteFetch.getListOfLines()");
+                //Log.w("API Request Fails", "occured in RemoteFetch.getListOfLines()");
                 json = readJsonFromUrl(String.format(REQUEST, String.format(REQUEST_LIST_OF_ROUTE, agency)));
             }
 

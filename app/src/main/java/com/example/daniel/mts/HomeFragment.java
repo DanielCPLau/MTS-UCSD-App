@@ -39,6 +39,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+//credit given to the following websites for display help
+//http://stackoverflow.com/questions/30589498/how-to-call-getmapasync-in-android-studio
+//http://stackoverflow.com/questions/16978190/add-google-maps-api-v2-in-a-fragment
+//http://stackoverflow.com/questions/14083950/duplicate-id-tag-null-or-parent-id-with-
+// another-fragment-for-com-google-androi/19815266#19815266
+//http://www.androidtutorialpoint.com/intermediate/android-map-app-showing-current-location-android/
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass. Activities that
  * contain this fragment must implement the
@@ -244,8 +250,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback,
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted. Do the
-                    // contacts-related task you need to do.
+                    // permission was granted
                     if (ContextCompat.checkSelfPermission(getContext(),
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {

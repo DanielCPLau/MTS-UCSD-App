@@ -21,7 +21,7 @@ public class Line extends LineInfo implements Writable {
         super();
         this.id = id;
 
-        ListOfLinesAndStopsIO.read(this);
+        //ListOfLinesAndStopsIO.read(this);
     }
 
     public Line(Line line) {
