@@ -120,7 +120,7 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
 
             Stop stop = new Stop(stopId, lineId);
 
-            ArrayList<Integer> pred = RemoteFetch.getPrediction(stopId, lineId, stop.directionId);
+            ArrayList<Integer> pred = RemoteFetch.getPrediction(stopId, lineId, stop.directionName);
             String times = "";
 
 
