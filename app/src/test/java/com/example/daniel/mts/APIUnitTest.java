@@ -24,13 +24,13 @@ public class APIUnitTest {
     @Test
     public void checkStopFav() throws Exception {
         ArrayList<Stop> stops = rf.getStopsNearLoc(32.877571, -117.236009, 50);
+        assertEquals(4, stops.size());
     }
 
     @Test
     public void checkStops() throws Exception {
         ArrayList<Stop> stops = rf.getStopsNearLoc(32.877571, -117.236009, 50);
 
-        assertEquals(4, stops.size());
         assertEquals(stops.get(0).favorite, false);
         assertEquals(stops.get(1).favorite, false);
         assertEquals(stops.get(2).favorite, false);
@@ -60,6 +60,22 @@ public class APIUnitTest {
         assertEquals(stops.get(1).wheelchairBoarding, false);
         assertEquals(stops.get(2).wheelchairBoarding, false);
         assertEquals(stops.get(3).wheelchairBoarding, false);
+    }
+
+    @Test
+    public void checkCode() throws Exception {
+        ArrayList<Stop> stops = rf.getStopsNearLoc(32.877571, -117.236009, 50);
+        assertEquals(stops.get(0).lineId.toString().trim(),"MTS_30");
+        assertEquals(stops.get(1).lineId.toString().trim(),"NCTD_301");
+        assertEquals(stops.get(2).lineId.toString().trim(),"MTS_150");
+    }
+
+    @Test
+    public void checkLineID() throws Exception {
+        ArrayList<Stop> stops = rf.getStopsNearLoc(32.877571, -117.236009, 50);
+        assertEquals(stops.get(0).id.toString().trim(),"MTS_10772");
+        assertEquals(stops.get(1).id.toString().trim(),"MTS_10772");
+        assertEquals(stops.get(2).id.toString().trim(),"MTS_10772");
     }
 
 
