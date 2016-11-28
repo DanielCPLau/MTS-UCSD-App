@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ListOfLinesAndStopsIO.fetchAllInfo();
+
         setContentView(R.layout.activity_main);
 
         //Set toolbar to replace the action bar
