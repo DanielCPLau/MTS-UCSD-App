@@ -25,7 +25,11 @@ import java.util.ArrayList;
 
 import static com.example.daniel.mts.ListOfLinesAndStopsIO.readFavoriteList;
 
-
+/*
+ * Sources of Help:
+ * http://www.ezzylearning.com/tutorial/customizing-android-listview-items-with-custom-arrayadapter,
+ * https://www.youtube.com/watch?v=wDBM6wVEO70
+ */
 
 
 /**
@@ -110,6 +114,7 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
 
         Favorite[] favoriteList = new Favorite[favoriteArray.size()];
 
+        // get the favorite stop and set the prediction times
         for(int i = 0; i < favoriteList.length; i++) {
             favoriteList[i] = favoriteArray.get(i);
 
@@ -208,8 +213,6 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
      * >Communicating with Other Fragments</a> for more information.
      */
     public void onFragmentMessage(String MSG, Object data) {
-
-
     }
 
 
@@ -229,38 +232,38 @@ public class FavFragment extends ListFragment implements OnFragmentInteractionLi
             String stopId = favStop.stopId;
             String lineId = favStop.lineId;
 
-
+            // create the favorite stop
             Stop stop = new Stop(stopId, lineId);
             String color = "#" + stop.color;
             String stopName = stop.name;
             String lineShortName = stop.lineShortName;
             String lineDirName = stop.directionName;
 
-
+            // make the textviews to display the favorite stop information
             TextView line = (TextView) view.findViewById(R.id.favLineStop);
             TextView stopText = (TextView)view.findViewById(R.id.favStopName);
             TextView dirName = (TextView)view.findViewById(R.id.favStopDir);
             TextView prediction = (TextView)view.findViewById(R.id.favPrediction);
 
-
+            // set the color of the circle holding the line number
             GradientDrawable lineCircleBg = (GradientDrawable)line.getBackground();
             lineCircleBg.setColor(Color.parseColor(color));
 
-
+            // display the line information
             line.setText(lineShortName);
             line.setTextColor(Color.WHITE);
 
-
+            // display the stop information
             stopText.setText(stopName);
             stopText.setTextColor(Color.BLACK);
 
-
+            // display which direction this route is going
             dirName.setText("To " + lineDirName);
             dirName.setTextColor(Color.GRAY);
 
+            // display the prediction times for this line at this stop
             prediction.setText(favStop.prediction);
             prediction.setTextColor(Color.BLACK);
-
 
             // alternate grey and white row background
             if (position % 2 == 1) {
