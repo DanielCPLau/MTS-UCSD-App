@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,6 +167,7 @@ public class StopFragment extends Fragment {
     // b should always be false unless you want to force update the time
     private void updatePrediction(boolean b) {
         if(!b) {
+            date = new Date();
             long currentTime = date.getTime() - lastTime;
             if (currentTime < REFRESH_LIMIT) {
                 return;
@@ -198,6 +200,7 @@ public class StopFragment extends Fragment {
 
         prediction.setText(times);
 
+        date = new Date();
         lastTime = date.getTime();
 
     }
