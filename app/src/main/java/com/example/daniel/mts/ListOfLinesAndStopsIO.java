@@ -32,7 +32,8 @@ class ListOfLinesAndStopsIO {
     static void fetchAllInfo() {
         LineInfo[] lineInfo = readLineInfoList();
         for(int i = 0; i < lineInfo.length; i++) {
-            if (lineInfo[i].agency == "UCSD") continue;
+            if (lineInfo[i].agency.equals("UCSD")) continue;
+
             Line l = new Line(lineInfo[i].id);
             for(int j = 0; j < l.listOfStopsId.length; j++) {
                 Stop s = new Stop(l.listOfStopsId[j], l.id);
