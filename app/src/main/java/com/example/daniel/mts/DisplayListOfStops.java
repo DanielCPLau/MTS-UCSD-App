@@ -130,22 +130,6 @@ public class DisplayListOfStops extends AppCompatActivity implements OnFragmentI
             }
         });
 
-        Button removeButton = (Button)findViewById(R.id.remove_files);
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ListOfLinesAndStopsIO.removeSavedFiles();
-            }
-        });
-
-        Button fetchButton = (Button)findViewById(R.id.fetch_all_info);
-        fetchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ListOfLinesAndStopsIO.fetchAllInfo();
-            }
-        });
-
         // actions performed when reverse button is clicked
         reverse.setOnClickListener(new View.OnClickListener() {
             @Override

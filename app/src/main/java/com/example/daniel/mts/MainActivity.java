@@ -89,22 +89,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
-        Button removeButton = (Button)findViewById(R.id.remove_files);
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ListOfLinesAndStopsIO.removeSavedFiles();
-            }
-        });
-
-        Button fetchButton = (Button)findViewById(R.id.fetch_all_info);
-        fetchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ListOfLinesAndStopsIO.fetchAllInfo();
-            }
-        });
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
