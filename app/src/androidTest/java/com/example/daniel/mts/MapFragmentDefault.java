@@ -21,6 +21,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -28,29 +29,43 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class HomeTest {
+public class MapFragmentDefault {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void homeTest() {
-        ViewInteraction button = onView(
-                allOf(withId(R.id.home_button),
+    public void mapFragmentDefault() {
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withContentDescription("Open navigation drawer"),
+                        withParent(withId(R.id.toolbar)),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+        ViewInteraction appCompatCheckedTextView = onView(
+                allOf(withId(R.id.design_menu_item_text), withText("Map"), isDisplayed()));
+        appCompatCheckedTextView.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withText("Map"),
                         childAtPosition(
                                 allOf(withId(R.id.toolbar),
                                         childAtPosition(
                                                 IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
                                                 0)),
-                                4),
+                                1),
                         isDisplayed()));
-        button.check(matches(isDisplayed()));
+        textView.check(matches(withText("Map")));
 
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.home_button), withText("Home"),
-                        withParent(withId(R.id.toolbar)),
+        ViewInteraction frameLayout = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.android_list),
+                                childAtPosition(
+                                        IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                                        1)),
+                        0),
                         isDisplayed()));
-        appCompatButton.perform(click());
+        frameLayout.check(matches(isDisplayed()));
 
     }
 
