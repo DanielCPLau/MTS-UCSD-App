@@ -116,6 +116,7 @@ public class Line extends LineInfo implements Writable {
             this.oppositeDirectionId = obj.getString("oppositeDirectionId");
         } catch (JSONException e) {
             Log.w("JSONException", "occured in Line.fillJSONObject()");
+            ListOfLinesAndStopsIO.write(this);
             e.printStackTrace();
         }
     }

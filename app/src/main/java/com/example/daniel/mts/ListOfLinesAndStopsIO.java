@@ -32,7 +32,7 @@ class ListOfLinesAndStopsIO {
     static void fetchAllInfo() {
         LineInfo[] lineInfo = readLineInfoList();
 
-        int total = 6303;
+        int total = 6314;
         int count = 1;
 
         for(int i = 0; i < lineInfo.length; i++) {
