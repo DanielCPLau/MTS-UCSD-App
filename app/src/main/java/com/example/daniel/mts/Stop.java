@@ -116,6 +116,7 @@ public class Stop implements Writable {
 
         } catch (JSONException e) {
             Log.w("JSONException", "occured in Line.fillJSONObject()");
+            ListOfLinesAndStopsIO.write(this);
             e.printStackTrace();
         }
 
