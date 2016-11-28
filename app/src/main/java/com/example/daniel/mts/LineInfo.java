@@ -24,6 +24,16 @@ public class LineInfo implements Comparable<LineInfo> {
     public LineInfo () {
     }
 
+    // only use this constructor for tempt UCSD shuttles
+    public LineInfo (String id, String shortName, String longName, String color, String textColor) {
+        this.agency = "UCSD";
+        this.id = id;
+        this.shortName = shortName;
+        this.longName = longName;
+        this.color = color;
+        this.textColor = textColor;
+    }
+
     public LineInfo (String id) {
         this.id = id;
         RemoteFetch.fillLineInfo(this);

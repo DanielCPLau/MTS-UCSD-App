@@ -155,6 +155,37 @@ class ListOfLinesAndStopsIO {
             JSONArray jarray = new JSONArray();
 
             // put UCSD shuttle
+            // Campus Loop Shuttle
+            LineInfo l = new LineInfo("UCSD_L", "L", "Campus Loop", "F9E06D", "000000");
+            jarray.put(l.getJSONObject());
+
+            // City Suttle
+
+            // Coaster shuttle
+
+            // East Campus Connector
+            l = new LineInfo("UCSD_EC", "EC", "East Campus Connector", "8CC63F", "000000");
+            jarray.put(l.getJSONObject());
+
+            // East/Regents Shuttle
+            l = new LineInfo("UCSD_P", "P", "East/Regents", "8CC63F", "FFFFFF");
+            jarray.put(l.getJSONObject());
+
+            // Hillcrest/Campus Shuttle
+            l = new LineInfo("UCSD_H", "H", "Hillcrest/Campus", "D71E43", "000000");
+            jarray.put(l.getJSONObject());
+
+            // Mesa Housing Shuttle
+            l = new LineInfo("UCSD_M", "M", "Mesa Housing", "89307A", "000000");
+            jarray.put(l.getJSONObject());
+
+            // Sanford Consortium Shuttle
+            l = new LineInfo("UCSD_SC", "SC", "Sanford Consortium", "D789BA", "FFFFFF");
+            jarray.put(l.getJSONObject());
+
+            // Scripps Institution of Oceanography Shuttle
+            l = new LineInfo("UCSD_S", "S", "Scripps Institution of Oceanography", "7599C5", "FFFFFF");
+            jarray.put(l.getJSONObject());
 
             for (LineInfo lineInfo : array) {
                 jarray.put(lineInfo.getJSONObject());
@@ -175,6 +206,7 @@ class ListOfLinesAndStopsIO {
 
     static LineInfo[] readLineInfoList() {
         try {
+            writeLineInfoList();
             Context context = MyApplication.getAppContext();
             FileInputStream fis = context.openFileInput(FILENAME_LINE_INFO_LIST);
             ObjectInputStream ois = new ObjectInputStream(fis);

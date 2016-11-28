@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Load lineInfo from API to local
-        ListOfLinesAndStopsIO.checkLineInfoList();
-
         setContentView(R.layout.activity_main);
 
         //Set toolbar to replace the action bar
