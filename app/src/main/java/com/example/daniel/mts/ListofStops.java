@@ -145,6 +145,9 @@ public class ListofStops extends ListFragment{
         void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     *  Sources of help : http://www.ezzylearning.com/tutorial/customizing-android-listview-items-with-custom-arrayadapter
+     */
     public class stopAdapter extends ArrayAdapter {
         public stopAdapter(Context context, int resource, int textViewResourceId, Object[] objects) {
             super(context, resource, textViewResourceId, objects);
