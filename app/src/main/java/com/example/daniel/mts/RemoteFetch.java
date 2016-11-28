@@ -19,6 +19,9 @@ import org.json.JSONArray;
 
 /**
  * Created by Isaac on 10/22/16.
+ *
+ * Credit:
+ * http://stackoverflow.com/questions/4308554/simplest-way-to-read-json-from-a-url-in-java
  */
 
 public class RemoteFetch {
