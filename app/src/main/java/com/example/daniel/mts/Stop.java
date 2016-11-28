@@ -32,7 +32,7 @@ public class Stop implements Writable {
         this.id = id;
         this.lineId = lineId;
 
-        ListOfLinesAndStopsIO.read(this);
+        //ListOfLinesAndStopsIO.read(this);
     }
 
 

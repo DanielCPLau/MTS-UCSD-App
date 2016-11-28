@@ -372,7 +372,7 @@ public class RemoteFetch {
 
             while (json.getInt("code") != REQUEST_SUCCESS_CODE) {
                 // Request to API failed
-                Log.w("API Request Fails", "occured in RemoteFetch.getStopsNearLoc()");
+                //Log.w("API Request Fails", "occured in RemoteFetch.getStopsNearLoc()");
                 json = readJsonFromUrl(String.format(REQUEST, REQUEST_STOP_NEARBY) +
                         String.format(REQUEST_END_LOC, lat, lon) + "&radius=" + rad);
             }
