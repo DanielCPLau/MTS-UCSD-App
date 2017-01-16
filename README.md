@@ -1,5 +1,6 @@
-# San Diego & UCSD Metro App
+# Triton Transit 
 
+## Metro app for UCSD students to see both UCSD & San Diego Bus lines
 ## As accurate as can be
 
 ## View bus stops near your location
